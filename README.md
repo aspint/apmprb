@@ -29,9 +29,8 @@ Associação de produtores de leite de Bonvinopolis em Minas Gerais.
 Caso tenha recebido o forbiden copie e cole o modelo de .htaccess no final da pagina.</i>
 
 ## FAQ
-### Forbiden
-
-<p>Verifique se o servidor possui um .htaccess em sua raiz, caso contrário crie o seguinte codigo abaixo.</P>
+### Forbiden .htaccess
+<p>Avalie se o servidor possui o arquivo .htaccess na raiz onde o projeto se encontra, caso contrário crie um .haccess com o seguinte codigo abaixo:</p>
 <pre>
 <IfModule mod_rewrite.c>
     RewriteEngine on
