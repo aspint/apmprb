@@ -1,7 +1,6 @@
 <p align="center"> 
-<h1>Associação de Pequenos e 
-Médios<br> Produtores Rurais de 
-Bonvinopolis de Minas</h1>
+<h1>Associação de Pequenos e Médios<br>
+Produtores Rurais de Bonvinopolis de Minas</h1>
 </p>
 
 
