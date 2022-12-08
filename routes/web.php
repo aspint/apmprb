@@ -19,5 +19,16 @@ Route::get('/', function () {
 });
 
 
-Route::get('/login',[UserController::class, 'index'])->name('home.login');
-Route::post('/validation',[UserController::class,'validation'])->name('validation');
+Route::get('/login',[UserController::class, 'index'])->name('login');
+
+Route::post('/auth',[UserController::class,'auth'])->name('auth');
+
+Route::group(['middleware'=>['auth']], function(){
+
+    Route::get('/logout',[UserController::class,'logout'])->name('logout');
+
+    Route::get('/home',function(){
+        return view('layout.home');
+    })->name('home');
+});
+

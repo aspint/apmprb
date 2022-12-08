@@ -3,23 +3,25 @@
         <div class="navbar-header">
             <!-- This is for the sidebar toggle which is visible on mobile only -->
             <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="{{route('home')}}">
                 <!-- Logo icon -->
                 <b class="logo-icon">
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                    <!-- Dark Logo icon -->
-                    <img src="../../assets/images/logos/logo-icon.png" alt="homepage" class="dark-logo" />
-                    <!-- Light Logo icon -->
-                    <img src="../../assets/images/logos/logo-light-icon.png" alt="homepage" class="light-logo" />
+                    <!-- Dark Logo icon-->
+                    <img src="../../assets/images/logos/logo-icon-coop.png" alt="homepage" class="dark-logo" />
+                    <!-- Light Logo icon-->
+                    <img src="../../assets/images/logos/logo-icon-coop.png" alt="homepage" class="light-logo" />
                 </b>
                 <!--End Logo icon -->
                 <!-- Logo text -->
                 <span class="logo-text">
-                        <!-- dark Logo text -->
-                        <img src="../../assets/images/logos/logo-text.png" alt="homepage" class="dark-logo" />
-                        <!-- Light Logo text -->
-                        <img src="../../assets/images/logos/logo-light-text.png" class="light-logo" alt="homepage" />
+
+                        <!-- dark Logo text-->
+                        <img src="../../assets/images/logos/logo-text-apmprbm.png" alt="homepage" class="dark-logo" />
+                        <!-- Light Logo text-->
+                        <img src="../../assets/images/logos/logo-light-text-apmprbm.png" class="light-logo" alt="homepage" />
                 </span>
+
             </a>
             <!-- ============================================================== -->
             <!-- End Logo -->
@@ -286,7 +288,7 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings mr-1 ml-1"></i> Account Setting</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off mr-1 ml-1"></i> Logout</a>
+                        <a href="{{route('logout')}}" class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off mr-1 ml-1"></i> Logout</a>
                     </div>
                 </li>
                 <!-- ============================================================== -->

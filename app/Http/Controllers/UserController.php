@@ -11,13 +11,19 @@ class UserController extends Controller
         return view('login');
     }
 
-    public function validation(Request $request){
+    public function auth(Request $request){
+
 
         if(Auth::attempt(['email'=>$request->email, 'password' => $request->password])){
-            return view('layout.home');
+            return redirect('/home');
         }else{
             dd('voce não esta logado');
         }
 
+    }
+
+    public function logout(){
+        Auth::logout();
+        return redirect('/login');
     }
 }
