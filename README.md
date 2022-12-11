@@ -1,5 +1,7 @@
 <p align="center"> 
-<h1>Associação de Pequenos e Médios<br>
+<img src="public/assets/images/logos/logo-icon-coop.png" width="40">
+<img src="public/assets/images/logos/logo-light-text-apmprbm.png" width="200">
+<h1 align="center">Associação de Pequenos e Médios<br>
 Produtores Rurais de Bonvinopolis de Minas</h1>
 </p>
 
@@ -23,7 +25,21 @@ Associação de produtores de leite de Bonvinopolis em Minas Gerais.
 2. Dentro do projeto execute Composer Install 
     - obs.: Em alguns servidores talvez seja preciso rodar php composer.phar
 
-3. Copie, ou configure, o arquivo .env com dados da aplicação
+3. Copie, ou configure, o arquivo .env com dados da aplicação e banco de dados
+
+4. Dentro da pasta do projeto rode o comando abaixo para que seja criado as tabelas do sistema.
+<pre>
+<IfModule mod_rewrite.c>
+    php artisan migrate
+</IfModule>
+</pre>
+
+5. Logo em seguida a criação da tabela rode o comando abaixo para criar os dados base da tabela, como user ADMIN e outros.
+<pre>
+<IfModule mod_rewrite.c>
+    php artisan db:seed
+</IfModule>
+</pre>
 
 <i> Obs.: Caso rode a aplicação em sub-dominio pode ser preciso criar um arquivo .htaccess apontando para public do projeto, ou recebera um forbiden.
 Caso tenha recebido o forbiden copie e cole o modelo de .htaccess no final da pagina.</i>
