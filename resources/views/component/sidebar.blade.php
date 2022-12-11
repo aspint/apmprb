@@ -34,7 +34,7 @@
                     </a>
                     <ul aria-expanded="false" class="collapse  first-level">
                         <li class="sidebar-item">
-                            <a href="index.html" class="sidebar-link">
+                            <a href="{{route('home')}}" class="sidebar-link">
                                 <i class="mdi mdi-adjust"></i>
                                 <span class="hide-menu"> Dashboard 1 </span>
                             </a>
@@ -186,7 +186,7 @@
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                            <a class="sidebar-link waves-effect waves-dark" href="{{route('userCadastro')}}" aria-expanded="false">
                                 <i class="mdi mdi-collage"></i>
                                 <span class="hide-menu">Cadastro Usuarios</span>
                             </a>

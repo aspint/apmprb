@@ -31,7 +31,7 @@ Route::group(['middleware'=>['auth']], function(){
 
     Route::get('/user/cadastro',function(){
         return view('view.cadastroUsuario');
-    });
+    })->name('userCadastro');
 
 });
 
