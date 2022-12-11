@@ -6,7 +6,7 @@ Produtores Rurais de Bonvinopolis de Minas</h1>
 </p>
 
 <p>
-Associação de produtores de leite de Bonvinopolis em Minas Gerais.
+Software de gerenciamento de entrega de leite da associação de produtores de leite da cidade de Bonvinopolis de Minas no  estado de Minas Gerais.
 </p>
 
 ## Sobre Aplicação da APMPRBM
