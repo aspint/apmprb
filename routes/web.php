@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,9 +27,11 @@ Route::post('/auth',[UserController::class,'auth'])->name('auth');
 Route::group(['middleware'=>['auth']], function(){
 
     Route::get('/logout',[UserController::class,'logout'])->name('logout');
+    Route::get('/home',[HomeController::class,'index'])->name('home');
 
-    Route::get('/home',function(){
-        return view('layout.home');
-    })->name('home');
+    Route::get('/user/cadastro',function(){
+        return view('view.cadastroUsuario');
+    });
+
 });
 

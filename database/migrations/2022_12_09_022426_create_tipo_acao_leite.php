@@ -15,7 +15,7 @@ class CreateTipoAcaoLeite extends Migration
     {
         Schema::create('tipo_acao_leite', function (Blueprint $table) {
             $table->id();
-            $table->string('tipo_acao_valor');
+            $table->string('tipo_acao_valor')->unique();
             $table->string('tipo_acao_descricao');
             $table->timestamp('datahora_inclusao')->nullable()->default(null);
             $table->timestamp('datahora_atualizacao')->nullable()->default(null);

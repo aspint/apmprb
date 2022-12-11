@@ -17,10 +17,10 @@
                         <div class="user-pic"><img src="../../assets/images/users/1.jpg" alt="users" class="rounded-circle" width="50" /></div>
                         <div class="user-content hide-menu">
                             <a href="javascript:void(0)" class="mt-2" id="Userdd" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <h5 class="mb-0 user-name mt-2">Steave Jobs <i class="fa fa-angle-down"></i></h5>
+                                <h5 class="mb-0 user-name mt-2">{{isset($response)? $response['name']:''}}<i class="fa fa-angle-down"></i></h5>
                             </a>
                             <div class="dropdown-menu dropdown-menu-left" aria-labelledby="Userdd">
-                                @include('layout.dropdown');
+                                @include('component.dropdown');
                             </div>
                         </div>
                     </div>

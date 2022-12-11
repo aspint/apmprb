@@ -15,7 +15,7 @@ class CreateFonte extends Migration
     {
         Schema::create('fonte', function (Blueprint $table) {
             $table->id();
-            $table->string('fonte_valor');
+            $table->string('fonte_valor')->unique();
             $table->string('fonte_descricao');
             $table->timestamp('datahora_inclusao')->nullable()->default(null);
             $table->timestamp('datahora_atualizacao')->nullable()->default(null);
