@@ -93,12 +93,12 @@
                 <!-- Comment -->
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-check-circle font-18"></i>
+                  <!--  <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-check-circle font-18"></i>
                         <div class="notify">
                             <span class="heartbit"></span>
                             <span class="point"></span>
                         </div>
-                    </a>
+                    </a>-->
                     <div class="dropdown-menu dropdown-menu-left mailbox animated bounceInDown">
                         <span class="with-arrow"><span class="bg-primary"></span></span>
                         <ul class="list-style-none">
@@ -146,10 +146,10 @@
                 <!-- mega menu -->
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown mega-dropdown">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <!--<a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="d-none d-md-block">Mega <i class="icon-options-vertical"></i></span>
                         <span class="d-block d-md-none"><i class="mdi mdi-dialpad font-24"></i></span>
-                    </a>
+                    </a>-->
                     <div class="dropdown-menu animated bounceInDown">
                         <div class="mega-dropdown-menu row">
                             <div class="col-lg-3 col-xlg-2 mb-4">
@@ -271,24 +271,18 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img src="../../assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31">
-                        <span class="ml-2 user-text font-medium">Steve</span><span class="fas fa-angle-down ml-2 user-text"></span>
+                        <span class="ml-2 user-text font-medium">{{isset($response)? $response['name']:''}}</span><span class="fas fa-angle-down ml-2 user-text"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
                         <div class="d-flex no-block align-items-center p-3 mb-2 border-bottom">
                             <div class=""><img src="../../assets/images/users/1.jpg" alt="user" class="rounded" width="80"></div>
                             <div class="ml-2">
-                                <h4 class="mb-0">Steave Jobs</h4>
-                                <p class=" mb-0 text-muted">varun@gmail.com</p>
-                                <a href="javascript:void(0)" class="btn btn-sm btn-danger text-white mt-2 btn-rounded">View Profile</a>
+                                <h4 class="mb-0">{{isset($response)? $response['name']:null}}</h4>
+                                <p class=" mb-0 text-muted">{{isset($response)? $response['email']:''}}</p>
+                                <!--<a href="javascript:void(0)" class="btn btn-sm btn-danger text-white mt-2 btn-rounded">View Profile</a>-->
                             </div>
                         </div>
-                        <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user mr-1 ml-1"></i> My Profile</a>
-                        <a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet mr-1 ml-1"></i> My Balance</a>
-                        <a class="dropdown-item" href="javascript:void(0)"><i class="ti-email mr-1 ml-1"></i> Inbox</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings mr-1 ml-1"></i> Account Setting</a>
-                        <div class="dropdown-divider"></div>
-                        <a href="{{route('logout')}}" class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off mr-1 ml-1"></i> Logout</a>
+                        @include('component.dropdown');
                     </div>
                 </li>
                 <!-- ============================================================== -->

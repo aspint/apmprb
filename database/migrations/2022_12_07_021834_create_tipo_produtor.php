@@ -15,7 +15,7 @@ class CreateTipoProdutor extends Migration
     {
         Schema::create('tipo_produtor', function (Blueprint $table) {
             $table->id();
-            $table->string('tipo_valor',50)->nullable();
+            $table->string('tipo_valor',50)->unique();
             $table->string('desc_valor',50);
             $table->timestamp('datahora_inclusao')->nullable()->default(null);
             $table->timestamp('datahora_atualizacao')->nullable()->default(null);

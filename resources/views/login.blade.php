@@ -46,6 +46,7 @@
                         <!--<span class="db"><img src="../../assets/images/logos/logo-icon.png" alt="logo" /></span>-->
                         <h5 class="font-medium mb-3">Entrar no painel</h5>
                     </div>
+
                     <!-- Form -->
                     <div class="row">
                         <div class="col-12">
