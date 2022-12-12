@@ -39,7 +39,7 @@ class UserController extends Controller
                     ->select('users.id','name', 'email','created_at as inclusao','tipo_usuario.tipo_valor as perfil')
                     ->orderBy('id', 'asc')
                     ->paginate(5);
-        return view('view.cadastroUsuario', compact('response','users'));
+        return view('view.CadastroUsuario', compact('response','users'));
     }
 
     public function cadastrar(Request $request){
