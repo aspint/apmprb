@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProdutorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,15 @@ Route::group(['middleware'=>['auth']], function(){
 
     Route::post('/user/formulario/inserir',[UserController::class, 'cadastrar'])->name('inserirUsuario');
     Route::post('/user/formulario/excluir',[UserController::class, 'destroy'])->name('excluirUsuario');
+
+});
+
+
+
+Route::group(['middleware'=>['auth']], function(){
+
+    Route::get('/produtor/formulario',[ProdutorController::class,'edit'])->name('produtorFormulario');
+
 
 });
 
