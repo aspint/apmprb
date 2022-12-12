@@ -29,28 +29,28 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('tipo_usuario')->insert([
-            'tipo_valor' => 'COMUM',
-            'descricao' => 'Usuarios comum do sistema, como produtor',
+            'tipo_valor' => 'PROD',
+            'descricao' => 'Usuarios de sistema produtor',
             'data_inclusao' => new \DateTime()
         ]);
 
         DB::table('tipo_usuario')->insert([
             'tipo_valor' => 'FUNC',
-            'descricao' => 'funcionario da associação',
+            'descricao' => 'Funcionario Associação',
             'data_inclusao' => new \DateTime()
         ]);
 
 
         DB::table('tipo_produtor')->insert([
-            'tipo_valor' => 'COMUM',
-            'desc_valor' => 'Produtor Comum',
+            'tipo_valor' => 'PROD_ASS',
+            'desc_valor' => 'Produtor Associação',
             'datahora_inclusao' => new \DateTime(),
             'datahora_atualizacao' => new \DateTime(),
             'usuario' => 'usuario.batch'
         ]);
 
         DB::table('tipo_produtor')->insert([
-            'tipo_valor' => 'TERCEIRO',
+            'tipo_valor' => 'PROD_TERCEIRO',
             'desc_valor' => 'Produtor Terceiro',
             'datahora_inclusao' => new \DateTime(),
             'datahora_atualizacao' => new \DateTime(),
@@ -64,6 +64,18 @@ class DatabaseSeeder extends Seeder
             'tipo_usuario_id' => 1,
         ]);
 
+        \App\Models\User::create([
+            'name'=>'Produtor Teste',
+            'email' =>'prod@apmprbm.com.br',
+            'password' => Hash::make('123456'),
+            'tipo_usuario_id' => 2,
+        ]);
 
+        \App\Models\User::create([
+            'name'=>'Funcionario Teste',
+            'email' =>'func@apmprbm.com.br',
+            'password' => Hash::make('123456'),
+            'tipo_usuario_id' => 3,
+        ]);
     }
 }

@@ -5,13 +5,13 @@
     <div class="page-breadcrumb bg-white">
         <div class="row">
             <div class="col-lg-3 col-md-4 col-xs-12 align-self-center">
-                <h5 class="font-medium text-uppercase mb-0">Cadastro Usuario</h5>
+                <h5 class="font-medium text-uppercase mb-0">Cadastro Produtor</h5>
             </div>
             <div class="col-lg-9 col-md-8 col-xs-12 align-self-center">
                 <nav aria-label="breadcrumb" class="mt-2 float-md-right float-left">
                     <ol class="breadcrumb mb-0 justify-content-end p-0 bg-white">
                         <li class="breadcrumb-item"><a href="index.html">Cadastrar</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Cadastro Usuario</li>
+                        <li class="breadcrumb-item active" aria-current="page">Cadastro Produtor</li>
                     </ol>
                 </nav>
             </div>
@@ -37,10 +37,10 @@
                     {{-- <form action="{{route('inserirUsuario')}}"  method="POST"> --}}
                     <form action=""  method="POST">
                         @csrf
-                        <div class="card-body">
+                        {{-- <div class="card-body">
                             <h4 class="card-title">Formulario de Criação de Produtor</h4>
                         </div>
-                        <hr>
+                        <hr> --}}
                         <div class="form-body">
                             <div class="card-body">
                                 <div class="row pt-3">
@@ -106,16 +106,16 @@
                                             <small class="form-control-feedback"> Informe a inscricao do produtor (esse campo não pode ser vazio) </small> </div>
                                     </div>
                                     <!--/span-->
-                                    {{-- <div class="col-md-6">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label">Tipo Produtor</label>
+                                            <label class="control-label">Associar a Usuario</label>
                                             <select class="form-control custom-select" id="perfil" name="perfil">
                                                 <option value=""></option>
-                                                <option value="1">Comum</option>
-                                                <option value="2">Terceiro</option>
+                                                <option value="1">User teste 1</option>
+                                                <option value="2">User teste 2</option>
                                             </select>
-                                            <small class="form-control-feedback"> Informe o tipo de produtor (este campo não pode ser nulo). </small> </div>
-                                    </div> --}}
+                                            <small class="form-control-feedback"> Informe qual usuario pode ser usado por esse cliente(este campo não pode ser nulo). </small> </div>
+                                    </div>
                                     <!--/span-->
                                 </div>
                                 <!--/row-->
