@@ -3,7 +3,7 @@
 @section('cadastroUsuario')
     @include('component.header')
     @include('component.sidebar')
-    @include('content.cadastroUsuarioContent')
+    @include('content.CadastroUsuarioContent')
     @include('component.footer')
 @endsection
 
