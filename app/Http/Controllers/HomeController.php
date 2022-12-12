@@ -17,7 +17,7 @@ class HomeController extends Controller
             $user = Auth::user();
             $response['id'] = $user->id;
             $response['email'] = $user->email;
-            $response['name'] = explode(' ',$user->name)[1];
+            $response['name'] = explode(' ',$user->name)[0];
             $response['name_full'] = $user->name;
             return view('view.home', compact('response'));
         }else{
