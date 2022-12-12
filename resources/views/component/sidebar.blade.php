@@ -201,7 +201,7 @@
                             </ul> --}}
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                            <a class="sidebar-link waves-effect waves-dark" href="{{route('produtorFormulario')}}" aria-expanded="false">
                                 <i class="mdi mdi-receipt"></i>
                                 <span class="hide-menu">Cadastro Produtor</span>
                             </a>

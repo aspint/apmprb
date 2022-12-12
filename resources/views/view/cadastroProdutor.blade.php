@@ -1,9 +1,9 @@
-@extends('pages.CadastroUsuario')
+@extends('pages.CadastroProdutor')
 
-@section('cadastroUsuario')
+@section('cadastroProdutor')
     @include('component.header')
     @include('component.sidebar')
-    @include('content.CadastroUsuarioContent')
+    @include('content.CadastroProdutorContent')
     @include('component.footer')
 @endsection
 

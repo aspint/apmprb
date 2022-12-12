@@ -40,6 +40,23 @@ class DatabaseSeeder extends Seeder
             'data_inclusao' => new \DateTime()
         ]);
 
+
+        DB::table('tipo_produtor')->insert([
+            'tipo_valor' => 'COMUM',
+            'desc_valor' => 'Produtor Comum',
+            'datahora_inclusao' => new \DateTime(),
+            'datahora_atualizacao' => new \DateTime(),
+            'usuario' => 'usuario.batch'
+        ]);
+
+        DB::table('tipo_produtor')->insert([
+            'tipo_valor' => 'TERCEIRO',
+            'desc_valor' => 'Produtor Terceiro',
+            'datahora_inclusao' => new \DateTime(),
+            'datahora_atualizacao' => new \DateTime(),
+            'usuario' => 'usuario.batch'
+        ]);
+
         \App\Models\User::create([
             'name'=>'Administrador',
             'email' =>'admin@apmprbm.com.br',
