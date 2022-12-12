@@ -8,18 +8,18 @@
                 <b class="logo-icon">
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                     <!-- Dark Logo icon-->
-                    <img src="../../assets/images/logos/logo-icon-coop.png" alt="homepage" class="dark-logo" />
+                    <img src="{{asset('assets/images/logos/logo-icon-coop.png')}}" alt="homepage" class="dark-logo" />
                     <!-- Light Logo icon-->
-                    <img src="../../assets/images/logos/logo-icon-coop.png" alt="homepage" class="light-logo" />
+                    <img src="{{asset('assets/images/logos/logo-icon-coop.png')}}" alt="homepage" class="light-logo" />
                 </b>
                 <!--End Logo icon -->
                 <!-- Logo text -->
                 <span class="logo-text">
 
                         <!-- dark Logo text-->
-                        <img src="../../assets/images/logos/logo-text-apmprbm.png" alt="homepage" class="dark-logo" />
+                        <img src="{{asset('assets/images/logos/logo-text-apmprbm.png')}}" alt="homepage" class="dark-logo" />
                         <!-- Light Logo text-->
-                        <img src="../../assets/images/logos/logo-light-text-apmprbm.png" class="light-logo" alt="homepage" />
+                        <img src="{{asset('assets/images/logos/logo-light-text-apmprbm.png')}}" class="light-logo" alt="homepage" />
                 </span>
 
             </a>
@@ -43,13 +43,17 @@
                 <!-- ============================================================== -->
                 <!-- Messages -->
                 <!-- ============================================================== -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-18 mdi mdi-gmail"></i>
+                {{-- <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark"
+                        href=""
+                        id="2"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-18 mdi mdi-gmail"></i>
                         <div class="notify">
                             <span class="heartbit"></span>
                             <span class="point"></span>
                         </div>
                     </a>
+
                     <div class="dropdown-menu dropdown-menu-left mailbox animated bounceInDown" aria-labelledby="2">
                         <ul class="list-style-none">
                             <li>
@@ -88,7 +92,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
                 <!-- ============================================================== -->
                 <!-- Comment -->
                 <!-- ============================================================== -->
@@ -270,12 +274,12 @@
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="../../assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31">
+                        <img src="{{ asset('assets/images/logos/images.png') }}" alt="user" class="rounded-circle" width="31">
                         <span class="ml-2 user-text font-medium">{{isset($response)? $response['name']:''}}</span><span class="fas fa-angle-down ml-2 user-text"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
                         <div class="d-flex no-block align-items-center p-3 mb-2 border-bottom">
-                            <div class=""><img src="../../assets/images/users/1.jpg" alt="user" class="rounded" width="80"></div>
+                            <div class=""><img src="{{ asset('assets/images/logos/images.png') }}" alt="user" class="rounded" width="80"></div>
                             <div class="ml-2">
                                 <h4 class="mb-0">{{isset($response)? $response['name']:null}}</h4>
                                 <p class=" mb-0 text-muted">{{isset($response)? $response['email']:''}}</p>
