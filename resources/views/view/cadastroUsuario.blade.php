@@ -1,6 +1,6 @@
 @extends('pages.CadastroUsuario')
 
-@section('cadastroUsuario')
+@section('CadastroUsuario')
     @include('component.header')
     @include('component.sidebar')
     @include('content.CadastroUsuarioContent')
