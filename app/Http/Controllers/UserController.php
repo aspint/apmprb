@@ -38,7 +38,7 @@ class UserController extends Controller
                     ->join('tipo_usuario','users.tipo_usuario_id','=','tipo_usuario.id')
                     ->select('users.id','name', 'email','created_at as inclusao','tipo_usuario.tipo_valor as perfil')
                     ->orderBy('id', 'asc')
-                    ->get();
+                    ->paginate(5);
         return view('view.cadastroUsuario', compact('response','users'));
     }
 

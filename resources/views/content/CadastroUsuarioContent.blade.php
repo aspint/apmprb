@@ -97,8 +97,6 @@
         </div>
         <!-- Row -->
 
-
-
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
@@ -144,17 +142,14 @@
                                         @endif
                                     </tbody>
                                 </table>
+                                {{$users->links()}}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
-
-
     </div>
-
 </div>
+
+
