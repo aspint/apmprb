@@ -20,18 +20,22 @@ Route::get('/', function () {
 });
 
 
-Route::get('/login',[UserController::class, 'index'])->name('login');
+Route::get('/login',function(){
+    return view('login');
+})->name('login');
 
 Route::post('/auth',[UserController::class,'auth'])->name('auth');
 
 Route::group(['middleware'=>['auth']], function(){
 
-    Route::get('/logout',[UserController::class,'logout'])->name('logout');
     Route::get('/home',[HomeController::class,'index'])->name('home');
+    Route::get('/logout',[UserController::class,'logout'])->name('logout');
 
-    Route::get('/user/cadastro',function(){
-        return view('view.cadastroUsuario');
-    })->name('userCadastro');
+
+    Route::get('/user/formulario',[UserController::class,'edit'])->name('userFormulario');
+
+    Route::post('/user/formulario/inserir',[UserController::class, 'cadastrar'])->name('inserirUsuario');
+    Route::post('/user/formulario/excluir',[UserController::class, 'destroy'])->name('excluirUsuario');
 
 });
 

@@ -47,12 +47,6 @@ class DatabaseSeeder extends Seeder
             'tipo_usuario_id' => 1,
         ]);
 
-        DB::table('tipo_usuario')->insert([
-            'tipo_valor' => 'FUNC',
-            'descricao' => 'funcionario da associação',
-            'data_inclusao' => new \DateTime()
-        ]);
-
 
     }
 }

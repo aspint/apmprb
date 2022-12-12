@@ -14,7 +14,7 @@
                 <li>
                     <!-- User Profile-->
                     <div class="user-profile text-center dropdown p-3">
-                        <div class="user-pic"><img src="../../assets/images/users/1.jpg" alt="users" class="rounded-circle" width="50" /></div>
+                        <div class="user-pic"><img src="{{ asset('assets/images/logos/images.png') }}" alt="users" class="rounded-circle" width="50" /></div>
                         <div class="user-content hide-menu">
                             <a href="javascript:void(0)" class="mt-2" id="Userdd" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <h5 class="mb-0 user-name mt-2">{{isset($response)? $response['name']:''}}<i class="fa fa-angle-down"></i></h5>
@@ -30,7 +30,7 @@
                     <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                         <i class="mdi mdi-av-timer"></i>
                         <span class="hide-menu">Dashboard</span>
-                        <span class="badge badge-inverse badge-pill ml-auto mr-3 font-medium px-2 py-1">6</span>
+                        {{-- <span class="badge badge-inverse badge-pill ml-auto mr-3 font-medium px-2 py-1">6</span> --}}
                     </a>
                     <ul aria-expanded="false" class="collapse  first-level">
                         <li class="sidebar-item">
@@ -179,14 +179,15 @@
 
                 <div class="devider"></div>
 
-                <li class="sidebar-item">
+
+                <li class="sidebar-item" >
                     <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                         <i class="mdi mdi-clipboard-text"></i>
                         <span class="hide-menu">Cadastrar</span>
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark" href="{{route('userCadastro')}}" aria-expanded="false">
+                            <a class="sidebar-link waves-effect waves-dark" href="{{route('userFormulario')}}" aria-expanded="false">
                                 <i class="mdi mdi-collage"></i>
                                 <span class="hide-menu">Cadastro Usuarios</span>
                             </a>
@@ -222,11 +223,12 @@
                     </ul>
                 </li>
 
+
                 <li class="sidebar-item">
                     <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                         <i class="mdi mdi-table"></i>
                         <span class="hide-menu">Relatorio</span>
-                        <span class="badge badge-danger text-white badge-pill ml-auto mr-3 font-medium px-2 py-1">11</span>
+                        {{-- <span class="badge badge-danger text-white badge-pill ml-auto mr-3 font-medium px-2 py-1">11</span> --}}
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="sidebar-item">
