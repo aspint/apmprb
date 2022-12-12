@@ -31,7 +31,7 @@ class UserController extends Controller
         $user = Auth::user();
         $response['id'] = $user->id;
         $response['email'] = $user->email;
-        $response['name'] = $user->name;
+        $response['name'] = explode(' ',$user->name)[0];
         $response['name_full'] = $user->name;
 
         $users = DB::table('users')
