@@ -281,7 +281,7 @@
                         <div class="d-flex no-block align-items-center p-3 mb-2 border-bottom">
                             <div class=""><img src="{{ asset('assets/images/logos/images.png') }}" alt="user" class="rounded" width="80"></div>
                             <div class="ml-2">
-                                <h4 class="mb-0">{{isset($response)? $response['name']:null}}</h4>
+                                <h4 class="mb-0">{{isset($response)? $response['name_full']:null}}</h4>
                                 <p class=" mb-0 text-muted">{{isset($response)? $response['email']:''}}</p>
                                 <!--<a href="javascript:void(0)" class="btn btn-sm btn-danger text-white mt-2 btn-rounded">View Profile</a>-->
                             </div>

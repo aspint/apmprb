@@ -32,7 +32,7 @@ class UserController extends Controller
         $response['id'] = $user->id;
         $response['email'] = $user->email;
         $response['name'] = $user->name;
-        $response['name'] = $user->name;
+        $response['name_full'] = $user->name;
 
         $users = DB::table('users')
                     ->join('tipo_usuario','users.tipo_usuario_id','=','tipo_usuario.id')
@@ -66,8 +66,10 @@ class UserController extends Controller
         if($this->hasAdm()){
             DB::table('users')->insert([
                 'name' => $request->input('name'),
-                'email' => $request->input('email'),
+                'email' => strtolower($request->input('email')),
                 'password'=>Hash::make($request->input('password')),
+                'created_at'=>new \DateTime(),
+                'updated_at'=>new \DateTime(),
                 'tipo_usuario_id' => $request->input('perfil'),
             ]);
         }
