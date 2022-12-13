@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\UserHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
@@ -50,12 +51,12 @@ class UserController extends Controller
     public function destroy(Request $request){
 
         if(Auth::check()){
-             if($this->hasAdm()){
+             if(UserHelper::hasAdm()){
                 // dd($request->input('id_usuario'));
                 DB::table('users')->where('id','=',$request->input('id_usuario'))->delete();
                 return back();
             }
-
+            return back();
         }else{
             return back();
         }
@@ -74,21 +75,6 @@ class UserController extends Controller
             ]);
         }
         return back();
-    }
-
-
-    public function hasAdm(){
-        $user = Auth::user();
-        $userPerfil = DB::table('users')
-            ->join('tipo_usuario','users.tipo_usuario_id','=','tipo_usuario.id')
-            ->select('users.id','name', 'email','created_at as inclusao','tipo_usuario.tipo_valor as perfil')
-            ->where('users.id',$user->id)
-            ->first();
-        if($userPerfil->perfil == 'ADM'){
-            return true;
-        }else{
-            return false;
-        }
     }
 
 

@@ -40,11 +40,10 @@ Route::group(['middleware'=>['auth']], function(){
 
 });
 
-
-
 Route::group(['middleware'=>['auth']], function(){
 
     Route::get('/produtor/formulario',[ProdutorController::class,'edit'])->name('produtorFormulario');
+    Route::delete('/produtor/formulario/excluir/{id}',[ProdutorController::class,'destroy'])->name('excluirProdutor');
 
 
 });

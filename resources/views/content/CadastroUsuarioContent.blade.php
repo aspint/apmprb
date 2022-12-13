@@ -98,7 +98,11 @@
                             </div>
                             <div class="form-actions">
                                 <div class="card-body">
-                                    <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i>Salvar</button>
+                                    <button type="submit"
+                                            class="btn btn-success">
+                                                <i class="fa fa-check"></i>
+                                                Salvar
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -107,7 +111,6 @@
             </div>
         </div>
         <!-- Row -->
-
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
@@ -142,7 +145,11 @@
                                                     <form action="{{ route('excluirUsuario') }}" method="POST">
                                                         @csrf
                                                         <input type="text" name="id_usuario" id="id_usuario" value="{{$user->id}}" hidden/>
-                                                        <button type="submit" class="btn btn-warning btn-circle"><i class="fa fa-times"></i></button>
+                                                        <button type="submit"
+                                                                class="btn btn-warning btn-circle"
+                                                                onclick="return confirm('Deseja remover {{$user->name}} ?')">
+                                                                    <i class="fa fa-times"></i>
+                                                                </button>
                                                         {{-- <label class="control-label">Excluir </label> --}}
                                                         <small class="form-control-feedback"><br> Excluir </small>
                                                         {{-- <button type='submit'>Enviar</button> --}}

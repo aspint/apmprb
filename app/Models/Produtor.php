@@ -10,4 +10,5 @@ class Produtor extends Model
     use HasFactory;
 
     protected $table = 'produtor';
+
 }

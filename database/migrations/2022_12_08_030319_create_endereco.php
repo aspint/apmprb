@@ -24,6 +24,8 @@ class CreateEndereco extends Migration
             $table->timestamp('datahora_inclusao')->nullable()->default(null);
             $table->timestamp('datahora_atualizacao')->nullable()->default(null);
             $table->string('usuario');
+            $table->unsignedBigInteger('produtor_id');
+            $table->foreign('produtor_id')->references('id')->on('produtor');
         });
     }
 

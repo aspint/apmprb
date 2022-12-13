@@ -1,4 +1,4 @@
-@extends('pages.CadastroProdutor')
+@extends('layout')
 
 @section('cadastroProdutor')
     @include('component.header')

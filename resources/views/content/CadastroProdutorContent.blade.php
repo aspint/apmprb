@@ -21,7 +21,6 @@
     <!-- End Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
 
-
     <!-- ============================================================== -->
     <!-- Container fluid  -->
     <!-- ============================================================== -->
@@ -90,8 +89,8 @@
                                             <label class="control-label">Tipo Produtor</label>
                                             <select class="form-control custom-select" id="tipo_produtor" name="tipo_produtor">
                                                 <option value=""></option>
-                                                <option value="1">Comum</option>
-                                                <option value="2">Terceiro</option>
+                                                <option value="1">Produtor Associação</option>
+                                                <option value="2">Produtor Terceiro</option>
                                             </select>
                                             <small class="form-control-feedback"> Informe o tipo de produtor (este campo não pode ser nulo). </small> </div>
                                     </div>
@@ -109,10 +108,11 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Associar a Usuario</label>
-                                            <select class="form-control custom-select" id="perfil" name="perfil">
+                                            <select class="form-control custom-select" id="usuario" name="usuario">
                                                 <option value=""></option>
-                                                <option value="1">User teste 1</option>
-                                                <option value="2">User teste 2</option>
+                                                @foreach ($users as $user)
+                                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                                @endforeach
                                             </select>
                                             <small class="form-control-feedback"> Informe qual usuario pode ser usado por esse cliente(este campo não pode ser nulo). </small> </div>
                                     </div>
@@ -148,9 +148,11 @@
                                         <tr>
                                             <th scope="col">#</th>
                                             <th scope="col">Nome Completo</th>
-                                            <th scope="col">E-mail</th>
-                                            <th scope="col">Criado em</th>
-                                            <th scope="col">Perfil Usuario</th>
+                                            <th scope="col">CPF ou CNPJ</th>
+                                            <th scope="col">Inscricao</th>
+                                            <th scope="col">Identidade</th>
+                                            <th scope="col">Tipo produtor</th>
+                                            <th scope="col">Incluido em</th>
                                             <th scope="col">Ação</th>
                                         </tr>
                                     </thead>
@@ -159,15 +161,21 @@
                                             @foreach ( $produtores as $produtor)
                                             <tr>
                                                 <th scope="row">{{$produtor->id}}</th>
-                                                <td>{{$produtor->name}}</td>
-                                                <td>{{$produtor->email}}</td>
+                                                <td>{{$produtor->nome}}</td>
+                                                <td>{{$produtor->cpf_cnpj}}</td>
+                                                <td>{{$produtor->inscricao}}</td>
+                                                <td>{{$produtor->rg}}</td>
+                                                <td>{{$produtor->tipo}}</td>
                                                 <td>{{\Carbon\Carbon::parse($produtor->inclusao)->format('d-m-Y')}}</td>
-                                                <td>{{$produtor->perfil}}</td>
                                                 <td>
-                                                    <form action="{{ route('excluirUsuario') }}" method="POST">
+                                                    <form action="{{ route('excluirProdutor', $produtor->id) }}" method="POST">
+                                                        @method('DELETE')
                                                         @csrf
-                                                        <input type="text" name="id_usuario" id="id_usuario" value="{{$user->id}}" hidden/>
-                                                        <button type="submit" class="btn btn-warning btn-circle"><i class="fa fa-times"></i></button>
+                                                        <input type="text" name="id_usuario" id="id_usuario" value="{{$produtor->id}}" hidden/>
+                                                        <button type="submit"
+                                                                class="btn btn-warning btn-circle"
+                                                                onclick="return confirm('Deseja remover {{$produtor->nome}} ?')"
+                                                                ><i class="fa fa-times"></i></button>
                                                         {{-- <label class="control-label">Excluir </label> --}}
                                                         <small class="form-control-feedback"><br> Excluir </small>
                                                         {{-- <button type='submit'>Enviar</button> --}}

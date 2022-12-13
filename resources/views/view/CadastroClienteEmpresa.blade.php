@@ -1,9 +1,9 @@
-@extends('pages.CadastroProdutor')
+@extends('layout')
 
-@section('cadastroProdutor')
+@section('CadastroCliente')
     @include('component.header')
     @include('component.sidebar')
-    @include('content.CadastroProdutorContent')
+    @include('content.CadastroClienteContent')
     @include('component.footer')
 @endsection
 
