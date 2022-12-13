@@ -36,24 +36,34 @@
 
                     <form action="{{route('inserirUsuario')}}"  method="POST">
                         @csrf
-                        <div class="card-body">
+                        {{-- <div class="card-body">
                             <h4 class="card-title">Formulario de Criação de usuários do sistema</h4>
                         </div>
-                        <hr>
+                        <hr> --}}
                         <div class="form-body">
                             <div class="card-body">
                                 <div class="row pt-3">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Nome Completo</label>
-                                            <input type="text" id="name" name="name"class="form-control" placeholder="João Silva">
+                                            <input type="text"
+                                                   id="name"
+                                                   name="name"
+                                                   class="form-control"
+                                                   placeholder="João Silva"
+                                                   required>
                                             <small class="form-control-feedback"> Informe seu nome completo </small> </div>
                                     </div>
                                     <!--/span-->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">E-mail</label>
-                                            <input type="email" id="email" name="email" class="form-control form-control-danger" placeholder="jogao@apmprbm.com.br">
+                                            <input type="email"
+                                                   id="email"
+                                                   name="email"
+                                                   class="form-control form-control-danger"
+                                                   placeholder="jogao@apmprbm.com.br"
+                                                   required>
                                             <small class="form-control-feedback"> Informe um e-mail, para entrar no sistema. </small> </div>
                                     </div>
                                     <!--/span-->
@@ -63,11 +73,11 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Perfil</label>
-                                            <select class="form-control custom-select" id="perfil" name="perfil">
+                                            <select class="form-control custom-select" id="perfil" name="perfil" required>
                                                 <option value=""></option>
                                                 <option value="1">Administrador</option>
-                                                <option value="2">Usuário Comum</option>
-                                                <option value="3">Usuário Funcionário</option>
+                                                <option value="2">Produtor</option>
+                                                <option value="3">Funcionário</option>
                                             </select>
                                             <small class="form-control-feedback"> Informe qual nivel de acesso </small> </div>
                                     </div>
@@ -79,7 +89,8 @@
                                                    id="password"
                                                    name="password"
                                                    class="form-control form-control-danger"
-                                                   placeholder="password">
+                                                   placeholder="password"
+                                                   required>
                                             <small class="form-control-feedback"> Informe a senha padrão </small> </div>
                                     </div>
                                     <!--/span-->
@@ -87,7 +98,11 @@
                             </div>
                             <div class="form-actions">
                                 <div class="card-body">
-                                    <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i>Salvar</button>
+                                    <button type="submit"
+                                            class="btn btn-success">
+                                                <i class="fa fa-check"></i>
+                                                Salvar
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -96,7 +111,6 @@
             </div>
         </div>
         <!-- Row -->
-
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
@@ -131,7 +145,11 @@
                                                     <form action="{{ route('excluirUsuario') }}" method="POST">
                                                         @csrf
                                                         <input type="text" name="id_usuario" id="id_usuario" value="{{$user->id}}" hidden/>
-                                                        <button type="submit" class="btn btn-warning btn-circle"><i class="fa fa-times"></i></button>
+                                                        <button type="submit"
+                                                                class="btn btn-warning btn-circle"
+                                                                onclick="return confirm('Deseja remover {{$user->name}} ?')">
+                                                                    <i class="fa fa-times"></i>
+                                                                </button>
                                                         {{-- <label class="control-label">Excluir </label> --}}
                                                         <small class="form-control-feedback"><br> Excluir </small>
                                                         {{-- <button type='submit'>Enviar</button> --}}

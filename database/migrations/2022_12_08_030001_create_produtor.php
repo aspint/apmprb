@@ -22,12 +22,12 @@ class CreateProdutor extends Migration
             $table->date('data_nascimento')->nullable();
             $table->unsignedBigInteger('tipo_produtor_id');
             $table->bigInteger('inscricao')->unique();
-            $table->unsignedBigInteger('endereco_id');
             $table->timestamp('datahora_inclusao')->nullable()->default(null);
             $table->timestamp('datahora_atualizacao')->nullable()->default(null);
-            $table->string('usuario');
+            $table->string('usuario')->nullable();
             $table->foreign('tipo_produtor_id')->references('id')->on('tipo_produtor');
-            $table->foreign('endereco_id')->references('id')->on('endereco');
+            $table->unsignedBigInteger('users_id')->unique();
+            $table->foreign('users_id')->references('id')->on('users')->nullable();
         });
     }
 

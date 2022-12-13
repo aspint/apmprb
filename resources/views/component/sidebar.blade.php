@@ -179,50 +179,50 @@
 
                 <div class="devider"></div>
 
-
-                <li class="sidebar-item" >
-                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                        <i class="mdi mdi-clipboard-text"></i>
-                        <span class="hide-menu">Cadastrar</span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse first-level">
-                        <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark" href="{{route('userFormulario')}}" aria-expanded="false">
-                                <i class="mdi mdi-collage"></i>
-                                <span class="hide-menu">Cadastro Usuarios</span>
-                            </a>
-                            {{-- <ul aria-expanded="false" class="collapse first-level">
-                                <li class="sidebar-item">
-                                    <a href="form-inputs.html" class="sidebar-link">
-                                        <i class="mdi mdi-priority-low"></i>
-                                        <span class="hide-menu"> Cadstro Cliente</span>
-                                    </a>
-                                </li>
-                            </ul> --}}
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark" href="{{route('produtorFormulario')}}" aria-expanded="false">
-                                <i class="mdi mdi-receipt"></i>
-                                <span class="hide-menu">Cadastro Produtor</span>
-                            </a>
-                            {{-- <ul aria-expanded="false" class="collapse first-level">
-                                <li class="sidebar-item">
-                                    <a href="form-basic.html" class="sidebar-link">
-                                        <i class="mdi mdi-vector-difference-ba"></i>
-                                        <span class="hide-menu"> Basic Forms</span>
-                                    </a>
-                                </li>
-                            </ul> --}}
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                                <i class="mdi mdi-receipt"></i>
-                                <span class="hide-menu">Cadastro Cliente</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
+                @if ($permission->tipo_valor == 'ADM' || $permission->tipo_valor == 'FUNC')
+                    <li class="sidebar-item" >
+                        <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                            <i class="mdi mdi-clipboard-text"></i>
+                            <span class="hide-menu">Cadastrar</span>
+                        </a>
+                        <ul aria-expanded="false" class="collapse first-level">
+                            <li class="sidebar-item">
+                                <a class="sidebar-link waves-effect waves-dark" href="{{route('userFormulario')}}" aria-expanded="false">
+                                    <i class="mdi mdi-collage"></i>
+                                    <span class="hide-menu">Cadastro Usuarios</span>
+                                </a>
+                                {{-- <ul aria-expanded="false" class="collapse first-level">
+                                    <li class="sidebar-item">
+                                        <a href="form-inputs.html" class="sidebar-link">
+                                            <i class="mdi mdi-priority-low"></i>
+                                            <span class="hide-menu"> Cadstro Cliente</span>
+                                        </a>
+                                    </li>
+                                </ul> --}}
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link waves-effect waves-dark" href="{{route('produtorFormulario')}}" aria-expanded="false">
+                                    <i class="mdi mdi-receipt"></i>
+                                    <span class="hide-menu">Cadastro Produtor</span>
+                                </a>
+                                {{-- <ul aria-expanded="false" class="collapse first-level">
+                                    <li class="sidebar-item">
+                                        <a href="form-basic.html" class="sidebar-link">
+                                            <i class="mdi mdi-vector-difference-ba"></i>
+                                            <span class="hide-menu"> Basic Forms</span>
+                                        </a>
+                                    </li>
+                                </ul> --}}
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                                    <i class="mdi mdi-receipt"></i>
+                                    <span class="hide-menu">Cadastro Cliente</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
 
                 <li class="sidebar-item">
                     <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
