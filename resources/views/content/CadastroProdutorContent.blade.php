@@ -34,7 +34,7 @@
                     </div> --}}
 
                     {{-- <form action="{{route('inserirUsuario')}}"  method="POST"> --}}
-                    <form action=""  method="POST">
+                    <form action="{{route('criarProdutor')}}"  method="POST">
                         @csrf
                         {{-- <div class="card-body">
                             <h4 class="card-title">Formulario de Criação de Produtor</h4>

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProdutorController;
+use App\Models\Produtor;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +45,7 @@ Route::group(['middleware'=>['auth']], function(){
 
     Route::get('/produtor/formulario',[ProdutorController::class,'edit'])->name('produtorFormulario');
     Route::delete('/produtor/formulario/excluir/{id}',[ProdutorController::class,'destroy'])->name('excluirProdutor');
-
+    Route::post('/produtor/formuario/criar',[ProdutorController::class, 'store'])->name('criarProdutor');
 
 });
 

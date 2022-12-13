@@ -13,6 +13,7 @@ class UserHelper
         $response['email'] = $user->email;
         $response['name'] = explode(' ',$user->name)[0];
         $response['name_full'] = $user->name;
+        $response['tipo_usuario_id'] = $user->tipo_usuario_id;
         return $response;
     }
 
@@ -28,5 +29,10 @@ class UserHelper
         }else{
             return false;
         }
+    }
+
+    public function getNameUserLogged(){
+        $user = Auth::user();
+        return $user->name;
     }
 }
