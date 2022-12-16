@@ -57,6 +57,22 @@ class DatabaseSeeder extends Seeder
             'usuario' => 'usuario.batch'
         ]);
 
+        DB::table('tipo_acao_leite')->insert([
+            'tipo_acao_valor' => 'ENTRADA',
+            'tipo_acao_descricao' => 'Entrada do leite na associaçao',
+            'datahora_inclusao' => new \DateTime(),
+            'datahora_atualizacao' => new \DateTime(),
+            'usuario' => 'usuario.batch'
+        ]);
+
+        DB::table('tipo_acao_leite')->insert([
+            'tipo_acao_valor' => 'SAIDA',
+            'tipo_acao_descricao' => 'Saida do leite na associaçao',
+            'datahora_inclusao' => new \DateTime(),
+            'datahora_atualizacao' => new \DateTime(),
+            'usuario' => 'usuario.batch'
+        ]);
+
         \App\Models\User::create([
             'name'=>'Administrador',
             'email' =>'admin@apmprbm.com.br',

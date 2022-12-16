@@ -1,11 +1,9 @@
 @extends('layout')
 
-@section('CadastroUsuario')
+@section('RelatorioLeiteProdutor')
     @include('component.header')
     @include('component.sidebar')
-    @include('content.CadastroUsuarioContent')
+    @include('content.RelatorioLeiteProdutorContent')
     @include('component.footer')
 @endsection
-
-
 
