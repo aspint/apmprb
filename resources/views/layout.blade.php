@@ -30,8 +30,16 @@
             @yield('home')
         @elseif($page['info'] == 'produtor')
             @yield('cadastroProdutor')
+        @elseif ($page['info'] == 'usuario')
+            @yield('CadastroUsuario')
         @elseif($page['info'] == 'cadastroCliente')
             @yield('CadastroCliente')
+        @elseif($page['info'] == 'relatorioLeiteProdutor')
+            @yield('RelatorioLeiteProdutor')
+        @elseif($page['info'] == 'app')
+            @yield('CadastroLeiteProdutor')
+        @elseif($page['info'] == 'CadastroValorLeiteMensal')
+            @yield('CadastroValorLeiteMensal')
         @endif
 
 
@@ -67,5 +75,9 @@
     <script>
         $('#calendar').fullCalendar('option', 'height', 650);
     </script>
+    {{-- Script para carregar botões de exportação de relatorio de entregas --}}
+    @if($page['info'] == 'home')
+        @include('component.js.UserRelatorioComponenteFooterJS')
+    @endif
 </body>
 </html>

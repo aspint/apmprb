@@ -8,7 +8,6 @@
                 <h5 class="font-medium text-uppercase mb-0">Dashboard</h5>
             </div>
             <div class="col-lg-9 col-md-8 col-xs-12 align-self-center">
-                <button class="btn btn-danger text-white float-right ml-3 d-none d-md-block">Buy Ample Admin</button>
                 <nav aria-label="breadcrumb" class="mt-2 float-md-right float-left">
                     <ol class="breadcrumb mb-0 justify-content-end p-0 bg-white">
                         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -33,16 +32,21 @@
                 <div class="p-lg-3 p-2">
                     <div class="d-flex align-items-center">
                         <button class="btn btn-circle btn-danger text-white btn-lg" href="javascript:void(0)">
-                        <i class="ti-clipboard"></i>
+                        <i class="fas fa-weight"></i>
                     </button>
                         <div class="ml-4" style="width: 38%;">
-                            <h4 class="font-light">Total Projects</h4>
+                            <h4 class="font-light">Total Leite recebido</h4>
                             <div class="progress">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="40"></div>
+                                <div class="progress-bar bg-danger"
+                                    role="progressbar"
+                                    style="width: 40%"
+                                    aria-valuenow="40"
+                                    aria-valuemin="0"
+                                        aria-valuemax="40"></div>
                             </div>
                         </div>
                         <div class="ml-auto">
-                            <h2 class="display-7 mb-0">23</h2>
+                            <h2 class="display-7 mb-0">{{$Leite->recebido}}L</h2>
                         </div>
                     </div>
                 </div>
@@ -51,10 +55,10 @@
                 <div class="p-lg-3 p-2">
                     <div class="d-flex align-items-center">
                         <button class="btn btn-circle btn-cyan text-white btn-lg" href="javascript:void(0)">
-                        <i class="ti-wallet"></i>
+                        <i class="fas fa-truck-moving"></i>
                     </button>
                         <div class="ml-4" style="width: 38%;">
-                            <h4 class="font-light">Total Earnings</h4>
+                            <h4 class="font-light">Total Leite Entregues</h4>
                             <div class="progress">
                                 <div class="progress-bar bg-cyan" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="40"></div>
                             </div>
@@ -69,25 +73,26 @@
                 <div class="p-lg-3 p-2">
                     <div class="d-flex align-items-center">
                         <button class="btn btn-circle btn-warning text-white btn-lg" href="javascript:void(0)">
-                        <i class="fas fa-dollar-sign"></i>
+                        <i class="fas fa-prescription-bottle"></i>
                     </button>
                         <div class="ml-4" style="width: 38%;">
-                            <h4 class="font-light">Total Earnings</h4>
+                            <h4 class="font-light">Leite no Tanque</h4>
                             <div class="progress">
                                 <div class="progress-bar bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="40"></div>
                             </div>
                         </div>
                         <div class="ml-auto">
-                            <h2 class="display-7 mb-0">83</h2>
+                            <h2 class="display-7 mb-0">{{$FonteTanqueLeite->total_leite}}</h2>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <!-- ============================================================== -->
         <!-- Products yearly sales, Weather Cards Section  -->
         <!-- ============================================================== -->
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-md-12 col-lg-8">
                 <div class="card">
                     <div class="card-body">
@@ -120,11 +125,11 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- ============================================================== -->
         <!-- Manage Table & Walet Cards Section  -->
         <!-- ============================================================== -->
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-lg-8 col-md-12">
                 <div class="card">
                     <!-- Nav tabs -->
@@ -161,9 +166,9 @@
                                 <span class="d-none d-md-block">Save and Finish</span>
                             </a>
                         </li>
-                    </ul>
+                    </ul> --}}
                     <!-- Tab panes -->
-                    <div class="tab-content">
+                    {{-- <div class="tab-content">
                         <div class="tab-pane active" id="users" role="tabpanel">
                             <div class="row py-4 px-5 no-gutters mt-3">
                                 <div class="col-sm-12 col-md-6">
@@ -707,11 +712,11 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- ============================================================== -->
         <!-- User Table & Profile Cards Section  -->
         <!-- ============================================================== -->
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
@@ -897,11 +902,11 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- ============================================================== -->
         <!-- Todo list & Calender application  -->
         <!-- ============================================================== -->
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-md-12 col-lg-4">
                 <div class="card">
                     <div class="d-flex align-items-center px-3 py-4 border-bottom">
@@ -1039,11 +1044,11 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- ============================================================== -->
         <!-- Social Cards  -->
         <!-- ============================================================== -->
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-md-6 col-lg-4">
                 <div class="card">
                     <img class="card-img-top" src="../../assets/images/big/img1.jpg" alt="Card image cap">
@@ -1092,11 +1097,11 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- ============================================================== -->
         <!-- Chat App, Timeline & Chat Listing  -->
         <!-- ============================================================== -->
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-md-12 col-lg-4">
                 <div class="card">
                     <h5 class="card-title text-uppercase p-3 bg-info text-white mb-0">
@@ -1402,7 +1407,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>--}}
     </div>
 
 </div>

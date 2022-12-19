@@ -101,14 +101,14 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Inscricao:</label>
-                                            <input type="text" id="inscricao" name="inscricao" class="form-control form-control-danger" placeholder="Ex.:(XX) 9XXXX-XXXX">
+                                            <input type="text" id="inscricao" name="inscricao" class="form-control form-control-danger" placeholder="Ex.: 3215">
                                             <small class="form-control-feedback"> Informe a inscricao do produtor (esse campo não pode ser vazio) </small> </div>
                                     </div>
                                     <!--/span-->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Associar a Usuario</label>
-                                            <select class="form-control custom-select" id="usuario" name="usuario">
+                                            <select class="form-control custom-select" id="usuario" name="usuario" >
                                                 <option value=""></option>
                                                 @foreach ($users as $user)
                                                     <option value="{{$user->id}}">{{$user->name}}</option>

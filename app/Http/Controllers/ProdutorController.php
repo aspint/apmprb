@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Helper\UserHelper;
 use App\Models\Produtor;
+use App\Models\RelacaoLeiteProdutorTanque;
 use App\Models\TipoUsuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -33,7 +35,9 @@ class ProdutorController extends Controller
     }
 
     $users = DB::table('users')
+                ->join('tipo_usuario','users.tipo_usuario_id','tipo_usuario.id')
                 ->whereNotIn('users.id', $indices)
+                ->where('tipo_usuario.tipo_valor','PROD')
                 ->get();
 
     return view('view.cadastroProdutor', compact('response','produtores','page','users','permission'));
@@ -55,7 +59,6 @@ class ProdutorController extends Controller
     return back();
    }
 
-
    public function store(Request $request){
 
         if(Auth::check()){
@@ -68,7 +71,7 @@ class ProdutorController extends Controller
                     'telefone' =>  $request->input('telefone'),
                     'data_nascimento' => $request->input('nascimento'),
                     'tipo_produtor_id' => (integer) $request->input('tipo_produtor'),
-                    'inscricao' =>$request->input('usuario'),
+                    'inscricao' =>$request->input('inscricao'),
                     'datahora_inclusao' => new \DateTime(),
                     'datahora_atualizacao' => new \DateTime(),
                     'usuario' => UserHelper::getNameUserLogged(),
@@ -82,5 +85,29 @@ class ProdutorController extends Controller
             return back();
         }
    }
+
+   public function relatorioLeiteProdutorDiario(Request $request){
+        $page['info'] = 'relatorioLeiteProdutor';
+        $response = UserHelper::getDataUserLogged();
+        $permission = TipoUsuario::find($response['tipo_usuario_id']);
+        $RelatorioLeiteProdutor = null;
+
+        $DataCorteInicio = Date('01'.'/'.Date('m').'/'.Date('Y'));
+        // $DataCorteFim = Date('d/m/Y');
+        $DataCorteFim = Date(Date("t", mktime(0,0,0,Date('m'),'01',Date('Y'))).'/'.Date('m').'/'.Date('Y'));
+        // dd('Inicio: '. $DataCorteInicio.' FIM: '. $DataCorteFim);
+        if($permission->tipo_valor == 'PROD'){
+            $this->RelatorioLeiteProdutor = DB::table('relacao_leite_produtor_tanque')
+                                            ->join('produtor','relacao_leite_produtor_tanque.produtor_id','produtor.id')
+                                            ->where('produtor.users_id',$response['id'])
+                                            ->whereBetween('data_entrega', [ $DataCorteInicio, $DataCorteFim])
+                                            // ->whereBetween('data_entrega',
+                                            //             [ `to_timestamp($DataCorteInicio , 'DD-MM-YYYY')`,
+                                            //             `to_timestamp($DataCorteFim, 'DD-MM-YYYY')`])
+                                            ->get();
+        }
+        return view('view.RelatorioLeiteProdutor',compact('response','page','permission','RelatorioLeiteProdutor'));
+   }
+
 
 }

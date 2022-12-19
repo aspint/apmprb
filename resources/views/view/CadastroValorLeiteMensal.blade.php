@@ -1,9 +1,9 @@
 @extends('layout')
 
-@section('CadastroUsuario')
+@section('CadastroValorLeiteMensal')
     @include('component.header')
     @include('component.sidebar')
-    @include('content.CadastroUsuarioContent')
+    @include('content.CadastroValorLeiteMensalContent')
     @include('component.footer')
 @endsection
 

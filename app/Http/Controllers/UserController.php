@@ -32,13 +32,14 @@ class UserController extends Controller
 
         $response = UserHelper::getDataUserLogged();
         $permission = TipoUsuario::find($response['tipo_usuario_id']);
+        $page['info'] = 'usuario';
 
         $users = DB::table('users')
                     ->join('tipo_usuario','users.tipo_usuario_id','=','tipo_usuario.id')
                     ->select('users.id','name', 'email','created_at as inclusao','tipo_usuario.tipo_valor as perfil')
                     ->orderBy('id', 'asc')
                     ->paginate(5);
-        return view('view.CadastroUsuario', compact('response','users','permission'));
+        return view('view.CadastroUsuario', compact('response','users','permission','page'));
     }
 
     public function cadastrar(Request $request){
@@ -62,7 +63,7 @@ class UserController extends Controller
     }
 
     public function store(Request $request){
-        if($this->hasAdm()){
+        if(UserHelper::hasAdm()){
             DB::table('users')->insert([
                 'name' => $request->input('name'),
                 'email' => strtolower($request->input('email')),
