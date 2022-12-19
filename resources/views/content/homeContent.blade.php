@@ -46,7 +46,7 @@
                             </div>
                         </div>
                         <div class="ml-auto">
-                            <h2 class="display-7 mb-0">23</h2>
+                            <h2 class="display-7 mb-0">{{$Leite->recebido}}L</h2>
                         </div>
                     </div>
                 </div>
@@ -76,13 +76,13 @@
                         <i class="fas fa-prescription-bottle"></i>
                     </button>
                         <div class="ml-4" style="width: 38%;">
-                            <h4 class="font-light">Diferença Tanque</h4>
+                            <h4 class="font-light">Leite no Tanque</h4>
                             <div class="progress">
                                 <div class="progress-bar bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="40"></div>
                             </div>
                         </div>
                         <div class="ml-auto">
-                            <h2 class="display-7 mb-0">83</h2>
+                            <h2 class="display-7 mb-0">{{$FonteTanqueLeite->total_leite}}</h2>
                         </div>
                     </div>
                 </div>

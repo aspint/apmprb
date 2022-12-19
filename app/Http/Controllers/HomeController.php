@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helper\UserHelper;
+use App\Models\FonteTanque;
 use App\Models\TanqueLeiteAssociacao;
 use App\Models\TipoUsuario;
 use Illuminate\Http\Request;
@@ -21,11 +22,21 @@ class HomeController extends Controller
             $page['info'] = 'home';
             $response = UserHelper::getDataUserLogged();
             $permission = TipoUsuario::find($response['tipo_usuario_id']);
-            $leiteRecebido = TanqueLeiteAssociacao::where('tipo_acao_leite_id', 1);
-            // dd($leiteRecebido );
+
+            $DataCorteInicio = Date('01'.'/'.Date('m').'/'.Date('Y'));
+            $DataCorteFim = Date(Date("t", mktime(0,0,0,Date('m'),'01',Date('Y'))).'/'.Date('m').'/'.Date('Y'));
+
+            $FonteTanqueLeite = FonteTanque::find(1);
+            $Leite = DB::table('relacao_leite_produtor_tanque')
+                                ->where('data_entrega','>=', $DataCorteInicio )
+                                ->where('data_entrega','<=', $DataCorteFim )
+                                ->select(DB::raw('SUM(qntd_litros_entregue) as recebido'))
+                                ->first();
+
+            // dd($Leite->recebido);
             // $dashboard['qntdLeite']= [,,];
 
-            return view('view.home', compact('response','page','permission'));
+            return view('view.home', compact('response','page','permission','FonteTanqueLeite','Leite'));
         }else{
             return view('home');
         }

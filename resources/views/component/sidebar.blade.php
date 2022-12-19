@@ -57,7 +57,7 @@
                                 </a>
                                 <ul aria-expanded="false" class="collapse second-level">
                                     <li class="sidebar-item">
-                                        <a href="inbox-email.html" class="sidebar-link">
+                                        <a href="{{route('CadastroLeiteProdutor')}}" class="sidebar-link">
                                             <i class="mdi mdi-email"></i>
                                             <span class="hide-menu"> Informar Recebimento </span>
                                         </a>
@@ -135,7 +135,7 @@
                 @endif
                 <div class="devider"></div>
 
-                <li class="sidebar-item">
+                {{-- <li class="sidebar-item">
                     <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                         <i class="mdi mdi-notification-clear-all"></i>
                         <span class="hide-menu">Memorandos</span>
@@ -194,7 +194,7 @@
                     </ul>
                 </li>
 
-                <div class="devider"></div>
+                <div class="devider"></div> --}}
 
                 @if ($permission->tipo_valor == 'ADM')
                     <li class="sidebar-item" >
@@ -206,7 +206,7 @@
                             <li class="sidebar-item">
                                 <a class="sidebar-link waves-effect waves-dark" href="{{route('userFormulario')}}" aria-expanded="false">
                                     <i class="mdi mdi-collage"></i>
-                                    <span class="hide-menu">Cadastro Usuarios</span>
+                                    <span class="hide-menu">Cadastrar Usuarios</span>
                                 </a>
                                 {{-- <ul aria-expanded="false" class="collapse first-level">
                                     <li class="sidebar-item">
@@ -220,7 +220,7 @@
                             <li class="sidebar-item">
                                 <a class="sidebar-link waves-effect waves-dark" href="{{route('produtorFormulario')}}" aria-expanded="false">
                                     <i class="mdi mdi-receipt"></i>
-                                    <span class="hide-menu">Cadastro Produtor</span>
+                                    <span class="hide-menu">Cadastrar Produtores</span>
                                 </a>
                                 {{-- <ul aria-expanded="false" class="collapse first-level">
                                     <li class="sidebar-item">
@@ -234,7 +234,19 @@
                             <li class="sidebar-item">
                                 <a class="sidebar-link waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                                     <i class="mdi mdi-receipt"></i>
-                                    <span class="hide-menu">Cadastro Cliente</span>
+                                    <span class="hide-menu">Cadastrar Clientes</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                                    <i class="mdi mdi-receipt"></i>
+                                    <span class="hide-menu">Cadastrar Fonte Tanque</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link waves-effect waves-dark" href="{{route('CadastroValorLeite')}}" aria-expanded="false">
+                                    <i class="mdi mdi-receipt"></i>
+                                    <span class="hide-menu">Cadastrar Valor Leite</span>
                                 </a>
                             </li>
                         </ul>

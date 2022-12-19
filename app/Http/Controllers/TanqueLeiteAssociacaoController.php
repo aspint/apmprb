@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TanqueLeiteAssociacao;
 use Illuminate\Http\Request;
 
 class TanqueLeiteAssociacaoController extends Controller
@@ -27,5 +28,14 @@ class TanqueLeiteAssociacaoController extends Controller
     }
     public function destroy(){
         return $this;
+    }
+
+    public function leiteEntradaTanque($idUser, $Produtor ,$RelacaoLeiteProdutor, $fonte){
+
+
+    }
+
+    public function leiteSaidaTanque($idUser, $Produtor ,$RelacaoLeiteProdutor){
+
     }
 }

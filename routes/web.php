@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\AppController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProdutorController;
-use App\Models\Produtor;
+use App\Http\Controllers\RelacaoLeiteProtutorTanqueController;
+use App\Http\Controllers\ValorLeiteMensalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +49,14 @@ Route::group(['middleware'=>['auth']], function(){
     Route::delete('/produtor/formulario/excluir/{id}',[ProdutorController::class,'destroy'])->name('excluirProdutor');
     Route::post('/produtor/formuario/criar',[ProdutorController::class, 'store'])->name('criarProdutor');
     Route::get('/produtor/relatorio/leitediario',[ProdutorController::class, 'relatorioLeiteProdutorDiario'])->name('RelatorioLeiteProdutorContent');
+    Route::get('/produtor/cadastro/leitediario',[AppController::class,'create'])->name('CadastroLeiteProdutor');
+    Route::post('/produtor/cadastro/leitediario/inserir',[RelacaoLeiteProtutorTanqueController::class,'store'])->name('inserirLeiteProdutor');
+
+
+
+    Route::get('/leite/cadastro/valor',[ValorLeiteMensalController::class,'create'])->name('CadastroValorLeite');
+    Route::post('/leite/cadastro/valor/inserir',[ValorLeiteMensalController::class,'store'])->name('inserirValorLeiteMensal');
+    Route::delete('/leite/cadastro/valor/excluir',[ValorLeiteMensalController::class, 'destroy'])->name('excluirValorLeiteMensal');
 
 });
 

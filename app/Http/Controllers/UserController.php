@@ -63,7 +63,7 @@ class UserController extends Controller
     }
 
     public function store(Request $request){
-        if($this->hasAdm()){
+        if(UserHelper::hasAdm()){
             DB::table('users')->insert([
                 'name' => $request->input('name'),
                 'email' => strtolower($request->input('email')),

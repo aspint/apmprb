@@ -71,7 +71,7 @@ class ProdutorController extends Controller
                     'telefone' =>  $request->input('telefone'),
                     'data_nascimento' => $request->input('nascimento'),
                     'tipo_produtor_id' => (integer) $request->input('tipo_produtor'),
-                    'inscricao' =>$request->input('usuario'),
+                    'inscricao' =>$request->input('inscricao'),
                     'datahora_inclusao' => new \DateTime(),
                     'datahora_atualizacao' => new \DateTime(),
                     'usuario' => UserHelper::getNameUserLogged(),
@@ -93,15 +93,17 @@ class ProdutorController extends Controller
         $RelatorioLeiteProdutor = null;
 
         $DataCorteInicio = Date('01'.'/'.Date('m').'/'.Date('Y'));
-        $DataCorteFim = Date('d/m/Y');
-        // $DataCorteFim = Date(Date("t", mktime(0,0,0,Date('m'),'01',Date('Y'))).'/'.Date('m').'/'.Date('Y'));
+        // $DataCorteFim = Date('d/m/Y');
+        $DataCorteFim = Date(Date("t", mktime(0,0,0,Date('m'),'01',Date('Y'))).'/'.Date('m').'/'.Date('Y'));
         // dd('Inicio: '. $DataCorteInicio.' FIM: '. $DataCorteFim);
-        DB::select('SET datestyle = mdy');
         if($permission->tipo_valor == 'PROD'){
             $this->RelatorioLeiteProdutor = DB::table('relacao_leite_produtor_tanque')
                                             ->join('produtor','relacao_leite_produtor_tanque.produtor_id','produtor.id')
                                             ->where('produtor.users_id',$response['id'])
-                                            ->whereBetween('data_entrega', [ $DataCorteInicio , $DataCorteFim])
+                                            ->whereBetween('data_entrega', [ $DataCorteInicio, $DataCorteFim])
+                                            // ->whereBetween('data_entrega',
+                                            //             [ `to_timestamp($DataCorteInicio , 'DD-MM-YYYY')`,
+                                            //             `to_timestamp($DataCorteFim, 'DD-MM-YYYY')`])
                                             ->get();
         }
         return view('view.RelatorioLeiteProdutor',compact('response','page','permission','RelatorioLeiteProdutor'));

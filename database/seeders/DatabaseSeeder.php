@@ -73,6 +73,39 @@ class DatabaseSeeder extends Seeder
             'usuario' => 'usuario.batch'
         ]);
 
+        DB::table('periodo')->insert([
+            'periodo_valor' => 'MANHA',
+            'periodo_descricao' => 'Periodo da Manhã',
+            'data_inclusao' => new \DateTime(),
+            'data_alteracao' => new \DateTime(),
+            'usuario' => 'usuari.batch'
+        ]);
+
+        DB::table('periodo')->insert([
+            'periodo_valor' => 'TARDE',
+            'periodo_descricao' => 'Periodo da Tarde',
+            'data_inclusao' => new \DateTime(),
+            'data_alteracao' => new \DateTime(),
+            'usuario' => 'usuari.batch'
+        ]);
+
+        DB::table('periodo')->insert([
+            'periodo_valor' => 'NOITE',
+            'periodo_descricao' => 'Periodo da Noite',
+            'data_inclusao' => new \DateTime(),
+            'data_alteracao' => new \DateTime(),
+            'usuario' => 'usuari.batch'
+        ]);
+
+        DB::table('fonte_tanque')->insert([
+            'fonte_valor' => 'MATRIZ',
+            'fonte_descricao' => 'Fonte principal da associação',
+            'total_leite' => 0.0,
+            'datahora_inclusao' =>new \DateTime(),
+            'datahora_atualizacao' =>new \DateTime(),
+            'usuario' => 'usuario.batch'
+        ]);
+
         \App\Models\User::create([
             'name'=>'Administrador',
             'email' =>'admin@apmprbm.com.br',
