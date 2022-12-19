@@ -75,7 +75,7 @@ class ProdutorController extends Controller
                     'datahora_inclusao' => new \DateTime(),
                     'datahora_atualizacao' => new \DateTime(),
                     'usuario' => UserHelper::getNameUserLogged(),
-                    'users_id' => (integer)$request->input('usuario'),
+                    'users_id' => $request->input('usuario')=='' ? null:(integer)$request->input('usuario'),
                 ]);
 
                 return back();

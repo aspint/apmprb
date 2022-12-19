@@ -20,13 +20,13 @@ class CreateProdutor extends Migration
             $table->string('rg',100)->nullable();
             $table->string('telefone', 20)->nullable();
             $table->date('data_nascimento')->nullable();
-            $table->unsignedBigInteger('tipo_produtor_id');
+            $table->unsignedBigInteger('tipo_produtor_id')->nullable();
             $table->bigInteger('inscricao')->unique();
             $table->timestamp('datahora_inclusao')->nullable()->default(null);
             $table->timestamp('datahora_atualizacao')->nullable()->default(null);
             $table->string('usuario')->nullable();
             $table->foreign('tipo_produtor_id')->references('id')->on('tipo_produtor');
-            $table->unsignedBigInteger('users_id')->unique();
+            $table->unsignedBigInteger('users_id')->nullable()->default(null);
             $table->foreign('users_id')->references('id')->on('users')->nullable();
         });
     }
