@@ -46,14 +46,14 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Nome Completo</label>
-                                            <input type="text" id="nome" name="nome"class="form-control" placeholder="Ex.: Fazenda Amanhecer">
+                                            <input type="text" id="nome" name="nome"class="form-control" placeholder="Ex.: Fazenda Amanhecer" required>
                                             <small class="form-control-feedback"> Informe um nome completo para o produtor (esse campo pode ser vazio) </small> </div>
                                     </div>
                                     <!--/span-->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">CPF ou CNPJ</label>
-                                            <input type="text" id="cpfcnpj" name="cpfcnpj" class="form-control form-control-danger" placeholder="Ex.: 088.055.546-08">
+                                            <input type="text" id="cpfcnpj" name="cpfcnpj" class="form-control form-control-danger" placeholder="Ex.: 088.055.546-08" required>
                                             <small class="form-control-feedback"> Informe um CPF  (esse campo pode ser vazio). </small> </div>
                                     </div>
                                     <!--/span-->
@@ -63,7 +63,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">RG ou CNH:</label>
-                                            <input type="text" id="identificacao" name="identificacao"class="form-control" placeholder="Ex.: MG 12.232.122">
+                                            <input type="text" id="identificacao" name="identificacao"class="form-control" placeholder="Ex.: MG 12.232.122" required>
                                             <small class="form-control-feedback"> Informe um documento de identificação  (esse campo pode ser vazio)</small> </div>
                                     </div>
                                     <!--/span-->
@@ -87,7 +87,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Tipo Produtor</label>
-                                            <select class="form-control custom-select" id="tipo_produtor" name="tipo_produtor">
+                                            <select class="form-control custom-select" id="tipo_produtor" name="tipo_produtor" required>
                                                 <option value=""></option>
                                                 <option value="1">Produtor Associação</option>
                                                 <option value="2">Produtor Terceiro</option>
@@ -101,7 +101,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Inscricao:</label>
-                                            <input type="text" id="inscricao" name="inscricao" class="form-control form-control-danger" placeholder="Ex.: 3215">
+                                            <input type="number" id="inscricao" name="inscricao" class="form-control form-control-danger" placeholder="Ex.: 3215" required>
                                             <small class="form-control-feedback"> Informe a inscricao do produtor (esse campo não pode ser vazio) </small> </div>
                                     </div>
                                     <!--/span-->
