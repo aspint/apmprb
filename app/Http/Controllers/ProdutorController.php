@@ -29,9 +29,12 @@ class ProdutorController extends Controller
                          'produtor.rg','inscricao','produtor.users_id')
                 ->orderBy('id', 'asc')
                 ->paginate(5);
+
     $indices = [];
     foreach($produtores as $produtor){
-        array_push($indices, $produtor->users_id);
+        if($produtor->users_id != null){
+            array_push($indices, $produtor->users_id);
+        }
     }
 
     $users = DB::table('users')
