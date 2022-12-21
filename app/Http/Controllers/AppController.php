@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\Helpers;
 use App\Helper\UserHelper;
 use App\Models\FonteTanque;
 use App\Models\Periodo;
 use App\Models\Produtor;
 use App\Models\TipoUsuario;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -30,13 +32,8 @@ class AppController extends Controller
         $produtores = Produtor::all();
         $fonteTanques = FonteTanque::all();
 
-
-        $DataCorteInicio = Date('01'.'/'.Date('m').'/'.Date('Y'));
-        $DataCorteFim = Date(Date("t", mktime(0,0,0,Date('m'),'01',Date('Y'))).'/'.Date('m').'/'.Date('Y'));
-
-
         $valorMensal = DB::table('valor_leite_mensal')
-                        ->whereBetween('data_referencia', [ $DataCorteInicio, $DataCorteFim])
+                        ->whereBetween('data_referencia', [ Helpers::dataCorteInicioMes(), Helpers::dataCorteFimMes()])
                         ->count();
 
         if($valorMensal >= 2){

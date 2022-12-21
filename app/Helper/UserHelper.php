@@ -31,8 +31,22 @@ class UserHelper
         }
     }
 
+    public function hasFunc(){
+        $user = Auth::user();
+        $userPerfil = DB::table('users')
+            ->join('tipo_usuario','users.tipo_usuario_id','=','tipo_usuario.id')
+            ->select('users.id','name', 'email','created_at as inclusao','tipo_usuario.tipo_valor as perfil')
+            ->where('users.id',$user->id)
+            ->first();
+        if($userPerfil->perfil == 'FUNC'){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public function getNameUserLogged(){
         $user = Auth::user();
         return $user->name;
-    }
+   }
 }

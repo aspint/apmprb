@@ -121,7 +121,7 @@
                                         @if(isset($valoresLeite))
                                         @foreach ( $valoresLeite as $valorLeite)
                                         <tr>
-                                            <th scope="row">{{$valorLeite->id}}</th>
+                                            <th scope="row">{{$valorLeite->valorLeite_id}}</th>
                                             <td>{{\Carbon\Carbon::parse($valorLeite->data_referencia)->format('d-m-Y')}}</td>
                                             <td>{{$valorLeite->desc_valor}}</td>
                                             <td>R$ {{$valorLeite->valor_bruto}}</td>
@@ -130,10 +130,10 @@
                                                 <form action="{{route('excluirValorLeiteMensal')}}" method="POST">
                                                     @method('DELETE')
                                                     @csrf
-                                                    <input type="text" name="idValorLeite" id="idValorLeite" value="{{$valorLeite->id}}" hidden/>
+                                                    <input type="text" name="idValorLeite" id="idValorLeite" value="{{$valorLeite->valorLeite_id}}" hidden/>
                                                     <button type="submit"
                                                             class="btn btn-warning btn-circle"
-                                                            onclick="return confirm('Deseja remover a inclusao com ID {{$valorLeite->id}} ?')"
+                                                            onclick="return confirm('Deseja remover a inclusao com ID {{$valorLeite->valorLeite_id}} ?')"
                                                             ><i class="fa fa-times"></i></button>
                                                     {{-- <label class="control-label">Excluir </label> --}}
                                                     <small class="form-control-feedback"><br> Excluir </small>

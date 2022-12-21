@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\Helpers;
 use App\Helper\UserHelper;
 use App\Models\FonteTanque;
 use App\Models\Produtor;
@@ -21,16 +22,14 @@ class RelacaoLeiteProtutorTanqueController extends Controller
     public function store(Request $request){
 
         if(Auth::check()){
-            if(UserHelper::hasAdm()){
+            if(UserHelper::hasAdm() || UserHelper::hasFunc()){
                 $produtor = Produtor::find($request->input('produtor'));
-
-                $DataCorteInicio = Date('01'.'/'.Date('m').'/'.Date('Y'));
-                $DataCorteFim = Date(Date("t", mktime(0,0,0,Date('m'),'01',Date('Y'))).'/'.Date('m').'/'.Date('Y'));
 
 
                 $ValorLeite = ValorLeiteMensal::where('tipo_produtor_id', $produtor->tipo_produtor_id)
-                            ->where('data_referencia', '>=', $DataCorteInicio )
-                            ->where('data_referencia', '<=', $DataCorteFim )
+                             ->whereBetween('data_referencia', [ Helpers::dataCorteInicioMes(), Helpers::dataCorteFimMes()])
+                            // ->where('data_referencia', '>=', $DataCorteInicio )
+                            // ->where('data_referencia', '<=', $DataCorteFim )
                             ->first();
 
                 // $ValorLeite = DB::table('valor_leite_mensal')
