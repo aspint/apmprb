@@ -49,6 +49,7 @@ class AppController extends Controller
                        ->join('produtor','relacao_leite_produtor_tanque.produtor_id','produtor.id')
                        ->join('periodo','relacao_leite_produtor_tanque.periodo_id','periodo.id')
                        ->join('valor_leite_mensal','relacao_leite_produtor_tanque.valor_leite_mensal_id','valor_leite_mensal.id')
+                       ->select('relacao_leite_produtor_tanque.id as rlpt_id', 'relacao_leite_produtor_tanque.*', 'produtor.*','periodo.*','valor_leite_mensal.*')
                        ->orderBy('relacao_leite_produtor_tanque.data_entrega', 'DESC')
                        ->paginate(10);;
 
