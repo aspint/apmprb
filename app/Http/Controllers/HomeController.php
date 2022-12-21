@@ -26,7 +26,7 @@ class HomeController extends Controller
 
             $FonteTanqueLeite = FonteTanque::find(1);
             $Leite = DB::table('relacao_leite_produtor_tanque')
-                                ->whereBetween('data_referencia', [ Helpers::dataCorteInicioMes(), Helpers::dataCorteFimMes()])
+                                ->whereBetween('data_entrega', [ Helpers::dataCorteInicioMes(), Helpers::dataCorteFimMes()])
                                 ->select(DB::raw('SUM(qntd_litros_entregue) as recebido'))
                                 ->first();
 
