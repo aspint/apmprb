@@ -31,6 +31,7 @@ class ValorLeiteMensalController extends Controller
 
         $valoresLeite =  DB::table('valor_leite_mensal')
                             ->join('tipo_produtor','valor_leite_mensal.tipo_produtor_id','tipo_produtor.id')
+                            ->select('valor_leite_mensal.id as valorLeite_id','valor_leite_mensal.*','tipo_produtor.*')
                             ->orderBy('data_referencia', 'desc')
                             ->paginate(10);
 
