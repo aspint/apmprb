@@ -51,6 +51,7 @@ Route::group(['middleware'=>['auth']], function(){
     Route::get('/produtor/relatorio/leitediario',[ProdutorController::class, 'relatorioLeiteProdutorDiario'])->name('RelatorioLeiteProdutorContent');
     Route::get('/produtor/cadastro/leitediario',[AppController::class,'create'])->name('CadastroLeiteProdutor');
     Route::post('/produtor/cadastro/leitediario/inserir',[RelacaoLeiteProtutorTanqueController::class,'store'])->name('inserirLeiteProdutor');
+    Route::delete('/produtor/cadastro/leitediario/destroy/{id}',[RelacaoLeiteProtutorTanqueController::class,'destroy'])->name('excluirLeiteProdutor');
 
 
 

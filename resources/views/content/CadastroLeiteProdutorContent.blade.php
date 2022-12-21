@@ -146,21 +146,24 @@
                                         @if(isset($entregas))
                                         @foreach ( $entregas as $entrega)
                                         <tr>
-                                            <th scope="row">{{$entrega->id}}</th>
+                                            <th scope="row">{{$entrega->rlpt_id}}</th>
                                             <td>{{$entrega->nome}}</td>
                                             <td>{{\Carbon\Carbon::parse($entrega->data_entrega)->format('d-m-Y')}}</td>
                                             <td>{{$entrega->periodo_descricao}}</td>
-                                            <td>{{$entrega->qntd_litros_entregue}}</td>
+                                            <td>{{$entrega->qntd_litros_entregue}}l</td>
                                             <td>R$ {{$entrega->valor_bruto}}</td>
                                             <td>R$ {{$entrega->valor_liquido}}</td>
                                             <td>
-                                                <form action="" method="POST">
+                                                <form action="{{route('excluirLeiteProdutor',$entrega->rlpt_id)}}" method="POST">
                                                     @method('DELETE')
                                                     @csrf
-                                                    <input type="text" name="id_usuario" id="id_usuario" value="{{$entrega->id}}" hidden/>
+                                                    <input type="text" name="id_usuario" id="id_usuario" value="{{$entrega->rlpt_id}}" hidden/>
                                                     <button type="submit"
                                                             class="btn btn-warning btn-circle"
-                                                            onclick="return confirm('Deseja remover {{$entrega->nome}} ?')"
+                                                            onclick="return confirm(`Deseja remover
+                                                                                    Produtor: {{$entrega->nome}},
+                                                                                    dia:{{\Carbon\Carbon::parse($entrega->data_entrega)->format('d-m-Y')}}
+                                                                                    {{$entrega->periodo_descricao}} ?`)"
                                                             ><i class="fa fa-times"></i></button>
                                                     {{-- <label class="control-label">Excluir </label> --}}
                                                     <small class="form-control-feedback"><br> Excluir </small>
