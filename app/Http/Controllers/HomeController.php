@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\Helpers;
 use App\Helper\UserHelper;
 use App\Models\FonteTanque;
 use App\Models\TanqueLeiteAssociacao;
@@ -23,13 +24,9 @@ class HomeController extends Controller
             $response = UserHelper::getDataUserLogged();
             $permission = TipoUsuario::find($response['tipo_usuario_id']);
 
-            $DataCorteInicio = Date('01'.'/'.Date('m').'/'.Date('Y'));
-            $DataCorteFim = Date(Date("t", mktime(0,0,0,Date('m'),'01',Date('Y'))).'/'.Date('m').'/'.Date('Y'));
-
             $FonteTanqueLeite = FonteTanque::find(1);
             $Leite = DB::table('relacao_leite_produtor_tanque')
-                                ->where('data_entrega','>=', $DataCorteInicio )
-                                ->where('data_entrega','<=', $DataCorteFim )
+                                ->whereBetween('data_referencia', [ Helpers::dataCorteInicioMes(), Helpers::dataCorteFimMes()])
                                 ->select(DB::raw('SUM(qntd_litros_entregue) as recebido'))
                                 ->first();
 
