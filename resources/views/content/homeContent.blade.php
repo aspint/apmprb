@@ -46,7 +46,7 @@
                             </div>
                         </div>
                         <div class="ml-auto">
-                            <h2 class="display-7 mb-0">{{$Leite->recebido}}L</h2>
+                            <h2 class="display-7 mb-0">{{$Leite->recebido == null ? 0 : $Leite->recebido}}L</h2>
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                             </div>
                         </div>
                         <div class="ml-auto">
-                            <h2 class="display-7 mb-0">76</h2>
+                            <h2 class="display-7 mb-0">0L</h2>
                         </div>
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                             </div>
                         </div>
                         <div class="ml-auto">
-                            <h2 class="display-7 mb-0">{{$FonteTanqueLeite->total_leite}}</h2>
+                            <h2 class="display-7 mb-0">{{$FonteTanqueLeite->total_leite}}L</h2>
                         </div>
                     </div>
                 </div>
