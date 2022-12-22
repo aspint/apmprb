@@ -97,18 +97,16 @@ class ProdutorController extends Controller
         $DashboardRelatorioLeiteProdutor = null;
         $RelatorioLeiteProdutor = null;
         $valorMensal = null;
-        $produtor = null;
 
+        $produtor = DB::table('produtor')
+                            ->where('produtor.users_id', $response['id'])
+                            ->first();
 
-        if($permission->tipo_valor == 'PROD'){
+        if($permission->tipo_valor == 'PROD' && $produtor != null ){
 
             $temp['totalLitros'] = 0;
             $temp['valorLeiteMes'] = 0.0;
             $temp['valorAReceber'] = 0.0;
-
-            $produtor = DB::table('produtor')
-                            ->where('produtor.users_id', $response['id'])
-                            ->first();
 
             $resRelacaoProdTanque = DB::table('relacao_leite_produtor_tanque')
                                         // ->join('produtor','relacao_leite_produtor_tanque.produtor_id','produtor.id')
