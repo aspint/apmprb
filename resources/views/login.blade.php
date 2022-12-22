@@ -56,13 +56,13 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1"><i class="ti-user"></i></span>
                                     </div>
-                                    <input type="email" class="form-control form-control-lg" placeholder="Email" name="email" aria-label="Username" aria-describedby="basic-addon1">
+                                    <input type="email" class="form-control form-control-lg" placeholder="Email" name="email" aria-label="Username" aria-describedby="basic-addon1" required>
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon2"><i class="ti-pencil"></i></span>
                                     </div>
-                                    <input type="password" class="form-control form-control-lg" placeholder="Senha" name="password" aria-label="Password" aria-describedby="basic-addon1">
+                                    <input type="password" class="form-control form-control-lg" placeholder="Senha" name="password" aria-label="Password" aria-describedby="basic-addon1" required>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-12">
