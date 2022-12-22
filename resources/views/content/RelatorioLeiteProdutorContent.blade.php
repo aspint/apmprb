@@ -27,11 +27,11 @@
             <div class="card p-2 p-lg-3">
                 <div class="p-lg-3 p-2">
                     <div class="d-flex align-items-center">
-                        <button class="btn btn-circle btn-danger text-white btn-lg" href="javascript:void(0)">
+                        <button class="btn btn-circle btn-danger text-white btn-lg">
                         <i class="fas fa-weight"></i>
                     </button>
-                        <div class="ml-4" style="width: 38%;">
-                            <h4 class="font-light">Total Leite Entregue</h4>
+                        <!--<div class="ml-4" style="width: 38%;">
+                            {{-- <h4 class="font-light">Total Leite Entregue</h4> --}}
                             <div class="progress">
                                 <div class="progress-bar bg-danger"
                                     role="progressbar"
@@ -41,8 +41,10 @@
                                         aria-valuemax="40"></div>
                             </div>
                         </div>
-                        <div class="ml-auto">
-                            <h2 class="display-7 mb-0">332</h2>
+                        <div class="ml-auto">-->
+                        <div class="ml-4">
+                            <h4 class="font-light">Total Leite Entregue</h4>
+                            <h2 class="display-7 mb-0">{{isset($DashboardRelatorioLeiteProdutor) ? $DashboardRelatorioLeiteProdutor['totalLitros'] : '0'}}L</h2>
                         </div>
                     </div>
                 </div>
@@ -53,30 +55,36 @@
                         <button class="btn btn-circle btn-cyan text-white btn-lg" href="javascript:void(0)">
                         <i class="fas fa-truck-moving"></i>
                     </button>
-                        <div class="ml-4" style="width: 38%;">
+                       <!-- <div class="ml-4" style="width: 38%;">
                             <h4 class="font-light">Valor do Litro Leite</h4>
                             <div class="progress">
                                 <div class="progress-bar bg-cyan" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="40"></div>
                             </div>
                         </div>
-                        <div class="ml-auto">
-                            <h2 class="display-7 mb-0">R$ 2,50</h2>
+                        <div class="ml-auto">-->
+                        <div class="ml-4">
+                            <h4 class="font-light">Valor do Litro Leite</h4>
+                            <h2 class="display-7 mb-0">R${{isset($DashboardRelatorioLeiteProdutor)?$DashboardRelatorioLeiteProdutor['valorLeiteMes']: ' 0.00'}}</h2>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="card p-2 p-lg-3">
                 <div class="p-lg-3 p-2">
-                    <div class="d-flex align-items-center">
+                   <div class="d-flex align-items-center">
                         <button class="btn btn-circle btn-warning text-white btn-lg" href="javascript:void(0)">
                         <i class="fas fa-prescription-bottle"></i>
-                    </button>
-                        <div class="ml-4" style="width: 38%;">
+                   </button>
+                    <!-- <div class="ml-4" style="width: 38%;">
                             <h4 class="font-light">Valor a Receber</h4>
-
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="40"></div>
+                            </div>
                         </div>
-                        <div class="ml-auto">
-                            <h2 class="display-7 mb-0">R$ 830,00</h2>
+                        <div class="ml-auto">-->
+                        <div class="ml-4">
+                            <h4 class="font-light">Valor a Receber</h4>
+                            <h2 class="display-7 mb-0">R$ {{isset($DashboardRelatorioLeiteProdutor) ? $DashboardRelatorioLeiteProdutor['valorAReceber'] : ' 0.00'}}</h2>
                         </div>
                     </div>
                 </div>
@@ -103,45 +111,21 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @if(isset($RelatorioLeiteProdutor))
+                                        @foreach ( $RelatorioLeiteProdutor as $entrega)
                                         <tr>
-                                            <th scope="row">1</th>
-                                            <td>15/11/2022</td>
-                                            <td>Manhã</td>
-                                            <td>100</td>
+                                            <th scope="row">{{$entrega->rlpt_id}}</th>
+                                            <td>{{\Carbon\Carbon::parse($entrega->data_entrega)->format('d-m-Y')}}</td>
+                                            <td>{{$entrega->periodo_descricao}}</td>
+                                            <td>{{$entrega->qntd_litros_entregue}}L</td>
                                         </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>15/11/2022</td>
-                                            <td>Tarde</td>
-                                            <td>50</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>16/11/2022</td>
-                                            <td>Manhã</td>
-                                            <td>50</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">4</th>
-                                            <td>16/11/2022</td>
-                                            <td>Tarde</td>
-                                            <td>50</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">5</th>
-                                            <td>17/11/2022</td>
-                                            <td>Manhã</td>
-                                            <td>50</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">6   </th>
-                                            <td>17/11/2022</td>
-                                            <td>Tarde</td>
-                                            <td>32</td>
-                                        </tr>
+                                        @endforeach
+                                    @endif
                                     </tbody>
                                 </table>
-                                {{-- {{$users->links()}} --}}
+                                @if(isset($RelatorioLeiteProdutor))
+                                    {{$RelatorioLeiteProdutor->links()}}
+                                @endif
                             </div>
                         </div>
                     </div>
