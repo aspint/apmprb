@@ -27,6 +27,7 @@
         <!-- ============================================================== -->
         <!-- Card Group  -->
         <!-- ============================================================== -->
+        @if ($permission->tipo_valor == 'ADM' || $permission->tipo_valor == 'FUNC' )
         <div class="card-group">
             <div class="card p-2 p-lg-3">
                 <div class="p-lg-3 p-2">
@@ -34,7 +35,7 @@
                         <button class="btn btn-circle btn-danger text-white btn-lg" href="javascript:void(0)">
                         <i class="fas fa-weight"></i>
                     </button>
-                        <div class="ml-4" style="width: 38%;">
+                        <!--<div class="ml-4" style="width: 38%;">
                             <h4 class="font-light">Total Leite recebido</h4>
                             <div class="progress">
                                 <div class="progress-bar bg-danger"
@@ -45,7 +46,9 @@
                                         aria-valuemax="40"></div>
                             </div>
                         </div>
-                        <div class="ml-auto">
+                        <div class="ml-auto">-->
+                        <div class="ml-4">
+                             <h4 class="font-light">Total Leite recebido</h4>
                             <h2 class="display-7 mb-0">{{$Leite->recebido == null ? 0 : $Leite->recebido}}L</h2>
                         </div>
                     </div>
@@ -57,13 +60,15 @@
                         <button class="btn btn-circle btn-cyan text-white btn-lg" href="javascript:void(0)">
                         <i class="fas fa-truck-moving"></i>
                     </button>
-                        <div class="ml-4" style="width: 38%;">
+                        <!--<div class="ml-4" style="width: 38%;">
                             <h4 class="font-light">Total Leite Entregues</h4>
                             <div class="progress">
                                 <div class="progress-bar bg-cyan" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="40"></div>
                             </div>
                         </div>
-                        <div class="ml-auto">
+                        <div class="ml-auto">-->
+                        <div class="ml-4">
+                            <h4 class="font-light">Leite no Tanque</h4>
                             <h2 class="display-7 mb-0">0L</h2>
                         </div>
                     </div>
@@ -75,19 +80,22 @@
                         <button class="btn btn-circle btn-warning text-white btn-lg" href="javascript:void(0)">
                         <i class="fas fa-prescription-bottle"></i>
                     </button>
-                        <div class="ml-4" style="width: 38%;">
+                        <!--<div class="ml-4" style="width: 38%;">
                             <h4 class="font-light">Leite no Tanque</h4>
                             <div class="progress">
                                 <div class="progress-bar bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="40"></div>
                             </div>
                         </div>
-                        <div class="ml-auto">
+                        <div class="ml-auto">-->
+                        <div class="ml-4">
+                            <h4 class="font-light">Leite no Tanque</h4>
                             <h2 class="display-7 mb-0">{{$FonteTanqueLeite->total_leite}}L</h2>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        @endif
 
         <!-- ============================================================== -->
         <!-- Products yearly sales, Weather Cards Section  -->

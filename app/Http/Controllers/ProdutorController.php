@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\Helpers;
 use App\Helper\UserHelper;
 use App\Models\Produtor;
 use App\Models\RelacaoLeiteProdutorTanque;
@@ -93,23 +94,59 @@ class ProdutorController extends Controller
         $page['info'] = 'relatorioLeiteProdutor';
         $response = UserHelper::getDataUserLogged();
         $permission = TipoUsuario::find($response['tipo_usuario_id']);
+        $DashboardRelatorioLeiteProdutor = null;
         $RelatorioLeiteProdutor = null;
+        $valorMensal = null;
+        $produtor = null;
 
-        $DataCorteInicio = Date('01'.'/'.Date('m').'/'.Date('Y'));
-        // $DataCorteFim = Date('d/m/Y');
-        $DataCorteFim = Date(Date("t", mktime(0,0,0,Date('m'),'01',Date('Y'))).'/'.Date('m').'/'.Date('Y'));
-        // dd('Inicio: '. $DataCorteInicio.' FIM: '. $DataCorteFim);
+
         if($permission->tipo_valor == 'PROD'){
-            $this->RelatorioLeiteProdutor = DB::table('relacao_leite_produtor_tanque')
-                                            ->join('produtor','relacao_leite_produtor_tanque.produtor_id','produtor.id')
-                                            ->where('produtor.users_id',$response['id'])
-                                            ->whereBetween('data_entrega', [ $DataCorteInicio, $DataCorteFim])
-                                            // ->whereBetween('data_entrega',
-                                            //             [ `to_timestamp($DataCorteInicio , 'DD-MM-YYYY')`,
-                                            //             `to_timestamp($DataCorteFim, 'DD-MM-YYYY')`])
-                                            ->get();
+
+            $temp['totalLitros'] = 0;
+            $temp['valorLeiteMes'] = 0.0;
+            $temp['valorAReceber'] = 0.0;
+
+            $produtor = DB::table('produtor')
+                            ->where('produtor.users_id', $response['id'])
+                            ->first();
+
+            $resRelacaoProdTanque = DB::table('relacao_leite_produtor_tanque')
+                                        // ->join('produtor','relacao_leite_produtor_tanque.produtor_id','produtor.id')
+                                        ->where('relacao_leite_produtor_tanque.produtor_id',$produtor->id)
+                                        ->whereBetween('data_entrega',  [ Helpers::dataCorteInicioMes(), Helpers::dataCorteFimMes()])
+                                        ->get();
+
+            foreach($resRelacaoProdTanque as $rlp){
+                $temp['totalLitros'] += $rlp->qntd_litros_entregue;
+            }
+
+            $valorMensal = DB::table('valor_leite_mensal')
+                    ->where('valor_leite_mensal.tipo_produtor_id',$produtor->tipo_produtor_id)
+                    ->whereBetween('data_referencia', [ Helpers::dataCorteInicioMes(), Helpers::dataCorteFimMes()])
+                    ->select('valor_leite_mensal.valor_liquido as valor')
+                    ->first();
+
+            $temp['valorLeiteMes'] =  $valorMensal->valor;
+
+            $temp['valorAReceber'] = $valorMensal->valor * $temp['totalLitros'] ;
+
+            $entregas = DB::table('relacao_leite_produtor_tanque')
+                    ->join('produtor','relacao_leite_produtor_tanque.produtor_id','produtor.id')
+                    ->join('periodo','relacao_leite_produtor_tanque.periodo_id','periodo.id')
+                    ->join('valor_leite_mensal','relacao_leite_produtor_tanque.valor_leite_mensal_id','valor_leite_mensal.id')
+                    ->where('relacao_leite_produtor_tanque.produtor_id',$produtor->tipo_produtor_id )
+                    ->select('relacao_leite_produtor_tanque.id as rlpt_id', 'relacao_leite_produtor_tanque.*', 'produtor.*','periodo.*','valor_leite_mensal.*')
+                    ->orderBy('relacao_leite_produtor_tanque.data_entrega', 'DESC')
+                    ->paginate(20);
+
+
+            $DashboardRelatorioLeiteProdutor = $temp;
+            $RelatorioLeiteProdutor =  $entregas;
         }
-        return view('view.RelatorioLeiteProdutor',compact('response','page','permission','RelatorioLeiteProdutor'));
+
+
+
+        return view('view.RelatorioLeiteProdutor',compact('response','page','permission','RelatorioLeiteProdutor','DashboardRelatorioLeiteProdutor'));
    }
 
 
