@@ -15,4 +15,13 @@ class Helpers
     public function dataCorteFimMes(){
         return new DateTime( Date(Date('Y').'/'.Date('m').'/'.Date("t", mktime(0,0,0,Date('m'),'01',Date('Y')))));
     }
+
+    public function removerMapaCpf(String $cpf){
+        $valor = trim($cpf);
+        $valor = str_replace(".", "", $valor);
+        $valor = str_replace(",", "", $valor);
+        $valor = str_replace("-", "", $valor);
+        $valor = str_replace("/", "", $valor);
+        return $valor;
+    }
 }

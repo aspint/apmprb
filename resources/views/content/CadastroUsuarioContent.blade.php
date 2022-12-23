@@ -20,7 +20,11 @@
     <!-- ============================================================== -->
     <!-- End Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
-
+    @if (session('message'))
+        <div class="alert alert-danger"> <i class="ti-user"></i> {{session('message')}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+        </div>
+    @endif
 
     <!-- ============================================================== -->
     <!-- Container fluid  -->
@@ -62,15 +66,14 @@
                                                    id="email"
                                                    name="email"
                                                    class="form-control form-control-danger"
-                                                   placeholder="jogao@apmprbm.com.br"
-                                                   required>
-                                            <small class="form-control-feedback"> Informe um e-mail, para entrar no sistema. </small> </div>
+                                                   placeholder="jogao@apmprbm.com.br">
+                                            <small class="form-control-feedback"> Informe um e-mail. </small> </div>
                                     </div>
                                     <!--/span-->
                                 </div>
                                 <!--/row-->
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">Perfil</label>
                                             <select class="form-control custom-select" id="perfil" name="perfil" required>
@@ -81,8 +84,19 @@
                                             </select>
                                             <small class="form-control-feedback"> Informe qual nivel de acesso </small> </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">CPF</label>
+                                            <input type="text"
+                                                   id="cpf"
+                                                   name="cpf"
+                                                   class="form-control form-control-danger cpf"
+                                                   placeholder="123.456.789.01"
+                                                   required>
+                                            <small class="form-control-feedback"> Informe um cpf, para entrar no sistema. </small> </div>
+                                    </div>
                                     <!--/span-->
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">Password </label>
                                             <input type="password"
@@ -127,6 +141,7 @@
                                             <th scope="col">#</th>
                                             <th scope="col">Nome Completo</th>
                                             <th scope="col">E-mail</th>
+                                            <th scope="col">CPF</th>
                                             <th scope="col">Criado em</th>
                                             <th scope="col">Perfil Usuario</th>
                                             <th scope="col">Ação</th>
@@ -139,6 +154,7 @@
                                                 <th scope="row">{{$user->id}}</th>
                                                 <td>{{$user->name}}</td>
                                                 <td>{{$user->email}}</td>
+                                                <td class="cpf">{{$user->cpf}}</td>
                                                 <td>{{\Carbon\Carbon::parse($user->inclusao)->format('d-m-Y')}}</td>
                                                 <td>{{$user->perfil}}</td>
                                                 <td>

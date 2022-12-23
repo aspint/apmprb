@@ -79,5 +79,7 @@
     @if($page['info'] == 'home')
         @include('component.js.UserRelatorioComponenteFooterJS')
     @endif
+    <script src="{{asset('assets/libs/inputmask/dist/min/jquery.inputmask.bundle.min.js')}}"></script>
+    <script src="{{asset('dist/js/pages/forms/mask/mask.init.js')}}"></script>
 </body>
 </html>
