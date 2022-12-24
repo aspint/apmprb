@@ -11,6 +11,7 @@ class UserHelper
         $user = Auth::user();
         $response['id'] = $user->id;
         $response['email'] = $user->email;
+        $response['cpf'] = $user->cpf;
         $response['name'] = explode(' ',$user->name)[0];
         $response['name_full'] = $user->name;
         $response['tipo_usuario_id'] = $user->tipo_usuario_id;

@@ -109,6 +109,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::create([
             'name'=>'Administrador',
             'email' =>'admin@apmprbm.com.br',
+            'cpf' => '00000000001',
             'password' => Hash::make('123456'),
             'tipo_usuario_id' => 1,
         ]);
@@ -116,6 +117,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::create([
             'name'=>'Produtor Teste',
             'email' =>'prod@apmprbm.com.br',
+            'cpf' => '00000000002',
             'password' => Hash::make('123456'),
             'tipo_usuario_id' => 2,
         ]);
@@ -123,6 +125,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::create([
             'name'=>'Funcionario Teste',
             'email' =>'func@apmprbm.com.br',
+            'cpf' => '00000000003',
             'password' => Hash::make('123456'),
             'tipo_usuario_id' => 3,
         ]);
