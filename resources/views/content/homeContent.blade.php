@@ -48,7 +48,7 @@
                         </div>
                         <div class="ml-auto">-->
                         <div class="ml-4">
-                             <h4 class="font-light">Total Leite recebido</h4>
+                             <h4 class="font-light">Total Leite recebidos</h4>
                             <h2 class="display-7 mb-0">{{$Leite->recebido == null ? 0 : $Leite->recebido}}L</h2>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                         </div>
                         <div class="ml-auto">-->
                         <div class="ml-4">
-                            <h4 class="font-light">Leite no Tanque</h4>
+                            <h4 class="font-light">Total Leite Entregues</h4>
                             <h2 class="display-7 mb-0">0L</h2>
                         </div>
                     </div>
