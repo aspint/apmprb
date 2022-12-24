@@ -27,20 +27,8 @@
 
     <div id="main-wrapper">
 
-        @if($page['info'] == 'home')
-            @yield('home')
-        @elseif($page['info'] == 'produtor')
-            @yield('cadastroProdutor')
-        @elseif ($page['info'] == 'usuario')
-            @yield('CadastroUsuario')
-        @elseif($page['info'] == 'cadastroCliente')
-            @yield('CadastroCliente')
-        @elseif($page['info'] == 'relatorioLeiteProdutor')
-            @yield('RelatorioLeiteProdutor')
-        @elseif($page['info'] == 'app')
-            @yield('CadastroLeiteProdutor')
-        @elseif($page['info'] == 'CadastroValorLeiteMensal')
-            @yield('CadastroValorLeiteMensal')
+        @if($page['info'] == 'edicaoUsuario')
+            @yield('editacaoUsuario')
         @endif
 
 

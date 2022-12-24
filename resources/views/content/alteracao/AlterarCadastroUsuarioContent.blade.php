@@ -5,13 +5,14 @@
     <div class="page-breadcrumb bg-white">
         <div class="row">
             <div class="col-lg-3 col-md-4 col-xs-12 align-self-center">
-                <h5 class="font-medium text-uppercase mb-0">Cadastro Usuario</h5>
+                <h5 class="font-medium text-uppercase mb-0">Alterar Cadastro Usuario</h5>
             </div>
             <div class="col-lg-9 col-md-8 col-xs-12 align-self-center">
                 <nav aria-label="breadcrumb" class="mt-2 float-md-right float-left">
                     <ol class="breadcrumb mb-0 justify-content-end p-0 bg-white">
                         <li class="breadcrumb-item"><a href="index.html">Cadastrar</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Cadastro Usuario</li>
+                        <li class="breadcrumb-item" aria-current="page">Cadastro Usuario</li>
+                        <li class="breadcrumb-item active" aria-current="page">Alterar</li>
                     </ol>
                 </nav>
             </div>
@@ -38,12 +39,13 @@
                         <h4 class="mb-0 text-white">Formulario de Usuario</h4>
                     </div> --}}
 
-                    <form action="{{route('inserirUsuario')}}"  method="POST">
+                    <form action="{{route('atualizaUsuario')}}"  method="POST">
                         @csrf
                         {{-- <div class="card-body">
                             <h4 class="card-title">Formulario de Criação de usuários do sistema</h4>
                         </div>
                         <hr> --}}
+                        <input type="number" name="id" value="{{$edit->id}}" hidden>
                         <div class="form-body">
                             <div class="card-body">
                                 <div class="row pt-3">
@@ -54,7 +56,7 @@
                                                    id="name"
                                                    name="name"
                                                    class="form-control"
-                                                   placeholder="João Silva"
+                                                   value="{{$edit->name}}"
                                                    required>
                                             <small class="form-control-feedback"> Informe seu nome completo </small> </div>
                                     </div>
@@ -66,6 +68,7 @@
                                                    id="email"
                                                    name="email"
                                                    class="form-control form-control-danger"
+                                                   value="{{$edit->email}}"
                                                    placeholder="jogao@apmprbm.com.br">
                                             <small class="form-control-feedback"> Informe um e-mail. </small> </div>
                                     </div>
@@ -76,11 +79,13 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">Perfil</label>
-                                            <select class="form-control custom-select" id="perfil" name="perfil" required>
-                                                <option value=""></option>
-                                                <option value="1">Administrador</option>
-                                                <option value="2">Produtor</option>
-                                                <option value="3">Funcionário</option>
+                                            <select class="form-control custom-select"
+                                                    id="perfil"
+                                                    name="perfil"
+                                                    required>
+                                                <option value="1" {{$edit->tipo_usuario_id == 1 ?'selected':''}}>Administrador</option>
+                                                <option value="2" {{$edit->tipo_usuario_id == 2 ?'selected':''}}>Produtor</option>
+                                                <option value="3" {{$edit->tipo_usuario_id == 3 ?'selected':''}}>Funcionário</option>
                                             </select>
                                             <small class="form-control-feedback"> Informe qual nivel de acesso </small> </div>
                                     </div>
@@ -91,6 +96,7 @@
                                                    id="cpf"
                                                    name="cpf"
                                                    class="form-control form-control-danger cpf"
+                                                   value="{{$edit->cpf}}"
                                                    placeholder="123.456.789.01"
                                                    required>
                                             <small class="form-control-feedback"> Informe um cpf, para entrar no sistema. </small> </div>
@@ -104,7 +110,7 @@
                                                    name="password"
                                                    class="form-control form-control-danger"
                                                    placeholder="password"
-                                                   required>
+                                                   >
                                             <small class="form-control-feedback"> Informe a senha padrão </small> </div>
                                     </div>
                                     <!--/span-->
@@ -115,7 +121,7 @@
                                     <button type="submit"
                                             class="btn btn-success">
                                                 <i class="fa fa-check"></i>
-                                                Salvar
+                                                Alterar
                                     </button>
                                 </div>
                             </div>
@@ -124,77 +130,7 @@
                 </div>
             </div>
         </div>
-        <!-- Row -->
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Usuarios Cadastrados</h4>
-                                {{-- <h6 class="card-subtitle">Similar to tables, use the modifier classes .thead-light to make <code>&lt;thead&gt;</code>s appear light.</h6> --}}
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Nome Completo</th>
-                                            <th scope="col">E-mail</th>
-                                            <th scope="col">CPF</th>
-                                            <th scope="col">Criado em</th>
-                                            <th scope="col">Perfil Usuario</th>
-                                            <th scope="col">Ação</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if(isset($users))
-                                            @foreach ( $users as $user)
-                                            <tr>
-                                                <th scope="row">{{$user->id}}</th>
-                                                <td>{{$user->name}}</td>
-                                                <td>{{$user->email}}</td>
-                                                <td class="cpf">{{$user->cpf}}</td>
-                                                <td>{{\Carbon\Carbon::parse($user->inclusao)->format('d-m-Y')}}</td>
-                                                <td>{{$user->perfil}}</td>
-                                                <td>
-                                                    <form action="{{ route('excluirUsuario') }}" method="POST" class="form-inline">
-                                                        @csrf
-                                                        <input type="text" name="id_usuario" id="id_usuario" value="{{$user->id}}" hidden/>
-                                                        <button type="submit"
-                                                                class="btn btn-warning btn-circle"
-                                                                onclick="return confirm('Deseja remover {{$user->name}} ?')">
-                                                                    <i class="fa fa-times"></i>
-                                                                </button>
-                                                        {{-- <label class="control-label">Excluir </label> --}}
-                                                        <small class="form-control-feedback"><br> Excluir </small>
-                                                        {{-- <button type='submit'>Enviar</button> --}}
-                                                    </form>
-                                                    <form action="{{ route('alterarUsuario',$user->id) }}" method="POST" class="form-inline" >
-                                                        @csrf
-                                                        <input type="text" name="id_usuario" id="id_usuario" value="{{$user->id}}" hidden/>
-                                                        <button type="submit"
-                                                                class="btn btn-primary btn-circle">
-                                                                    <i class="fa fa-list"></i>
-                                                                </button>
-                                                        {{-- <label class="control-label">Excluir </label> --}}
-                                                        <small class="form-control-feedback"><br> Alterar </small>
-                                                        {{-- <button type='submit'>Enviar</button> --}}
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        @endif
-                                    </tbody>
-                                </table>
-                                {{$users->links()}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </div>
 
 

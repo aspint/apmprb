@@ -16,6 +16,14 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
 
+    // index – Lista os dados da tabela
+    // show – Mostra um item específco
+    // create – Retorna a View para criar um item da tabela
+    // store – Salva o novo item na tabela
+    // edit – Retorna a View para edição do dado
+    // update – Salva a atualização do dado
+    // destroy – Remove o dado
+
     public function auth(Request $request){
         if(Auth::attempt(['cpf'=>Helpers::removerMapaCpf($request->input('cpf')), 'password' => $request->password])){
             return redirect()->action([HomeController::class, 'index']);
@@ -83,5 +91,45 @@ class UserController extends Controller
         return back();
     }
 
+    public function alterar($id){
+        if(UserHelper::hasAdm()){
+            try{
+                $response = UserHelper::getDataUserLogged();
+                $permission = TipoUsuario::find($response['tipo_usuario_id']);
+                $page['info'] = 'edicaoUsuario';
+                $edit = User::find($id);
+                return view('view.alteracao.EdicaoUsuario', compact('response','permission','page','edit'));
+            }catch(Exception $e){
+                return back();
+            }
+        }
+        return back();
+
+        return;
+    }
+    public function atualizaUsuario(Request $request){
+        if(UserHelper::hasAdm()){
+
+            $userOriginal = User::find( $request->input('id'));
+
+            try{
+
+                DB::table('users')
+                    ->where('id',$request->input('id'))
+                    ->update([
+                    'name' => empty($request->input('name'))? $userOriginal->name : $request->input('name'),
+                    'email' => empty($request->input('email'))? $userOriginal->email : strtolower($request->input('email')),
+                    'cpf' => empty($request->input('cpf'))? $userOriginal->cpf : Helpers::removerMapaCpf($request->input('cpf')),
+                    'password'=>empty($request->input('password'))? $userOriginal->password : Hash::make($request->input('password')),
+                    'updated_at'=>new \DateTime(),
+                    'tipo_usuario_id' => empty($request->input('perfil'))? $userOriginal->tipo_usuario_id : $request->input('perfil'),
+                ]);
+            }catch(Exception $e){
+                dd('erro');
+                return redirect('/user/formulario')->with('message','Não foi possivel atualizar os dados verifique novamente');
+            }
+        }
+        return redirect()->route('userFormulario');
+    }
 
 }
