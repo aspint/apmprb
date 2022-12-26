@@ -150,7 +150,7 @@
                                             <td>{{$entrega->nome}}</td>
                                             <td>{{\Carbon\Carbon::parse($entrega->data_entrega)->format('d-m-Y')}}</td>
                                             <td>{{$entrega->periodo_descricao}}</td>
-                                            <td>{{$entrega->qntd_litros_entregue}}l</td>
+                                            <td>{{$entrega->qntd_litros_entregue}}L</td>
                                             <td>R$ {{$entrega->valor_bruto}}</td>
                                             <td>R$ {{$entrega->valor_liquido}}</td>
                                             <td>

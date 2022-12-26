@@ -37,7 +37,6 @@ Route::group(['middleware'=>['auth']], function(){
 
 
     Route::get('/user/formulario',[UserController::class,'edit'])->name('userFormulario');
-
     Route::post('/user/formulario/inserir',[UserController::class, 'cadastrar'])->name('inserirUsuario');
     Route::post('/user/formulario/excluir',[UserController::class, 'destroy'])->name('excluirUsuario');
     Route::post('/user/formulario/alterar/{id}',[UserController::class, 'alterar'])->name('alterarUsuario');

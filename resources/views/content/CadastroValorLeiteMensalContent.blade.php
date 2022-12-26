@@ -20,7 +20,11 @@
     <!-- ============================================================== -->
     <!-- End Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
-
+    @if (session('message'))
+        <div class="alert alert-danger"> <i class="ti-user"></i> {{session('message')}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+        </div>
+    @endif
     <!-- ============================================================== -->
     <!-- Container fluid  -->
     <!-- ============================================================== -->

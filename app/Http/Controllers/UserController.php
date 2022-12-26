@@ -85,7 +85,7 @@ class UserController extends Controller
                     'tipo_usuario_id' => $request->input('perfil'),
                 ]);
             }catch(Exception $e){
-                return redirect('/user/formulario')->with('message','CPF, ou email, já inseridos no sistema!');
+                return redirect('/user/formulario')->with('message','CPF já inseridos no sistema!');
             }
         }
         return back();
@@ -117,13 +117,13 @@ class UserController extends Controller
                 DB::table('users')
                     ->where('id',$request->input('id'))
                     ->update([
-                    'name' => empty($request->input('name'))? $userOriginal->name : $request->input('name'),
-                    'email' => empty($request->input('email'))? $userOriginal->email : strtolower($request->input('email')),
-                    'cpf' => empty($request->input('cpf'))? $userOriginal->cpf : Helpers::removerMapaCpf($request->input('cpf')),
-                    'password'=>empty($request->input('password'))? $userOriginal->password : Hash::make($request->input('password')),
-                    'updated_at'=>new \DateTime(),
-                    'tipo_usuario_id' => empty($request->input('perfil'))? $userOriginal->tipo_usuario_id : $request->input('perfil'),
-                ]);
+                        'name' => empty($request->input('name'))? $userOriginal->name : $request->input('name'),
+                        'email' => empty($request->input('email'))? $userOriginal->email : strtolower($request->input('email')),
+                        'cpf' => empty($request->input('cpf'))? $userOriginal->cpf : Helpers::removerMapaCpf($request->input('cpf')),
+                        'password'=>empty($request->input('password'))? $userOriginal->password : Hash::make($request->input('password')),
+                        'updated_at'=>new \DateTime(),
+                        'tipo_usuario_id' => empty($request->input('perfil'))? $userOriginal->tipo_usuario_id : $request->input('perfil'),
+                    ]);
             }catch(Exception $e){
                 dd('erro');
                 return redirect('/user/formulario')->with('message','Não foi possivel atualizar os dados verifique novamente');

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\Helpers;
 use App\Helper\UserHelper;
-use App\Models\FonteTanque;
-use App\Models\Periodo;
-use App\Models\Produtor;
+use App\Models\TipoProdutor;
 use App\Models\TipoUsuario;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -43,6 +43,21 @@ class ValorLeiteMensalController extends Controller
     public function store(Request $request){
         if(Auth::check()){
             if(UserHelper::hasAdm()){
+                $tipoProdutor = TipoProdutor::find($request->input('tipo_produtor'));
+
+                $mes =  Date('m',strtotime( $request->input('dataReferencia')));
+
+
+                $vlrLeitCadasMes  =  DB::table('valor_leite_mensal')
+                                        ->join('tipo_produtor','valor_leite_mensal.tipo_produtor_id','tipo_produtor.id')
+                                        ->select('valor_leite_mensal.id as valorLeite_id','valor_leite_mensal.*','tipo_produtor.*')
+                                        ->where('tipo_produtor.tipo_valor',$tipoProdutor->tipo_valor)
+                                        ->whereBetween('valor_leite_mensal.data_referencia',[Helpers::dataCorteInicioMesPersonalizado($mes),Helpers::dataCorteFimMesPersonalizado($mes)])
+                                        ->count();
+
+                if($vlrLeitCadasMes > 0){
+                    return back()->with('message', 'Não é possivel inserir dois valores, para o mesmo produtor, dentro do mesmo mês');
+                }
 
                 DB::table('valor_leite_mensal')->insert([
 
