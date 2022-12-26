@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <div id="main-wrapper">
+    <div id="main-wrapper" class="hide-sidebar">
 
         @if($page['info'] == 'edicaoUsuario')
             @yield('editacaoUsuario')

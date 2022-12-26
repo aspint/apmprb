@@ -7,6 +7,7 @@ use App\Helper\UserHelper;
 use App\Models\TipoProdutor;
 use App\Models\TipoUsuario;
 use DateTime;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -82,8 +83,12 @@ class ValorLeiteMensalController extends Controller
 
         if(Auth::check()){
             if(UserHelper::hasAdm()){
+                try{
                // dd($request->input('id_usuario'));
-               DB::table('valor_leite_mensal')->where('id','=',$request->input('idValorLeite'))->delete();
+                    DB::table('valor_leite_mensal')->where('id','=',$request->input('idValorLeite'))->delete();
+                }catch(Exception $e){
+                 echo "Não e possivel remover valores ja atribuido a uma entrega";
+                }
                return back();
            }
            return back();
