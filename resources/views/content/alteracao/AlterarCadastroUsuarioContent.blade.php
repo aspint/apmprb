@@ -123,8 +123,14 @@
                                                 <i class="fa fa-check"></i>
                                                 Alterar
                                     </button>
+                                    <a class="btn  btn-info text-decoration-none"
+                                        href="{{route('backFormulario')}}">
+                                                <i class="fas fa-angle-left"></i>
+                                                Voltar
+                                    </a>
                                 </div>
                             </div>
+
                         </div>
                     </form>
                 </div>

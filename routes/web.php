@@ -41,6 +41,9 @@ Route::group(['middleware'=>['auth']], function(){
     Route::post('/user/formulario/excluir',[UserController::class, 'destroy'])->name('excluirUsuario');
     Route::post('/user/formulario/alterar/{id}',[UserController::class, 'alterar'])->name('alterarUsuario');
     Route::post('/user/formulario/atualizaUsuario',[UserController::class, 'atualizaUsuario'])->name('atualizaUsuario');
+    Route::get('/back', function(){
+        return redirect()->route('userFormulario');
+    })->name('backFormulario');
 
 });
 
