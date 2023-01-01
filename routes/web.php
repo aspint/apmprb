@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProdutorController;
 use App\Http\Controllers\RelacaoLeiteProtutorTanqueController;
+use App\Http\Controllers\TanqueLeiteAssociacaoController;
 use App\Http\Controllers\ValorLeiteMensalController;
 
 /*
@@ -62,6 +63,13 @@ Route::group(['middleware'=>['auth']], function(){
     Route::get('/leite/cadastro/valor',[ValorLeiteMensalController::class,'create'])->name('CadastroValorLeite');
     Route::post('/leite/cadastro/valor/inserir',[ValorLeiteMensalController::class,'store'])->name('inserirValorLeiteMensal');
     Route::delete('/leite/cadastro/valor/excluir',[ValorLeiteMensalController::class, 'destroy'])->name('excluirValorLeiteMensal');
+
+
+
+    Route::get('/fonte/formulario',[TanqueLeiteAssociacaoController::class,'index'])->name('formularioCadastroFonte');
+    Route::post('/fonte/formulario/inserir',[TanqueLeiteAssociacaoController::class,'create'])->name('criarTanqueFonte');
+    Route::delete('/fonte/formulario/excluir/{id}',[TanqueLeiteAssociacaoController::class,'destroy'])->name('excluirFonte');
+
 
 });
 

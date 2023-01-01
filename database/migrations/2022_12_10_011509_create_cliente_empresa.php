@@ -16,7 +16,7 @@ class CreateClienteEmpresa extends Migration
         Schema::create('cliente_empresa', function (Blueprint $table) {
             $table->id();
             $table->string('nome_razao_social');
-            $table->integer('cpf_cnpj');
+            $table->string('cpf_cnpj',14);
             $table->unsignedBigInteger('endereco_id');
             $table->foreign('endereco_id')->references('id')->on('endereco');
             $table->timestamp('datahora_inclusao')->nullable()->default(null);
