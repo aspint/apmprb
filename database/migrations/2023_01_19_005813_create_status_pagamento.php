@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEndereco extends Migration
+class CreateStatusPagamento extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,13 @@ class CreateEndereco extends Migration
      */
     public function up()
     {
-        Schema::create('endereco', function (Blueprint $table) {
+        Schema::create('status_pagamento', function (Blueprint $table) {
             $table->id();
-            $table->string('rua', 100);
-            $table->integer('numero');
-            $table->string('bairro',50);
-            $table->string('cidade',50);
-            $table->string('estado',2);
-            $table->string('cep',8);
+            $table->string('valor');
+            $table->string('descricao')->nullable();
             $table->timestamp('datahora_inclusao')->nullable()->default(null);
             $table->timestamp('datahora_atualizacao')->nullable()->default(null);
-            $table->string('usuario');
-            $table->unsignedBigInteger('produtor_id');
-            $table->foreign('produtor_id')->references('id')->on('produtor');
+            $table->string('usuario')->nullable();
         });
     }
 
@@ -36,6 +30,6 @@ class CreateEndereco extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('endereco');
+        Schema::dropIfExists('status_pagamento');
     }
 }

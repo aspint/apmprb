@@ -25,12 +25,18 @@ class UserController extends Controller
     // destroy – Remove o dado
 
     public function auth(Request $request){
-        if(Auth::attempt(['cpf'=>Helpers::removerMapaCpf($request->input('cpf')), 'password' => $request->password])){
-            return redirect()->action([HomeController::class, 'index']);
-        }else{
-            $erro['message'] = 'DADOS INVALIDO';
+        try{
+
+            if(Auth::attempt(['cpf'=>Helpers::removerMapaCpf($request->input('cpf')), 'password' => $request->password])){
+                return redirect()->action([HomeController::class, 'index']);
+            }else{
+                $erro['message'] = 'DADOS INVALIDO';
+                return redirect('/login')->with('message','Dados Inválidos!');
+            }
+        }catch(Exception $e){
             return redirect('/login')->with('message','Dados Inválidos!');
         }
+
     }
 
     public function logout(){

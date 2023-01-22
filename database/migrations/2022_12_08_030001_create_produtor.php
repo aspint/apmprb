@@ -26,8 +26,10 @@ class CreateProdutor extends Migration
             $table->timestamp('datahora_atualizacao')->nullable()->default(null);
             $table->string('usuario')->nullable();
             $table->foreign('tipo_produtor_id')->references('id')->on('tipo_produtor');
-            $table->unsignedBigInteger('users_id')->nullable()->default(null);
+            $table->unsignedBigInteger('users_id')->nullable()->default(null)->unique();
             $table->foreign('users_id')->references('id')->on('users')->nullable();
+            $table->unsignedBigInteger('endereco_id')->nullable()->default(null);
+            $table->foreign('endereco_id')->references('id')->on('endereco')->nullable();
         });
     }
 

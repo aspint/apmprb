@@ -11,7 +11,7 @@
                 <nav aria-label="breadcrumb" class="mt-2 float-md-right float-left">
                     <ol class="breadcrumb mb-0 justify-content-end p-0 bg-white">
                         <li class="breadcrumb-item"><a href="index.html">Cadastrar</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Cadastro Usuario</li>
+                        <li class="breadcrumb-item active" aria-current="page">Cliente</li>
                     </ol>
                 </nav>
             </div>
@@ -111,7 +111,6 @@
                             <div class="form-actions">
                                 <div class="card-body">
                                     <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
-                                    <button type="button" class="btn btn-dark">Cancel</button>
                                 </div>
                             </div>
                         </div>
@@ -121,10 +120,39 @@
         </div>
         <!-- Row -->
 
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Ultimos Recebimentos</h4>
+                                {{-- <h6 class="card-subtitle">Similar to tables, use the modifier classes .thead-light to make <code>&lt;thead&gt;</code>s appear light.</h6> --}}
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Produtor</th>
+                                            <th scope="col">Data entrega</th>
+                                            <th scope="col">Periodo entregue</th>
+                                            <th scope="col">Litros entregue</th>
+                                            <th scope="col">Valor Bruto</th>
+                                            <th scope="col">Valor Liquido</th>
+                                            <th scope="col">Ação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-
-
-
+                                </tbody>
+                            </table>
+                            {{-- {{$entregas->links()}} --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
 </div>
