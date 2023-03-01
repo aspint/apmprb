@@ -22,9 +22,13 @@ class CreateRelacaoLeiteProdutorTanque extends Migration
             $table->unsignedBigInteger('produtor_id');
             $table->foreign('produtor_id')->references('id')->on('produtor');
             $table->timestamp('datahora_inclusao')->nullable()->default(null);
-            $table->timestamp('datahora_atualizacao')->nullable()->default(null);
+            $table->timestamp('datahora_alteracao')->nullable()->default(null);
             $table->unsignedBigInteger('valor_leite_mensal_id');
             $table->foreign('valor_leite_mensal_id')->references('id')->on('valor_leite_mensal');
+            $table->unsignedBigInteger('status_pagamento_id');
+            $table->foreign('status_pagamento_id')->references('id')->on('status_pagamento');
+            $table->unsignedBigInteger('recibo_pagamento_id');
+            $table->foreign('recibo_pagamento_id')->references('id')->on('recibo_pagamento');
             $table->string('usuario')->nullable();
         });
     }

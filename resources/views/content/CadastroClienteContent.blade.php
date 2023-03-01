@@ -62,9 +62,15 @@
                             <hr>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-12 ">
+                                    <div class="col-md-10 ">
                                         <div class="form-group">
-                                            <label>Street</label>
+                                            <label>Rua</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 ">
+                                        <div class="form-group">
+                                            <label>Numero</label>
                                             <input type="text" class="form-control">
                                         </div>
                                     </div>
@@ -72,14 +78,14 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>City</label>
+                                            <label>Bairro</label>
                                             <input type="text" class="form-control">
                                         </div>
                                     </div>
                                     <!--/span-->
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>State</label>
+                                            <label>Cidade</label>
                                             <input type="text" class="form-control">
                                         </div>
                                     </div>
@@ -89,20 +95,15 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Post Code</label>
+                                            <label>Estado</label>
                                             <input type="text" class="form-control">
                                         </div>
                                     </div>
                                     <!--/span-->
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Country</label>
-                                            <select class="form-control custom-select">
-                                                <option>--Select your Country--</option>
-                                                <option>India</option>
-                                                <option>Sri Lanka</option>
-                                                <option>USA</option>
-                                            </select>
+                                            <label>CEP</label>
+                                            <input type="text" class="form-control">
                                         </div>
                                     </div>
                                     <!--/span-->
@@ -126,7 +127,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Ultimos Recebimentos</h4>
+                                <h4 class="card-title">Clientes Cadastrados</h4>
                                 {{-- <h6 class="card-subtitle">Similar to tables, use the modifier classes .thead-light to make <code>&lt;thead&gt;</code>s appear light.</h6> --}}
                             </div>
                             <div class="table-responsive">
@@ -134,12 +135,9 @@
                                     <thead class="thead-light">
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">Produtor</th>
-                                            <th scope="col">Data entrega</th>
-                                            <th scope="col">Periodo entregue</th>
-                                            <th scope="col">Litros entregue</th>
-                                            <th scope="col">Valor Bruto</th>
-                                            <th scope="col">Valor Liquido</th>
+                                            <th scope="col">Razão Social</th>
+                                            <th scope="col">CNPJ</th>
+                                            <th scope="col"> Data Inclusão</th>
                                             <th scope="col">Ação</th>
                                         </tr>
                                     </thead>

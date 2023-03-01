@@ -129,5 +129,39 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('123456'),
             'tipo_usuario_id' => 3,
         ]);
+
+        DB::table('status_pagamento')->insert([
+            'valor' => 'PAGO',
+            'descricao' => 'Pagamento efetuado',
+            'datahora_inclusao' =>new \DateTime(),
+            'datahora_atualizacao' =>new \DateTime(),
+            'usuario' => 'usuario.batch'
+        ]);
+
+        DB::table('status_pagamento')->insert([
+            'valor' => 'PENDENTE',
+            'descricao' => 'Pagamento pendente',
+            'datahora_inclusao' =>new \DateTime(),
+            'datahora_atualizacao' =>new \DateTime(),
+            'usuario' => 'usuario.batch'
+        ]);
+
+        DB::table('status_recibo')->insert([
+            'valor' => 'GERADO',
+            'descricao' => 'Pagamento pendente de gerar recibo',
+            'datahora_inclusao' =>new \DateTime(),
+            'datahora_atualizacao' =>new \DateTime(),
+            'usuario' => 'usuario.batch'
+        ]);
+
+        DB::table('status_recibo')->insert([
+            'valor' => 'FECHADO',
+            'descricao' => 'Recibo Gerado e Pagamento pendente ',
+            'datahora_inclusao' =>new \DateTime(),
+            'datahora_atualizacao' =>new \DateTime(),
+            'usuario' => 'usuario.batch'
+        ]);
+
+
     }
 }
