@@ -149,7 +149,11 @@ class ProdutorController extends Controller
 
         if(Auth::check()){
             if(UserHelper::hasAdm()){
+                $saldoProdutor = DB::table('saldo_produtor')
+                                    ->where('saldo_produtor.produtor_id',$id)
+                                    ->delete();
                 $produtor = Produtor::find($id);
+
                 $produtor->delete();
                 return back();
             }
