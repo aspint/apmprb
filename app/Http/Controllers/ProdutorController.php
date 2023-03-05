@@ -13,6 +13,7 @@ use App\Repository\IReposirtory;
 use App\Repository\ISaldoRepository;
 use App\Repository\SaldoProdutorRepository;
 use Exception;
+use GuzzleHttp\Psr7\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
@@ -26,6 +27,90 @@ class ProdutorController extends Controller
     public function __construct()
     {
         $this->repositorySaldo = new SaldoProdutorRepository();
+    }
+
+    public function alterar($id){
+        if(Auth::check()){
+            if(UserHelper::hasAdm()){
+                try{
+                    $response = UserHelper::getDataUserLogged();
+                    $permission = TipoUsuario::find($response['tipo_usuario_id']);
+
+                    $produtores = DB::table('produtor')
+                    ->join('tipo_produtor','produtor.tipo_produtor_id','=','tipo_produtor.id')
+                    ->leftjoin('endereco','produtor.id','=','endereco.id')
+                    ->select('produtor.id','nome', 'cpf_cnpj','produtor.datahora_inclusao as inclusao','tipo_produtor.desc_valor as tipo',
+                            'produtor.rg','inscricao','produtor.users_id')
+                    ->orderBy('id', 'asc')
+                    ->get();
+
+                    $indices = [];
+                    foreach($produtores as $produtor){
+                        if($produtor->users_id != null and $produtor->id != $id){
+                            array_push($indices, $produtor->users_id);
+                        }
+                    }
+
+                    $users = DB::table('users')
+                                ->join('tipo_usuario','users.tipo_usuario_id','tipo_usuario.id')
+                                ->whereNotIn('users.id', $indices)
+                                ->where('tipo_usuario.tipo_valor','PROD')
+                                ->select('users.tipo_usuario_id as id_tipo_user','users.id','name','cpf','email','tipo_usuario_id','tipo_valor','descricao','data_inclusao')
+                                ->get();
+
+                    $page['info'] = 'edicaoProdutor';
+                    $edit = Produtor::find($id);
+
+
+                    return view('view.alteracao.EdicaoProdutor', compact('response','permission','page','edit','produtores','users'));
+                }catch(Exception $e){
+                    return back();
+                }
+            }
+        }else{
+            return back();
+        }
+
+        return back();
+    }
+
+    public function update(Request $request){
+
+
+
+        if(Auth::check()){
+            if(UserHelper::hasAdm()){
+
+                $produtorOriginal = Produtor::find( $request->input('id'));
+
+                try{
+
+                    DB::table('produtor')
+                        ->where('id',$request->input('id'))
+                        ->update([
+                            'nome' =>empty($request->input('nome'))? $produtorOriginal->nome :  $request->input('nome'),
+                            'cpf_cnpj'=> empty($request->input('cpfcnpj'))? $produtorOriginal->cpf_cnpj : $request->input('cpfcnpj'),
+                            'rg'=>empty($request->input('identificacao')) ? $produtorOriginal->rg : $request->input('identificacao'),
+                            'telefone'=>empty($request->input('telefone'))? $produtorOriginal->telefone : $request->input('telefone'),
+                            'data_nascimento'=>empty($request->input('nascimento'))? $produtorOriginal->data_nascimento : $request->input('nascimento'),
+                            'tipo_produtor_id'=>(integer) empty($request->input('tipo_produtor'))? $produtorOriginal->tipo_produtor_id : $request->input('tipo_produtor'),
+                            'inscricao'=>empty($request->input('inscricao'))? $produtorOriginal->inscricao : $request->input('inscricao'),
+                            'datahora_atualizacao'=>new \DateTime(),
+                            'usuario'=> UserHelper::getNameUserLogged(),
+                            'users_id'=>$request->input('users_id')=='' ? null:(integer)$request->input('users_id'),
+                        ]);
+                }catch(Exception $e){
+
+                    echo "erro ao inserir na base informe ao desenvolvedor";
+                    return redirect('/produtor/formulario')->with('message','Não foi possivel atualizar os dados verifique novamente');
+                }
+
+                // return back();
+            }
+            return redirect()->route('produtorFormulario');
+        }else{
+            return back();
+        }
     }
 
     public function edit(){
@@ -53,6 +138,7 @@ class ProdutorController extends Controller
                     ->join('tipo_usuario','users.tipo_usuario_id','tipo_usuario.id')
                     ->whereNotIn('users.id', $indices)
                     ->where('tipo_usuario.tipo_valor','PROD')
+                    ->select('users.tipo_usuario_id as id_tipo_user','users.id','name','cpf','email','tipo_usuario_id','tipo_valor','descricao','data_inclusao')
                     ->get();
 
         return view('view.cadastroProdutor', compact('response','produtores','page','users','permission'));
@@ -61,17 +147,21 @@ class ProdutorController extends Controller
 
    public function destroy($id){
 
-    if(Auth::check()){
-        if(UserHelper::hasAdm()){
-            $produtor = Produtor::find($id);
-            $produtor->delete();
+        if(Auth::check()){
+            if(UserHelper::hasAdm()){
+                $saldoProdutor = DB::table('saldo_produtor')
+                                    ->where('saldo_produtor.produtor_id',$id)
+                                    ->delete();
+                $produtor = Produtor::find($id);
+
+                $produtor->delete();
+                return back();
+            }
+            return back();
+        }else{
             return back();
         }
         return back();
-    }else{
-        return back();
-    }
-    return back();
    }
 
    public function store(Request $request){

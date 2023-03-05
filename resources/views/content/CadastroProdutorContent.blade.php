@@ -20,6 +20,11 @@
     <!-- ============================================================== -->
     <!-- End Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
+    @if (session('message'))
+        <div class="alert alert-danger"> <i class="ti-user"></i> {{session('message')}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+        </div>
+    @endif
 
     <!-- ============================================================== -->
     <!-- Container fluid  -->
@@ -168,7 +173,7 @@
                                                 <td>{{$produtor->tipo}}</td>
                                                 <td>{{\Carbon\Carbon::parse($produtor->inclusao)->format('d-m-Y')}}</td>
                                                 <td>
-                                                    <form action="{{ route('excluirProdutor', $produtor->id) }}" method="POST">
+                                                    <form action="{{ route('excluirProdutor', $produtor->id) }}" method="POST" class="form-inline">
                                                         @method('DELETE')
                                                         @csrf
                                                         <input type="text" name="id_usuario" id="id_usuario" value="{{$produtor->id}}" hidden/>
@@ -178,6 +183,17 @@
                                                                 ><i class="fa fa-times"></i></button>
                                                         {{-- <label class="control-label">Excluir </label> --}}
                                                         <small class="form-control-feedback"><br> Excluir </small>
+                                                        {{-- <button type='submit'>Enviar</button> --}}
+                                                    </form>
+                                                    <form action="{{ route('alterarProdutor',$produtor->id) }}" method="POST" class="form-inline" >
+                                                        @csrf
+                                                        <input type="text" name="id_produtor" id="id_produtor" value="{{$produtor->id}}" hidden/>
+                                                        <button type="submit"
+                                                                class="btn btn-primary btn-circle">
+                                                                    <i class="fa fa-list"></i>
+                                                                </button>
+                                                        {{-- <label class="control-label">Excluir </label> --}}
+                                                        <small class="form-control-feedback"><br> Alterar </small>
                                                         {{-- <button type='submit'>Enviar</button> --}}
                                                     </form>
                                                 </td>

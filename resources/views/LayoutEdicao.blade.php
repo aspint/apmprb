@@ -29,6 +29,8 @@
 
         @if($page['info'] == 'edicaoUsuario')
             @yield('editacaoUsuario')
+        @elseif($page['info'] == 'edicaoProdutor')
+            @yield('edicaoProdutor')
         @endif
 
 
