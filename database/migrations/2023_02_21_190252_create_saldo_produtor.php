@@ -17,7 +17,7 @@ class CreateSaldoProdutor extends Migration
             $table->id();
             $table->float('saldo');
             $table->timestamp('datahora_alteracao')->nullable()->default(null);
-            $table->unsignedBigInteger('produtor_id');
+            $table->unsignedBigInteger('produtor_id')->unique();
             $table->foreign('produtor_id')->references('id')->on('produtor');
             $table->string('usuario');
         });
