@@ -232,13 +232,13 @@
                                 </ul> --}}
                             </li>
                             <li class="sidebar-item">
-                                <a class="sidebar-link waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                                <a class="sidebar-link waves-effect waves-dark" href="{{route('formularioCadastroCliente')}}" aria-expanded="false">
                                     <i class="mdi mdi-receipt"></i>
                                     <span class="hide-menu">Cadastrar Clientes</span>
                                 </a>
                             </li>
                             <li class="sidebar-item">
-                                <a class="sidebar-link waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                                <a class="sidebar-link waves-effect waves-dark" href="{{route('formularioCadastroFonte')}}" aria-expanded="false">
                                     <i class="mdi mdi-receipt"></i>
                                     <span class="hide-menu">Cadastrar Fonte Tanque</span>
                                 </a>

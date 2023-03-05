@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Entidade\SaldoProdutorEntidade;
 use App\Helper\Helpers;
 use App\Helper\UserHelper;
 use App\Models\Produtor;
 use App\Models\RelacaoLeiteProdutorTanque;
+use App\Models\SaldoProdutor;
 use App\Models\TipoUsuario;
+use App\Repository\IReposirtory;
+use App\Repository\ISaldoRepository;
+use App\Repository\SaldoProdutorRepository;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
@@ -15,36 +21,41 @@ use Illuminate\Support\Facades\Hash;
 
 class ProdutorController extends Controller
 {
+    protected $repositorySaldo;
 
-
-   public function edit(){
-    $page['info'] = 'produtor';
-
-    $response = UserHelper::getDataUserLogged();
-    $permission = TipoUsuario::find($response['tipo_usuario_id']);
-
-    $produtores = DB::table('produtor')
-                ->join('tipo_produtor','produtor.tipo_produtor_id','=','tipo_produtor.id')
-                ->leftjoin('endereco','produtor.id','=','endereco.id')
-                ->select('produtor.id','nome', 'cpf_cnpj','produtor.datahora_inclusao as inclusao','tipo_produtor.desc_valor as tipo',
-                         'produtor.rg','inscricao','produtor.users_id')
-                ->orderBy('id', 'asc')
-                ->paginate(5);
-
-    $indices = [];
-    foreach($produtores as $produtor){
-        if($produtor->users_id != null){
-            array_push($indices, $produtor->users_id);
-        }
+    public function __construct()
+    {
+        $this->repositorySaldo = new SaldoProdutorRepository();
     }
 
-    $users = DB::table('users')
-                ->join('tipo_usuario','users.tipo_usuario_id','tipo_usuario.id')
-                ->whereNotIn('users.id', $indices)
-                ->where('tipo_usuario.tipo_valor','PROD')
-                ->get();
+    public function edit(){
+        $page['info'] = 'produtor';
 
-    return view('view.cadastroProdutor', compact('response','produtores','page','users','permission'));
+        $response = UserHelper::getDataUserLogged();
+        $permission = TipoUsuario::find($response['tipo_usuario_id']);
+
+        $produtores = DB::table('produtor')
+                    ->join('tipo_produtor','produtor.tipo_produtor_id','=','tipo_produtor.id')
+                    ->leftjoin('endereco','produtor.id','=','endereco.id')
+                    ->select('produtor.id','nome', 'cpf_cnpj','produtor.datahora_inclusao as inclusao','tipo_produtor.desc_valor as tipo',
+                            'produtor.rg','inscricao','produtor.users_id')
+                    ->orderBy('id', 'asc')
+                    ->paginate(5);
+
+        $indices = [];
+        foreach($produtores as $produtor){
+            if($produtor->users_id != null){
+                array_push($indices, $produtor->users_id);
+            }
+        }
+
+        $users = DB::table('users')
+                    ->join('tipo_usuario','users.tipo_usuario_id','tipo_usuario.id')
+                    ->whereNotIn('users.id', $indices)
+                    ->where('tipo_usuario.tipo_valor','PROD')
+                    ->get();
+
+        return view('view.cadastroProdutor', compact('response','produtores','page','users','permission'));
 
    }
 
@@ -68,19 +79,35 @@ class ProdutorController extends Controller
         if(Auth::check()){
             if(UserHelper::hasAdm()){
 
-                DB::table('produtor')->insert([
-                    'nome' =>  $request->input('nome'),
-                    'cpf_cnpj' => $request->input('cpfcnpj'),
-                    'rg' => $request->input('identificacao'),
-                    'telefone' =>  $request->input('telefone'),
-                    'data_nascimento' => $request->input('nascimento'),
-                    'tipo_produtor_id' => (integer) $request->input('tipo_produtor'),
-                    'inscricao' =>$request->input('inscricao'),
-                    'datahora_inclusao' => new \DateTime(),
-                    'datahora_atualizacao' => new \DateTime(),
-                    'usuario' => UserHelper::getNameUserLogged(),
-                    'users_id' => $request->input('usuario')=='' ? null:(integer)$request->input('usuario'),
-                ]);
+                DB::beginTransaction();
+
+
+                $saldoProdutor = new SaldoProdutorEntidade();
+
+                try{
+                   $idProdutor = DB::table('produtor')->insertGetId([
+                        'nome' =>  $request->input('nome'),
+                        'cpf_cnpj' => $request->input('cpfcnpj'),
+                        'rg' => $request->input('identificacao'),
+                        'telefone' =>  $request->input('telefone'),
+                        'data_nascimento' => $request->input('nascimento'),
+                        'tipo_produtor_id' => (integer) $request->input('tipo_produtor'),
+                        'inscricao' =>$request->input('inscricao'),
+                        'datahora_inclusao' => new \DateTime(),
+                        'datahora_atualizacao' => new \DateTime(),
+                        'usuario' => UserHelper::getNameUserLogged(),
+                        'users_id' => $request->input('usuario')=='' ? null:(integer)$request->input('usuario'),
+                    ]);
+
+                    $saldoProdutor->setProdutorId($idProdutor);
+
+                    $this->repositorySaldo->create($saldoProdutor);
+
+                    DB::commit();
+                }catch(Exception $e){
+                    DB::rollBack();
+                    echo "erro ao inserir na base informe ao desenvolvedor";
+                }
 
                 return back();
             }

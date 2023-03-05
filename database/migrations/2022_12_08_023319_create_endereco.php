@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateClienteEmpresa extends Migration
+class CreateEndereco extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,17 @@ class CreateClienteEmpresa extends Migration
      */
     public function up()
     {
-        Schema::create('cliente_empresa', function (Blueprint $table) {
+        Schema::create('endereco', function (Blueprint $table) {
             $table->id();
-            $table->string('nome_razao_social');
-            $table->string('cpf_cnpj',14);
-            $table->unsignedBigInteger('endereco_id')->unique();
-            $table->foreign('endereco_id')->references('id')->on('endereco');
+            $table->string('rua', 100);
+            $table->integer('numero');
+            $table->string('bairro',50);
+            $table->string('cidade',50);
+            $table->string('estado',2);
+            $table->string('cep',8);
             $table->timestamp('datahora_inclusao')->nullable()->default(null);
             $table->timestamp('datahora_atualizacao')->nullable()->default(null);
-            $table->string('usuario')->nullable();
+            $table->string('usuario');
         });
     }
 
@@ -32,6 +34,6 @@ class CreateClienteEmpresa extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cliente_empresa');
+        Schema::dropIfExists('endereco');
     }
 }
