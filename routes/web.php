@@ -10,34 +10,24 @@ use App\Http\Controllers\RelacaoLeiteProtutorTanqueController;
 use App\Http\Controllers\TanqueLeiteAssociacaoController;
 use App\Http\Controllers\ValorLeiteMensalController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
+//Rota para site
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login');
 });
 
-
+// rota para login
 Route::get('/login',function(){
     return view('login');
 })->name('login');
 
+// Rota autenticação
 Route::post('/auth',[UserController::class,'auth'])->name('auth');
 
+//Rotas usuarios
 Route::group(['middleware'=>['auth']], function(){
 
     Route::get('/home',[HomeController::class,'index'])->name('home');
     Route::get('/logout',[UserController::class,'logout'])->name('logout');
-
-
     Route::get('/user/formulario',[UserController::class,'edit'])->name('userFormulario');
     Route::post('/user/formulario/inserir',[UserController::class, 'cadastrar'])->name('inserirUsuario');
     Route::post('/user/formulario/excluir',[UserController::class, 'destroy'])->name('excluirUsuario');
@@ -51,26 +41,29 @@ Route::group(['middleware'=>['auth']], function(){
 
 Route::group(['middleware'=>['auth']], function(){
 
+    //PRODUTOR
     Route::get('/produtor/formulario',[ProdutorController::class,'edit'])->name('produtorFormulario');
     Route::delete('/produtor/formulario/excluir/{id}',[ProdutorController::class,'destroy'])->name('excluirProdutor');
     Route::post('/produtor/formuario/criar',[ProdutorController::class, 'store'])->name('criarProdutor');
+    Route::post('/produtor/formulario/alterar/{id}',[ProdutorController::class, 'alterar'])->name('alterarProdutor');
+    Route::post('/produtor/formulario/atualizarprodutor',[ProdutorController::class, 'update'])->name('atualizarProdutor');
     Route::get('/produtor/relatorio/leitediario',[ProdutorController::class, 'relatorioLeiteProdutorDiario'])->name('RelatorioLeiteProdutorContent');
     Route::get('/produtor/cadastro/leitediario',[AppController::class,'create'])->name('CadastroLeiteProdutor');
+    Route::get('/produtor/back', function(){
+        return redirect()->route('produtorFormulario');
+    })->name('backFormularioProdutor');
+
+    //LEITE
     Route::post('/produtor/cadastro/leitediario/inserir',[RelacaoLeiteProtutorTanqueController::class,'store'])->name('inserirLeiteProdutor');
     Route::delete('/produtor/cadastro/leitediario/destroy/{id}',[RelacaoLeiteProtutorTanqueController::class,'destroy'])->name('excluirLeiteProdutor');
-
-
-
     Route::get('/leite/cadastro/valor',[ValorLeiteMensalController::class,'create'])->name('CadastroValorLeite');
     Route::post('/leite/cadastro/valor/inserir',[ValorLeiteMensalController::class,'store'])->name('inserirValorLeiteMensal');
     Route::delete('/leite/cadastro/valor/excluir',[ValorLeiteMensalController::class, 'destroy'])->name('excluirValorLeiteMensal');
-
-
-
     Route::get('/fonte/formulario',[TanqueLeiteAssociacaoController::class,'index'])->name('formularioCadastroFonte');
     Route::post('/fonte/formulario/inserir',[TanqueLeiteAssociacaoController::class,'create'])->name('criarTanqueFonte');
     Route::delete('/fonte/formulario/excluir/{id}',[TanqueLeiteAssociacaoController::class,'destroy'])->name('excluirFonte');
 
+    //CLIENTE
     Route::get('/cliente/formulario',[ClienteEmpresaControler::class,'create'])->name('formularioCadastroCliente');
 
 

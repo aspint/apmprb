@@ -147,7 +147,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('status_recibo')->insert([
-            'valor' => 'GERADO',
+            'valor' => 'ABERTO',
             'descricao' => 'Pagamento pendente de gerar recibo',
             'datahora_inclusao' =>new \DateTime(),
             'datahora_atualizacao' =>new \DateTime(),

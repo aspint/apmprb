@@ -131,7 +131,6 @@ class UserController extends Controller
                         'tipo_usuario_id' => empty($request->input('perfil'))? $userOriginal->tipo_usuario_id : $request->input('perfil'),
                     ]);
             }catch(Exception $e){
-                dd('erro');
                 return redirect('/user/formulario')->with('message','Não foi possivel atualizar os dados verifique novamente');
             }
         }
