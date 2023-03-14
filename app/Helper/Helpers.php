@@ -21,7 +21,7 @@ class Helpers
     }
 
     public function dataCorteFimMesPersonalizado($mes){
-        return new DateTime( Date(Date('Y').'/'.$mes.'/'.Date("t", mktime(0,0,0,Date('m'),'01',Date('Y')))));
+        return new DateTime( Date(Date('Y').'/'.$mes.'/'.Date("t", mktime(0,0,0,$mes,'01',Date('Y')))));
     }
 
 

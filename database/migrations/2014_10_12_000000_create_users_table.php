@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
             $table->unsignedBigInteger('tipo_usuario_id')->nullable();
             $table->foreign('tipo_usuario_id')->references('id')->on('tipo_usuario');
+            $table->string('image');
         });
     }
 

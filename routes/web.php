@@ -37,6 +37,8 @@ Route::group(['middleware'=>['auth']], function(){
         return redirect()->route('userFormulario');
     })->name('backFormulario');
 
+    ROute::get('/user/config/perfil', [UserController::class, 'atualizarUsuarioView'])->name('configPerfil');
+
 });
 
 Route::group(['middleware'=>['auth']], function(){

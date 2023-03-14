@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Entidade\SaldoProdutorEntidade;
+use App\Enums\StatusReciboEnum;
 use App\Helper\Helpers;
 use App\Helper\UserHelper;
 use App\Models\Produtor;
+use App\Models\ReciboPagamento;
 use App\Models\RelacaoLeiteProdutorTanque;
 use App\Models\SaldoProdutor;
+use App\Models\StatusRecibo;
 use App\Models\TipoUsuario;
 use App\Repository\IReposirtory;
 use App\Repository\ISaldoRepository;
@@ -75,8 +78,6 @@ class ProdutorController extends Controller
     }
 
     public function update(Request $request){
-
-
 
         if(Auth::check()){
             if(UserHelper::hasAdm()){
@@ -225,15 +226,15 @@ class ProdutorController extends Controller
             $temp['valorLeiteMes'] = 0.0;
             $temp['valorAReceber'] = 0.0;
 
-            $resRelacaoProdTanque = DB::table('relacao_leite_produtor_tanque')
-                                        // ->join('produtor','relacao_leite_produtor_tanque.produtor_id','produtor.id')
-                                        ->where('relacao_leite_produtor_tanque.produtor_id',$produtor->id)
-                                        ->whereBetween('data_entrega',  [ Helpers::dataCorteInicioMes(), Helpers::dataCorteFimMes()])
-                                        ->get();
+            $statusRecibo = StatusRecibo::where('valor',StatusReciboEnum::GERADO)
+                            ->first();
 
-            foreach($resRelacaoProdTanque as $rlp){
-                $temp['totalLitros'] += $rlp->qntd_litros_entregue;
-            }
+            $reciboPagamento = ReciboPagamento::where('produtor_id', $produtor->tipo_produtor_id)
+                            ->whereBetween('mes_referencia', [ Helpers::dataCorteInicioMesPersonalizado(date('m')), Helpers::dataCorteFimMesPersonalizado(date('m'))])
+                            ->where('status_recibo_id', $statusRecibo['id'])
+                            ->first();
+
+            $temp['totalLitros'] = $reciboPagamento['total_litros_pago'];
 
             $valorMensal = DB::table('valor_leite_mensal')
                     ->where('valor_leite_mensal.tipo_produtor_id',$produtor->tipo_produtor_id)
@@ -243,7 +244,7 @@ class ProdutorController extends Controller
 
             $temp['valorLeiteMes'] =  $valorMensal->valor;
 
-            $temp['valorAReceber'] = $valorMensal->valor * $temp['totalLitros'] ;
+            $temp['valorAReceber'] =  $reciboPagamento['valor_pago'];
 
             $entregas = DB::table('relacao_leite_produtor_tanque')
                     ->join('produtor','relacao_leite_produtor_tanque.produtor_id','produtor.id')

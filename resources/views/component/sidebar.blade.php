@@ -312,9 +312,9 @@
                     </a>
                     <ul aria-expanded="false" class="collapse  first-level">
                         <li class="sidebar-item">
-                            <a href="widgets-apps.html" class="sidebar-link">
+                            <a href="{{route('configPerfil')}}" class="sidebar-link">
                                 <i class="mdi mdi-comment-processing-outline"></i>
-                                <span class="hide-menu"> Apps Widgets </span>
+                                <span class="hide-menu"> Perfil </span>
                             </a>
                         </li>
                     </ul>
