@@ -89,6 +89,7 @@ class UserController extends Controller
                     'created_at'=>new \DateTime(),
                     'updated_at'=>new \DateTime(),
                     'tipo_usuario_id' => $request->input('perfil'),
+                    'image'=>''
                 ]);
             }catch(Exception $e){
                 return redirect('/user/formulario')->with('message','CPF já inseridos no sistema!');
@@ -135,6 +136,22 @@ class UserController extends Controller
             }
         }
         return redirect()->route('userFormulario');
+    }
+
+
+    public function atualizarUsuarioView(Request $request){
+        // dd('funcionalidade em desenvolvimento');
+        if(Auth::check()){
+            $response = UserHelper::getDataUserLogged();
+            $permission = TipoUsuario::find($response['tipo_usuario_id']);
+            $page['info'] = 'perfilUser';
+
+            // dd($response);
+
+            return view('view.alteracao.PerfilUser', compact('response','permission','page'));
+       }else{
+           return back();
+       }
     }
 
 }

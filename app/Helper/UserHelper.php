@@ -15,6 +15,7 @@ class UserHelper
         $response['name'] = explode(' ',$user->name)[0];
         $response['name_full'] = $user->name;
         $response['tipo_usuario_id'] = $user->tipo_usuario_id;
+        $response['image'] =  $user->image;
         return $response;
     }
 

@@ -29,6 +29,7 @@ class CreateReciboPagamento extends Migration
             $table->unsignedBigInteger('status_recibo_id');
             $table->foreign('status_recibo_id')->references('id')->on('status_recibo');
             $table->string('usuario')->nullable();
+            $table->unique('mes_referencia','produtor_id');
         });
     }
 

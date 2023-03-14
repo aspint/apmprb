@@ -97,7 +97,7 @@
                                                    name="cpf"
                                                    class="form-control form-control-danger cpf"
                                                    value="{{$edit->cpf}}"
-                                                   placeholder="123.456.789.01"
+                                                   placeholder="123.456.789-01"
                                                    required>
                                             <small class="form-control-feedback"> Informe um cpf, para entrar no sistema. </small> </div>
                                     </div>

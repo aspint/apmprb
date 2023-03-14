@@ -31,6 +31,8 @@
             @yield('editacaoUsuario')
         @elseif($page['info'] == 'edicaoProdutor')
             @yield('edicaoProdutor')
+        @elseif($page['info'] == 'perfilUser')
+            @yield('perfilUser')
         @endif
 
 

@@ -25,6 +25,17 @@
     <!-- ============================================================== -->
     <!-- Container fluid  -->
     <!-- ============================================================== -->
+    @if (session('message'))
+        <div class="alert alert-danger"> <i class="ti-user"></i> {{session('message')}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+        </div>
+    @endif
+
+
+
+    <div class="alert alert-danger"> <i class="ti-user"></i> FUNCIONALIDADE AINDA NÃO CONCLUIDA
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+    </div>
     <div class="page-content container-fluid">
         <!-- Row -->
         <div class="row">
@@ -111,7 +122,7 @@
                             </div>
                             <div class="form-actions">
                                 <div class="card-body">
-                                    <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
+                                    <button type="submit" class="btn btn-success" disabled> <i class="fa fa-check"></i> Save</button>
                                 </div>
                             </div>
                         </div>

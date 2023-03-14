@@ -2,16 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\StatusPagamentoEnum;
+use App\Enums\StatusReciboEnum;
 use App\Helper\Helpers;
 use App\Helper\UserHelper;
 use App\Models\FonteTanque;
 use App\Models\Produtor;
+use App\Models\ReciboPagamento;
 use App\Models\RelacaoLeiteProdutorTanque;
+use App\Models\SaldoProdutor;
+use App\Models\StatusPagamento;
+use App\Models\StatusRecibo;
 use App\Models\TipoAcaoLeite;
 use App\Models\ValorLeiteMensal;
+use DateTime;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 
 class RelacaoLeiteProtutorTanqueController extends Controller
@@ -25,33 +33,68 @@ class RelacaoLeiteProtutorTanqueController extends Controller
         if(Auth::check()){
             if(UserHelper::hasAdm() || UserHelper::hasFunc()){
                 $produtor = Produtor::find($request->input('produtor'));
+                $mesCorrenteInicio = Helpers::dataCorteInicioMes();
+                $mesCorrenteFim =  Helpers::dataCorteFimMes();
+                $userLogado = UserHelper::getDataUserLogged()['name'];
 
 
                 $ValorLeite = ValorLeiteMensal::where('tipo_produtor_id', $produtor->tipo_produtor_id)
-                             ->whereBetween('data_referencia', [ Helpers::dataCorteInicioMes(), Helpers::dataCorteFimMes()])
-                            // ->where('data_referencia', '>=', $DataCorteInicio )
-                            // ->where('data_referencia', '<=', $DataCorteFim )
+                             ->whereBetween('data_referencia', [  $mesCorrenteInicio, $mesCorrenteFim])
                             ->first();
 
-                // $ValorLeite = DB::table('valor_leite_mensal')
-                //                     ->where( 'valor_leite_mensal.tipo_produtor_id', $produtor->tipo_produtor_id);
+                $statusRecibo = StatusRecibo::where('valor',StatusReciboEnum::GERADO)
+                                ->first();
+
+                $statusPagamento = StatusPagamento::where('valor',StatusPagamentoEnum::PENDENTE)
+                                ->first();
+
+                $reciboPagamento = ReciboPagamento::where('produtor_id', $produtor->tipo_produtor_id)
+                                        ->whereBetween('mes_referencia', [ Helpers::dataCorteInicioMesPersonalizado(date('m')), Helpers::dataCorteFimMesPersonalizado(date('m'))])
+                                        ->where('status_recibo_id', $statusRecibo['id'])
+                                        ->first();
+                $saldoProdutor = SaldoProdutor::where('produtor_id', $produtor->tipo_produtor_id)
+                                ->first();
 
                 $acaoLeite = TipoAcaoLeite::where('tipo_acao_valor','ENTRADA')->first();
                 $FonteTanque = FonteTanque::find( $request->input('fonteTanque'));
 
+
+                // dd( $reciboPagamento );
                 DB::beginTransaction();
 
                 try{
+                    $valorAReceberProdutor = $ValorLeite['valor_liquido']*$request->input('quantidadeLitros');
+
+                    if ($reciboPagamento == null){
+
+                        $reciboPagamento = ReciboPagamento::insertGetId([
+                            'valor_pago' => 0.0,
+                            'total_litros_pago' =>0.0,
+                            'periodo_inicio' => $mesCorrenteInicio ,
+                            'periodo_fim' =>$mesCorrenteFim ,
+                            'mes_referencia' =>date('d/m/Y'),
+                            'produtor_id' =>$produtor['id'] ,
+                            'status_pagamento_id' => $statusPagamento['id'],
+                            'datahora_inclusao' =>new \DateTime() ,
+                            'datahora_atualizacao' => new \DateTime(),
+                            'status_recibo_id' => $statusRecibo['id'] ,
+                            'usuario' => $userLogado ,
+                        ]);
+
+                        $reciboPagamento = ReciboPagamento::find( $reciboPagamento);
+                    }
 
                     $leiteProdutorTanque =  DB::table('relacao_leite_produtor_tanque')->insertGetId([
                             'data_entrega' =>  $request->input('dataEntrega'),
                             'qntd_litros_entregue' =>$request->input('quantidadeLitros') ,
                             'periodo_id' =>$request->input('periodo'),
-                            'produtor_id' => $request->input('produtor'),
+                            'produtor_id' => $produtor['id'],
                             'datahora_inclusao' => new \DateTime(),
-                            'datahora_atualizacao' =>new \DateTime(),
+                            'datahora_alteracao' =>new \DateTime(),
                             'valor_leite_mensal_id' => $ValorLeite['id'] ,
-                            'usuario' => UserHelper::getDataUserLogged()['name'],
+                            'recibo_pagamento_id' =>  $reciboPagamento['id'],
+                            'status_pagamento_id' => $statusPagamento['id'],
+                            'usuario' =>  $userLogado,
                     ]);
 
 
@@ -60,11 +103,27 @@ class RelacaoLeiteProtutorTanqueController extends Controller
                         'tipo_acao_leite_id' => $acaoLeite->id,
                         'total_leite_acao' => $request->input('quantidadeLitros'),
                         'relacao_leite_produtor_tanque_id' => $leiteProdutorTanque,
-                        'usuario' => UserHelper::getDataUserLogged()['name'],
+                        'usuario' => $userLogado,
                         'datahora_inclusao' => new \DateTime() ,
                         'datahora_atualizacao' =>  new \DateTime(),
                     ]);
 
+                    DB::table('recibo_pagamento')
+                        ->where('id',$reciboPagamento['id'])
+                        ->update([
+                            'total_litros_pago' =>$reciboPagamento['total_litros_pago']+ $request->input('quantidadeLitros') ,
+                            'valor_pago'=> $reciboPagamento['valor_pago']+ $valorAReceberProdutor,
+                            'datahora_atualizacao'=>new \DateTime(),
+                        ]);
+                    
+                    DB::table('saldo_produtor')
+                        ->where('id', $saldoProdutor->id)
+                        ->update([
+                            'saldo'=> $saldoProdutor->saldo + $valorAReceberProdutor,
+                            'datahora_alteracao'=> new \DateTime(),
+                            'usuario'=> $userLogado,
+                        ])
+                    ;
                     DB::table('fonte_tanque')
                     ->where('id',$request->input('fonteTanque'))
                     ->update(['total_leite'=>$FonteTanque->total_leite+$request->input('quantidadeLitros')]);
