@@ -59,7 +59,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Tipo Produtor</label>
-                                            <select class="form-control custom-select" id="tipo_produtor" name="tipo_produtor">
+                                            <select class="form-control custom-select" id="tipo_produtor" name="tipo_produtor" required>
                                                 <option value=""></option>
                                                 <option value="1">Produtor Associação</option>
                                                 <option value="2">Produtor Terceiro</option>
@@ -75,13 +75,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Valor Bruto:</label>
-                                            <input type="number" step="0.01"  id="valorBruto" name="valorBruto" class="form-control form-control-danger" placeholder="Ex.:100" >
+                                            <input type="number" step="0.01"  id="valorBruto" name="valorBruto" class="form-control form-control-danger" placeholder="Ex.:100" required>
                                             <small class="form-control-feedback"> Informe uma quantidade de leite (esse campo não pode ser vazio). </small> </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Valor Liquido:</label>
-                                            <input type="number" step="0.01" id="valorLiquido" name="valorLiquido" class="form-control form-control-danger" placeholder="Ex.:100" >
+                                            <input type="number" step="0.01" id="valorLiquido" name="valorLiquido" class="form-control form-control-danger" placeholder="Ex.:100" required>
                                             <small class="form-control-feedback"> Informe uma quantidade de leite (esse campo não pode ser vazio). </small> </div>
                                     </div>
                                     <!--/span-->
