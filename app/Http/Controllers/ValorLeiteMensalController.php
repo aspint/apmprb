@@ -6,6 +6,7 @@ use App\Helper\Helpers;
 use App\Helper\UserHelper;
 use App\Models\TipoProdutor;
 use App\Models\TipoUsuario;
+use App\Models\ValorLeiteMensal;
 use DateTime;
 use Exception;
 use Illuminate\Http\Request;
@@ -28,16 +29,15 @@ class ValorLeiteMensalController extends Controller
         $permission = TipoUsuario::find($response['tipo_usuario_id']);
         $page['info'] = 'CadastroValorLeiteMensal';
 
-
-
         $valoresLeite =  DB::table('valor_leite_mensal')
                             ->join('tipo_produtor','valor_leite_mensal.tipo_produtor_id','tipo_produtor.id')
                             ->select('valor_leite_mensal.id as valorLeite_id','valor_leite_mensal.*','tipo_produtor.*')
                             ->orderBy('data_referencia', 'desc')
                             ->paginate(10);
 
-
-        return view('view.CadastroValorLeiteMensal',compact('response','permission','page','valoresLeite'));
+        $tipoProdutores = TipoProdutor::all();
+        
+        return view('view.CadastroValorLeiteMensal',compact('response','permission','page','valoresLeite','tipoProdutores'));
     }
 
 

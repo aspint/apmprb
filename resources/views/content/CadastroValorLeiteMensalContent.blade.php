@@ -61,8 +61,11 @@
                                             <label class="control-label">Tipo Produtor</label>
                                             <select class="form-control custom-select" id="tipo_produtor" name="tipo_produtor" required>
                                                 <option value=""></option>
-                                                <option value="1">Produtor Associação</option>
-                                                <option value="2">Produtor Terceiro</option>
+                                                @if(isset($tipoProdutores))
+                                                    @foreach ( $tipoProdutores as $tipoProdutor)
+                                                        <option value="{{$tipoProdutor->id}}">{{$tipoProdutor->desc_valor}}</option>
+                                                    @endforeach
+                                                @endif
                                             </select>
                                             <small class="form-control-feedback"> Informe o tipo de produtor (este campo não pode ser nulo). </small> </div>
                                     </div>
@@ -75,13 +78,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Valor Bruto:</label>
-                                            <input type="number" step="0.01"  id="valorBruto" name="valorBruto" class="form-control form-control-danger" placeholder="Ex.:100" required>
+                                            <input type="number" step="0.00000001"  id="valorBruto" name="valorBruto" class="form-control form-control-danger" placeholder="Ex.:100" required>
                                             <small class="form-control-feedback"> Informe uma quantidade de leite (esse campo não pode ser vazio). </small> </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Valor Liquido:</label>
-                                            <input type="number" step="0.01" id="valorLiquido" name="valorLiquido" class="form-control form-control-danger" placeholder="Ex.:100" required>
+                                            <input type="number" step="0.00000001" id="valorLiquido" name="valorLiquido" class="form-control form-control-danger" placeholder="Ex.:100" required>
                                             <small class="form-control-feedback"> Informe uma quantidade de leite (esse campo não pode ser vazio). </small> </div>
                                     </div>
                                     <!--/span-->
@@ -123,9 +126,10 @@
                                     </thead>
                                     <tbody>
                                         @if(isset($valoresLeite))
+                                        <span hidden>{{$c = 0;}}</span>
                                         @foreach ( $valoresLeite as $valorLeite)
                                         <tr>
-                                            <th scope="row">{{$valorLeite->valorLeite_id}}</th>
+                                            <th scope="row">{{$c++/*$valorLeite->valorLeite_id*/}}</th>
                                             <td>{{\Carbon\Carbon::parse($valorLeite->data_referencia)->format('d-m-Y')}}</td>
                                             <td>{{$valorLeite->desc_valor}}</td>
                                             <td>R$ {{$valorLeite->valor_bruto}}</td>

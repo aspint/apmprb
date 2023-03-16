@@ -52,7 +52,7 @@ class RelacaoLeiteProtutorTanqueController extends Controller
                                         ->whereBetween('mes_referencia', [ Helpers::dataCorteInicioMesPersonalizado(date('m')), Helpers::dataCorteFimMesPersonalizado(date('m'))])
                                         ->where('status_recibo_id', $statusRecibo['id'])
                                         ->first();
-                $saldoProdutor = SaldoProdutor::where('produtor_id', $produtor->tipo_produtor_id)
+                $saldoProdutor = SaldoProdutor::where('produtor_id', $produtor->id)
                                 ->first();
 
                 $acaoLeite = TipoAcaoLeite::where('tipo_acao_valor','ENTRADA')->first();
@@ -132,6 +132,7 @@ class RelacaoLeiteProtutorTanqueController extends Controller
 
                 }catch(Exception $e){
                     DB::rollBack();
+                    dd($e);
                     echo 'Erro ao inserir na base comunique ao administrador';
                 }
 

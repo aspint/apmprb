@@ -121,8 +121,11 @@
                                             <select class="form-control custom-select"
                                                     id="tipo_produtor" name="tipo_produtor" required>
                                                 <option value="" ></option>
-                                                <option value="1"{{$edit->tipo_produtor_id == 1 ?'selected':''}}>Produtor Associação</option>
-                                                <option value="2"{{$edit->tipo_produtor_id == 2 ?'selected':''}}>Produtor Terceiro</option>
+                                                @if(isset($tipoProdutores))
+                                                    @foreach ( $tipoProdutores as $tipoProdutor)
+                                                        <option value="{{$tipoProdutor->id}}" {{$tipoProdutor->id == $edit->tipo_produtor_id ?'selected':''}}>{{$tipoProdutor->desc_valor}}</option>
+                                                    @endforeach
+                                                @endif
                                             </select>
                                             <small class="form-control-feedback"> Informe o tipo de produtor (este campo não pode ser nulo). </small> </div>
                                     </div>

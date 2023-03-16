@@ -11,6 +11,7 @@ use App\Models\ReciboPagamento;
 use App\Models\RelacaoLeiteProdutorTanque;
 use App\Models\SaldoProdutor;
 use App\Models\StatusRecibo;
+use App\Models\TipoProdutor;
 use App\Models\TipoUsuario;
 use App\Repository\IReposirtory;
 use App\Repository\ISaldoRepository;
@@ -40,12 +41,12 @@ class ProdutorController extends Controller
                     $permission = TipoUsuario::find($response['tipo_usuario_id']);
 
                     $produtores = DB::table('produtor')
-                    ->join('tipo_produtor','produtor.tipo_produtor_id','=','tipo_produtor.id')
-                    ->leftjoin('endereco','produtor.id','=','endereco.id')
-                    ->select('produtor.id','nome', 'cpf_cnpj','produtor.datahora_inclusao as inclusao','tipo_produtor.desc_valor as tipo',
-                            'produtor.rg','inscricao','produtor.users_id')
-                    ->orderBy('id', 'asc')
-                    ->get();
+                            ->join('tipo_produtor','produtor.tipo_produtor_id','=','tipo_produtor.id')
+                            ->leftjoin('endereco','produtor.id','=','endereco.id')
+                            ->select('produtor.id','nome', 'cpf_cnpj','produtor.datahora_inclusao as inclusao','tipo_produtor.desc_valor as tipo',
+                                    'produtor.rg','inscricao','produtor.users_id')
+                            ->orderBy('id', 'asc')
+                            ->get();
 
                     $indices = [];
                     foreach($produtores as $produtor){
@@ -57,15 +58,17 @@ class ProdutorController extends Controller
                     $users = DB::table('users')
                                 ->join('tipo_usuario','users.tipo_usuario_id','tipo_usuario.id')
                                 ->whereNotIn('users.id', $indices)
-                                ->where('tipo_usuario.tipo_valor','PROD')
+                                // ->where('tipo_usuario.tipo_valor','PROD')
                                 ->select('users.tipo_usuario_id as id_tipo_user','users.id','name','cpf','email','tipo_usuario_id','tipo_valor','descricao','data_inclusao')
                                 ->get();
 
                     $page['info'] = 'edicaoProdutor';
                     $edit = Produtor::find($id);
+                    
+                    $tipoProdutores = TipoProdutor::all();
 
 
-                    return view('view.alteracao.EdicaoProdutor', compact('response','permission','page','edit','produtores','users'));
+                    return view('view.alteracao.EdicaoProdutor', compact('response','permission','page','edit','produtores','users','tipoProdutores'));
                 }catch(Exception $e){
                     return back();
                 }
@@ -138,11 +141,13 @@ class ProdutorController extends Controller
         $users = DB::table('users')
                     ->join('tipo_usuario','users.tipo_usuario_id','tipo_usuario.id')
                     ->whereNotIn('users.id', $indices)
-                    ->where('tipo_usuario.tipo_valor','PROD')
+                    // ->where('tipo_usuario.tipo_valor','PROD')
                     ->select('users.tipo_usuario_id as id_tipo_user','users.id','name','cpf','email','tipo_usuario_id','tipo_valor','descricao','data_inclusao')
                     ->get();
 
-        return view('view.cadastroProdutor', compact('response','produtores','page','users','permission'));
+        $tipoProdutores = TipoProdutor::all();
+
+        return view('view.cadastroProdutor', compact('response','produtores','page','users','permission','tipoProdutores'));
 
    }
 
@@ -229,12 +234,12 @@ class ProdutorController extends Controller
             $statusRecibo = StatusRecibo::where('valor',StatusReciboEnum::GERADO)
                             ->first();
 
-            $reciboPagamento = ReciboPagamento::where('produtor_id', $produtor->tipo_produtor_id)
+            $reciboPagamento = ReciboPagamento::where('produtor_id', $produtor->id)
                             ->whereBetween('mes_referencia', [ Helpers::dataCorteInicioMesPersonalizado(date('m')), Helpers::dataCorteFimMesPersonalizado(date('m'))])
                             ->where('status_recibo_id', $statusRecibo['id'])
                             ->first();
 
-            $temp['totalLitros'] = $reciboPagamento['total_litros_pago'];
+            $temp['totalLitros'] =  $reciboPagamento!= null ? $reciboPagamento['total_litros_pago'] : 0;
 
             $valorMensal = DB::table('valor_leite_mensal')
                     ->where('valor_leite_mensal.tipo_produtor_id',$produtor->tipo_produtor_id)
@@ -244,7 +249,7 @@ class ProdutorController extends Controller
 
             $temp['valorLeiteMes'] =  $valorMensal->valor;
 
-            $temp['valorAReceber'] =  $reciboPagamento['valor_pago'];
+            $temp['valorAReceber'] =  $reciboPagamento!= null ?  $reciboPagamento['valor_pago'] : 0;
 
             $entregas = DB::table('relacao_leite_produtor_tanque')
                     ->join('produtor','relacao_leite_produtor_tanque.produtor_id','produtor.id')
