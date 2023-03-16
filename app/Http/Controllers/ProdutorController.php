@@ -225,7 +225,7 @@ class ProdutorController extends Controller
                             ->where('produtor.users_id', $response['id'])
                             ->first();
 
-        if($permission->tipo_valor == 'PROD' && $produtor != null ){
+        if( $produtor != null ){
 
             $temp['totalLitros'] = 0;
             $temp['valorLeiteMes'] = 0.0;
