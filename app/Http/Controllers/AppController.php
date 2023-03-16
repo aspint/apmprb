@@ -7,6 +7,7 @@ use App\Helper\UserHelper;
 use App\Models\FonteTanque;
 use App\Models\Periodo;
 use App\Models\Produtor;
+use App\Models\TipoProdutor;
 use App\Models\TipoUsuario;
 use DateTime;
 use Illuminate\Http\Request;
@@ -35,8 +36,9 @@ class AppController extends Controller
         $valorMensal = DB::table('valor_leite_mensal')
                         ->whereBetween('data_referencia', [ Helpers::dataCorteInicioMes(), Helpers::dataCorteFimMes()])
                         ->count();
+        $tipoProdutores = TipoProdutor::all();
 
-        if($valorMensal >= 2){
+        if($valorMensal >= sizeof($tipoProdutores)){
             $page['formulario'] = false;
             $page['message'] = '';
 

@@ -57,6 +57,22 @@ class DatabaseSeeder extends Seeder
             'usuario' => 'usuario.batch'
         ]);
 
+        DB::table('tipo_produtor')->insert([
+            'tipo_valor' => 'PROD_GRAVISTA',
+            'desc_valor' => 'Produtores Gravista',
+            'datahora_inclusao' => new \DateTime(),
+            'datahora_atualizacao' => new \DateTime(),
+            'usuario' => 'usuario.batch'
+        ]);
+
+        DB::table('tipo_produtor')->insert([
+            'tipo_valor' => 'PROD_ASSA_PEIXE',
+            'desc_valor' => 'Produtores Assa Peixe',
+            'datahora_inclusao' => new \DateTime(),
+            'datahora_atualizacao' => new \DateTime(),
+            'usuario' => 'usuario.batch'
+        ]);
+
         DB::table('tipo_acao_leite')->insert([
             'tipo_acao_valor' => 'ENTRADA',
             'tipo_acao_descricao' => 'Entrada do leite na associaçao',
@@ -130,6 +146,7 @@ class DatabaseSeeder extends Seeder
             'tipo_usuario_id' => 3,
         ]);
 
+        /* @todo REVISAR DAQUI PARA BAIXO*/
         DB::table('status_pagamento')->insert([
             'valor' => 'PAGO',
             'descricao' => 'Pagamento efetuado',
