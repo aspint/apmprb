@@ -157,15 +157,15 @@ class DatabaseSeeder extends Seeder
 
         DB::table('status_pagamento')->insert([
             'valor' => 'PENDENTE',
-            'descricao' => 'Pagamento pendente',
+            'descricao' => 'Pendente de pagamento',
             'datahora_inclusao' =>new \DateTime(),
             'datahora_atualizacao' =>new \DateTime(),
             'usuario' => 'usuario.batch'
         ]);
 
         DB::table('status_recibo')->insert([
-            'valor' => 'ABERTO',
-            'descricao' => 'Pagamento pendente de gerar recibo',
+            'valor' => 'GERADO',
+            'descricao' => 'Recibo gerado e aberto para inclusão de itens, ',
             'datahora_inclusao' =>new \DateTime(),
             'datahora_atualizacao' =>new \DateTime(),
             'usuario' => 'usuario.batch'
@@ -173,7 +173,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('status_recibo')->insert([
             'valor' => 'FECHADO',
-            'descricao' => 'Recibo Gerado e Pagamento pendente ',
+            'descricao' => 'Recibo Fechado e Pagamento pendente ',
             'datahora_inclusao' =>new \DateTime(),
             'datahora_atualizacao' =>new \DateTime(),
             'usuario' => 'usuario.batch'

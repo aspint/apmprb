@@ -24,7 +24,11 @@ class HomeController extends Controller
             $response = UserHelper::getDataUserLogged();
             $permission = TipoUsuario::find($response['tipo_usuario_id']);
 
-            $FonteTanqueLeite = FonteTanque::find(1);
+            $FonteTanqueLeite = DB::table('fonte_tanque')
+                                    ->select(DB::raw('SUM(total_leite) as total_leite'))
+                                    ->first();
+            $totalLeiteTanques = 0;
+
             $Leite = DB::table('relacao_leite_produtor_tanque')
                                 ->whereBetween('data_entrega', [ Helpers::dataCorteInicioMes(), Helpers::dataCorteFimMes()])
                                 ->select(DB::raw('SUM(qntd_litros_entregue) as recebido'))

@@ -32,11 +32,11 @@ class ValorLeiteMensalController extends Controller
         $valoresLeite =  DB::table('valor_leite_mensal')
                             ->join('tipo_produtor','valor_leite_mensal.tipo_produtor_id','tipo_produtor.id')
                             ->select('valor_leite_mensal.id as valorLeite_id','valor_leite_mensal.*','tipo_produtor.*')
-                            ->orderBy('data_referencia', 'desc')
+                            ->orderBy('data_validade', 'desc')
                             ->paginate(10);
 
         $tipoProdutores = TipoProdutor::all();
-        
+
         return view('view.CadastroValorLeiteMensal',compact('response','permission','page','valoresLeite','tipoProdutores'));
     }
 
@@ -53,17 +53,19 @@ class ValorLeiteMensalController extends Controller
                                         ->join('tipo_produtor','valor_leite_mensal.tipo_produtor_id','tipo_produtor.id')
                                         ->select('valor_leite_mensal.id as valorLeite_id','valor_leite_mensal.*','tipo_produtor.*')
                                         ->where('tipo_produtor.tipo_valor',$tipoProdutor->tipo_valor)
-                                        ->whereBetween('valor_leite_mensal.data_referencia',[Helpers::dataCorteInicioMesPersonalizado($mes),Helpers::dataCorteFimMesPersonalizado($mes)])
+                                        ->where('valor_leite_mensal.data_validade', ">=",date("Y-m-d"))
+                                        // ->where('valor_leite_mensal.data_referencia', ">=", new \DateTime())
+                                        // ->whereBetween('valor_leite_mensal.data_referencia',[Helpers::dataCorteInicioMesPersonalizado($mes),Helpers::dataCorteFimMesPersonalizado($mes)])
                                         ->count();
 
                 if($vlrLeitCadasMes > 0){
-                    return back()->with('message', 'Não é possivel inserir dois valores, para o mesmo produtor, dentro do mesmo mês');
+                    return back()->with('message', 'Não é possivel inserir dois valores, para o mesmo TIPO PRODUTOR, dentro do mesmo PERIODO.');
                 }
 
                 DB::table('valor_leite_mensal')->insert([
 
                     'data_inclusao' => new \DateTime(),
-                    'data_referencia' => $request->input('dataReferencia'),
+                    'data_validade' => $request->input('dataValidade'),
                     'valor_bruto' => $request->input('valorBruto'),
                     'valor_liquido' => $request->input('valorLiquido'),
                     'tipo_produtor_id' =>$request->input('tipo_produtor'),

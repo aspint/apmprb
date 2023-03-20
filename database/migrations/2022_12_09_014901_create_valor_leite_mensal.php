@@ -16,7 +16,7 @@ class CreateValorLeiteMensal extends Migration
         Schema::create('valor_leite_mensal', function (Blueprint $table) {
             $table->id();
             $table->timestamp('data_inclusao');
-            $table->date('data_referencia');
+            $table->date('data_validade');
             $table->float('valor_bruto');
             $table->float('valor_liquido');
             $table->unsignedBigInteger('tipo_produtor_id');
