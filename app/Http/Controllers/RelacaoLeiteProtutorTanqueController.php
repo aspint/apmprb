@@ -39,8 +39,9 @@ class RelacaoLeiteProtutorTanqueController extends Controller
 
 
                 $ValorLeite = ValorLeiteMensal::where('tipo_produtor_id', $produtor->tipo_produtor_id)
-                             ->whereBetween('data_referencia', [  $mesCorrenteInicio, $mesCorrenteFim])
-                            ->first();
+                                ->where('data_validade', ">=", date("Y-m-d"))
+                            //  ->whereBetween('data_referencia', [  $mesCorrenteInicio, $mesCorrenteFim])
+                                ->first();
 
                 $statusRecibo = StatusRecibo::where('valor',StatusReciboEnum::GERADO)
                                 ->first();
@@ -48,18 +49,17 @@ class RelacaoLeiteProtutorTanqueController extends Controller
                 $statusPagamento = StatusPagamento::where('valor',StatusPagamentoEnum::PENDENTE)
                                 ->first();
 
-                $reciboPagamento = ReciboPagamento::where('produtor_id', $produtor->tipo_produtor_id)
+                $reciboPagamento = ReciboPagamento::where('produtor_id', $produtor->id)
                                         ->whereBetween('mes_referencia', [ Helpers::dataCorteInicioMesPersonalizado(date('m')), Helpers::dataCorteFimMesPersonalizado(date('m'))])
                                         ->where('status_recibo_id', $statusRecibo['id'])
                                         ->first();
+
                 $saldoProdutor = SaldoProdutor::where('produtor_id', $produtor->id)
                                 ->first();
 
                 $acaoLeite = TipoAcaoLeite::where('tipo_acao_valor','ENTRADA')->first();
                 $FonteTanque = FonteTanque::find( $request->input('fonteTanque'));
 
-
-                // dd( $reciboPagamento );
                 DB::beginTransaction();
 
                 try{
@@ -72,7 +72,7 @@ class RelacaoLeiteProtutorTanqueController extends Controller
                             'total_litros_pago' =>0.0,
                             'periodo_inicio' => $mesCorrenteInicio ,
                             'periodo_fim' =>$mesCorrenteFim ,
-                            'mes_referencia' =>date('d/m/Y'),
+                            'mes_referencia' =>Helpers::dataCorteInicioMesPersonalizado(date('m')),//date('20/m/Y'),
                             'produtor_id' =>$produtor['id'] ,
                             'status_pagamento_id' => $statusPagamento['id'],
                             'datahora_inclusao' =>new \DateTime() ,
@@ -115,7 +115,7 @@ class RelacaoLeiteProtutorTanqueController extends Controller
                             'valor_pago'=> $reciboPagamento['valor_pago']+ $valorAReceberProdutor,
                             'datahora_atualizacao'=>new \DateTime(),
                         ]);
-                    
+
                     DB::table('saldo_produtor')
                         ->where('id', $saldoProdutor->id)
                         ->update([
@@ -132,8 +132,7 @@ class RelacaoLeiteProtutorTanqueController extends Controller
 
                 }catch(Exception $e){
                     DB::rollBack();
-                    dd($e);
-                    echo 'Erro ao inserir na base comunique ao administrador';
+                    echo 'Erro ao inserir leite diario na base comunique ao administrador';
                 }
 
                 return back();

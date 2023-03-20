@@ -64,7 +64,7 @@ class ProdutorController extends Controller
 
                     $page['info'] = 'edicaoProdutor';
                     $edit = Produtor::find($id);
-                    
+
                     $tipoProdutores = TipoProdutor::all();
 
 
@@ -129,7 +129,7 @@ class ProdutorController extends Controller
                     ->select('produtor.id','nome', 'cpf_cnpj','produtor.datahora_inclusao as inclusao','tipo_produtor.desc_valor as tipo',
                             'produtor.rg','inscricao','produtor.users_id')
                     ->orderBy('id', 'asc')
-                    ->paginate(5);
+                    ->paginate(10);
 
         $indices = [];
         foreach($produtores as $produtor){
@@ -243,7 +243,8 @@ class ProdutorController extends Controller
 
             $valorMensal = DB::table('valor_leite_mensal')
                     ->where('valor_leite_mensal.tipo_produtor_id',$produtor->tipo_produtor_id)
-                    ->whereBetween('data_referencia', [ Helpers::dataCorteInicioMes(), Helpers::dataCorteFimMes()])
+                    ->where('valor_leite_mensal.data_validade', ">=", date("Y-m-d"))
+                    // ->whereBetween('data_validade', [ Helpers::dataCorteInicioMes(), Helpers::dataCorteFimMes()])
                     ->select('valor_leite_mensal.valor_liquido as valor')
                     ->first();
 

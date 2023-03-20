@@ -49,8 +49,8 @@
                                 <div class="row pt-3">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label">Data de Referencia:</label>
-                                            <input type="date" id="dataReferencia" name="dataReferencia"class="form-control" required >
+                                            <label class="control-label">Data de Vencimento:</label>
+                                            <input type="date" id="dataValidade" name="dataValidade"class="form-control" required >
                                             <small class="form-control-feedback"> Informe a data da referencia(esse campo não pode ser vazio) </small> </div>
 
 
@@ -117,8 +117,8 @@
                                     <thead class="thead-light">
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">Data referencia</th>
                                             <th scope="col">Tipo Produtor</th>
+                                            <th scope="col">Data Validade</th>
                                             <th scope="col">Valor Bruto</th>
                                             <th scope="col">Valor Liquido</th>
                                             <th scope="col">Ação</th>
@@ -130,8 +130,8 @@
                                         @foreach ( $valoresLeite as $valorLeite)
                                         <tr>
                                             <th scope="row">{{$c++/*$valorLeite->valorLeite_id*/}}</th>
-                                            <td>{{\Carbon\Carbon::parse($valorLeite->data_referencia)->format('d-m-Y')}}</td>
                                             <td>{{$valorLeite->desc_valor}}</td>
+                                            <td>{{\Carbon\Carbon::parse($valorLeite->data_validade)->format('d-m-Y')}}</td>
                                             <td>R$ {{$valorLeite->valor_bruto}}</td>
                                             <td>R$ {{$valorLeite->valor_liquido}}</td>
                                             <td>

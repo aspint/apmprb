@@ -53,9 +53,8 @@
                                         <div class="form-group">
                                             <label class="control-label">Data da Entrega:</label>
                                             <input type="date" id="dataEntrega" name="dataEntrega"class="form-control" required  {{$page['formulario']?'disabled':''}}>
-                                            <small class="form-control-feedback"> Informe a data da entrega(esse campo não pode ser vazio) </small> </div>
-
-
+                                            <small class="form-control-feedback"> Informe a data da entrega(esse campo não pode ser vazio) </small>
+                                        </div>
                                     </div>
                                     <!--/span-->
                                     <div class="col-md-6">
@@ -71,6 +70,24 @@
                                         </div>
                                     </div>
                                     <!--/span-->
+                                    {{-- <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Informar Valor Leite:</label>
+                                            <select class="form-control custom-select"
+                                                     id="valorLeiteMensal"
+                                                     name="valorLeiteMensal"
+                                                     required {{$page['formulario']?'disabled':''}}>
+                                                <option value=""></option>
+                                                @foreach ($valorLeiteMensal as $valorLeite)
+                                                    <option
+                                                        value="{{$valorLeite->id}}">
+                                                        {{$valorLeite->desc_valor}} | Vencimento: {{\Carbon\Carbon::parse($valorLeite->data_referencia)->format('d-m-Y')}}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            <small class="form-control-feedback"> Escolha o valor vigente para o produtor. </small>
+                                        </div>
+                                    </div> --}}
                                 </div>
                                 <!--/row-->
                                 <div class="row pt-3">

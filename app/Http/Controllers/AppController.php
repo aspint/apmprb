@@ -30,15 +30,18 @@ class AppController extends Controller
         $page['info'] = 'app';
 
         $periodos = Periodo::all();
-        $produtores = Produtor::all();
         $fonteTanques = FonteTanque::all();
 
-        $valorMensal = DB::table('valor_leite_mensal')
-                        ->whereBetween('data_referencia', [ Helpers::dataCorteInicioMes(), Helpers::dataCorteFimMes()])
-                        ->count();
+        $valorLeiteMensal = DB::table('valor_leite_mensal')
+                        ->join('tipo_produtor','valor_leite_mensal.tipo_produtor_id','tipo_produtor.id')
+                        ->where('valor_leite_mensal.data_validade', ">=", date("Y-m-d"))
+                        // ->whereBetween('data_referencia', [ Helpers::dataCorteInicioMes(), Helpers::dataCorteFimMes()])
+                        ->get();
+
+
         $tipoProdutores = TipoProdutor::all();
 
-        if($valorMensal >= sizeof($tipoProdutores)){
+        if(sizeof($valorLeiteMensal) >= 1){
             $page['formulario'] = false;
             $page['message'] = '';
 
@@ -47,14 +50,23 @@ class AppController extends Controller
             $page['message'] = 'Não possui valor do leite mensal cadastrado, peça ao administrador que cadadstre para preencher a data de entrega';
         }
 
+        $indices = [];
+
+        foreach($valorLeiteMensal as $valorLeite){
+            if(!in_array($valorLeite->tipo_produtor_id, $indices )){
+                array_push($indices, $valorLeite->tipo_produtor_id);
+            }
+        }
+
+        $produtores = DB::table('produtor')->whereIn('produtor.tipo_produtor_id',$indices)->get();
+
         $entregas = DB::table('relacao_leite_produtor_tanque')
                        ->join('produtor','relacao_leite_produtor_tanque.produtor_id','produtor.id')
                        ->join('periodo','relacao_leite_produtor_tanque.periodo_id','periodo.id')
                        ->join('valor_leite_mensal','relacao_leite_produtor_tanque.valor_leite_mensal_id','valor_leite_mensal.id')
                        ->select('relacao_leite_produtor_tanque.id as rlpt_id', 'relacao_leite_produtor_tanque.*', 'produtor.*','periodo.*','valor_leite_mensal.*')
                        ->orderBy('relacao_leite_produtor_tanque.data_entrega', 'DESC')
-                       ->paginate(10);;
-
+                       ->paginate(10);
 
         return view('view.CadastroLeiteProdutor', compact('response','permission','page','periodos','produtores','fonteTanques','entregas'));
     }
