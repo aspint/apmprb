@@ -64,7 +64,7 @@
                         <div class="ml-auto">-->
                         <div class="ml-4">
                             <h4 class="font-light">Valor do Litro Leite</h4>
-                            <h2 class="display-7 mb-0">R${{isset($DashboardRelatorioLeiteProdutor)?$DashboardRelatorioLeiteProdutor['valorLeiteMes']: ' 0.00'}}</h2>
+                            <h2 class="display-7 mb-0">R${{isset($DashboardRelatorioLeiteProdutor)? number_format($DashboardRelatorioLeiteProdutor['valorLeiteMes'], 8, ',', '') : ' 0.00'}}</h2>
                         </div>
                     </div>
                 </div>
@@ -84,7 +84,7 @@
                         <div class="ml-auto">-->
                         <div class="ml-4">
                             <h4 class="font-light">Valor a Receber</h4>
-                            <h2 class="display-7 mb-0">R$ {{isset($DashboardRelatorioLeiteProdutor) ? $DashboardRelatorioLeiteProdutor['valorAReceber'] : ' 0.00'}}</h2>
+                            <h2 class="display-7 mb-0">R$ {{isset($DashboardRelatorioLeiteProdutor) ? number_format( $DashboardRelatorioLeiteProdutor['valorAReceber'], 2, ',', '')  : ' 0.00'}}</h2>
                         </div>
                     </div>
                 </div>

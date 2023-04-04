@@ -118,7 +118,7 @@
                                         <tr>
                                             <th scope="col">#</th>
                                             <th scope="col">Tipo Produtor</th>
-                                            <th scope="col">Data Validade</th>
+                                            <th scope="col">Vigente até</th>
                                             <th scope="col">Valor Bruto</th>
                                             <th scope="col">Valor Liquido</th>
                                             <th scope="col">Ação</th>
@@ -132,8 +132,8 @@
                                             <th scope="row">{{$c++/*$valorLeite->valorLeite_id*/}}</th>
                                             <td>{{$valorLeite->desc_valor}}</td>
                                             <td>{{\Carbon\Carbon::parse($valorLeite->data_validade)->format('d-m-Y')}}</td>
-                                            <td>R$ {{$valorLeite->valor_bruto}}</td>
-                                            <td>R$ {{$valorLeite->valor_liquido}}</td>
+                                            <td>R$ {{number_format($valorLeite->valor_bruto, 8, ',', '')}}</td>
+                                            <td>R$ {{number_format($valorLeite->valor_liquido,8, ',', '')}}</td>
                                             <td>
                                                 <form action="{{route('excluirValorLeiteMensal')}}" method="POST">
                                                     @method('DELETE')
