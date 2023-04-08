@@ -168,8 +168,8 @@
                                             <td>{{\Carbon\Carbon::parse($entrega->data_entrega)->format('d-m-Y')}}</td>
                                             <td>{{$entrega->periodo_descricao}}</td>
                                             <td>{{$entrega->qntd_litros_entregue}}L</td>
-                                            <td>R$ {{$entrega->valor_bruto}}</td>
-                                            <td>R$ {{$entrega->valor_liquido}}</td>
+                                            <td>R$ {{number_format($entrega->valor_bruto,8, ',', '')}}</td>
+                                            <td>R$ {{number_format($entrega->valor_liquido,8, ',', '')}}</td>
                                             <td>
                                                 <form action="{{route('excluirLeiteProdutor',$entrega->rlpt_id)}}" method="POST">
                                                     @method('DELETE')
