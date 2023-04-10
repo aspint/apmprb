@@ -248,7 +248,8 @@ class ProdutorController extends Controller
                     ->select('valor_leite_mensal.valor_liquido as valor')
                     ->first();
 
-            $temp['valorLeiteMes'] =  $valorMensal->valor;
+
+            $temp['valorLeiteMes'] =    $valorMensal != null ? $valorMensal->valor : 0;
 
             $temp['valorAReceber'] =  $reciboPagamento!= null ?  $reciboPagamento['valor_pago'] : 0;
 
@@ -257,6 +258,7 @@ class ProdutorController extends Controller
                     ->join('periodo','relacao_leite_produtor_tanque.periodo_id','periodo.id')
                     ->join('valor_leite_mensal','relacao_leite_produtor_tanque.valor_leite_mensal_id','valor_leite_mensal.id')
                     ->where('relacao_leite_produtor_tanque.produtor_id',$produtor->tipo_produtor_id )
+                    ->whereBetween('relacao_leite_produtor_tanque.data_entrega',[ Helpers::dataCorteInicioMesPersonalizado(date('m')), Helpers::dataCorteFimMesPersonalizado(date('m'))] )
                     ->select('relacao_leite_produtor_tanque.id as rlpt_id', 'relacao_leite_produtor_tanque.*', 'produtor.*','periodo.*','valor_leite_mensal.*')
                     ->orderBy('relacao_leite_produtor_tanque.data_entrega', 'DESC')
                     ->paginate(20);

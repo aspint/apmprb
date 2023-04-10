@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\ClienteEmpresaControler;
+use App\Http\Controllers\GeradorRelatoriosPDFController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
@@ -69,5 +70,7 @@ Route::group(['middleware'=>['auth']], function(){
     Route::get('/cliente/formulario',[ClienteEmpresaControler::class,'create'])->name('formularioCadastroCliente');
 
 
+    //RELATORIO
+    Route::get('/produtor/relatorio/leitediario/gerarPDF',[GeradorRelatoriosPDFController::class,'gerarRelatorioLeiteMensalPDF'])->name('produtorFormularioToPdf');
 });
 
