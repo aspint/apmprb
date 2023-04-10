@@ -272,16 +272,16 @@
                                         <span class="hide-menu">Diario </span>
                                     </a>
                                 </li>
-                                <li class="sidebar-item">
+                                {{-- <li class="sidebar-item">
                                     <a href="table-basic.html" class="sidebar-link">
                                         <i class="mdi mdi-border-all"></i>
                                         <span class="hide-menu">Mensal </span>
                                     </a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </li>
                         @if ($permission->tipo_valor == 'ADM')
-                            <li class="sidebar-item">
+                            {{-- <li class="sidebar-item">
                                 <a href="table-jsgrid.html" class="sidebar-link">
                                     <i class="mdi mdi-border-top"></i>
                                     <span class="hide-menu">Usuarios</span>
@@ -298,7 +298,7 @@
                                     <i class="mdi mdi-tab-unselected"></i>
                                     <span class="hide-menu">Produtores</span>
                                 </a>
-                            </li>
+                            </li> --}}
                         @endif
                     </ul>
                 </li>

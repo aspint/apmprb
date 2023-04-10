@@ -112,6 +112,12 @@
         font-size: 15px;
 		text-align: center;
 	}
+    .table-row {
+
+		border-bottom: 1px solid #c0bcbc;
+		/*		border:1px solid black;*/
+        padding-bottom: 3px;
+	}
 
 	.table-th{
 		background-color: #C0C0C0;
@@ -128,21 +134,21 @@
         <div class="hr padding-5"></div>
 
 		<div >
-            <table class=" mb-4" width="98%">
+            <table class=" mb-4" width="100%">
                 <tr>
-                  <td width="33,33%">Nome: <strong>{{$produtor->nome}}</strong></td>
-                  <td width="33,33%">Inscricao: <strong>{{$produtor->inscricao}}</strong></td>
-                  <td width="33,33%">Tipo Cooperado: <strong> {{$produtor->desc_valor}}</strong></td>
+                  <td width="auto">Nome: <strong>{{$produtor->nome}}</strong></td>
+                  <td width="auto">Inscricao: <strong>{{$produtor->inscricao}}</strong></td>
+                  <td width="auto">Tipo Cooperado: <strong> {{$produtor->desc_valor}}</strong></td>
                 </tr>
             </table>
 		</div>
         <div class=" mb-5">
-            <table width="98%">
+            <table width="mb-4 " width="100%">
                 <tr>
-                  <td width="45%">Endereço: </td>
-                  <td width="30%">Telefone: </td>
-                  <td width="25%">Mês Referência:
-                    {{\Carbon\Carbon::parse($mesReferencia)->format('m/Y')}}</td>
+                  <td width="auto">Endereço: <strong></strong></td>
+                  <td width="auto">Telefone:<strong></strong> </td>
+                  <td width="auto">Mês Referência:<strong>
+                    {{\Carbon\Carbon::parse($mesReferencia)->format('m/Y')}}</strong></td>
                 </tr>
             </table>
 		</div>
@@ -165,22 +171,22 @@
                         @foreach ($relatoriEntregas as $rle )
                         <tr>
                             <td  class="table-row">{{$rle->rlpt_id}}</td>
-                            <td  class="table-row">{{\Carbon\Carbon::parse($rle->data_entrega)->format('d-m-Y')}}</td>
+                            <td  class="table-row">{{\Carbon\Carbon::parse($rle->data_entrega)->format('d/m/Y')}}</td>
                             <td  class="table-row">{{$rle->periodo_descricao}}</td>
                             <td  class="table-row">{{$rle->qntd_litros_entregue}}</td>
                         </tr>
                         @endforeach
-
+                        <tr><td height="30px"></td></tr>
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th class="table-th" colspan="3">TOTAL</th><th class="table-th">{{$totalLitros}}L</th>
+                        <th class="table-th" colspan="3"  style="text-align: right; padding-right:25px;">TOTAL</th><th class="table-th">{{$totalLitros}}L</th>
                     </tr>
                     <tr>
-                        <th class="table-th" colspan="3">VALOR LITRO LEITE MES</th><th class="table-th" >R$ {{number_format($valorLeiteMes,8, ',', '')}}</th>
+                        <th class="table-th" colspan="3" style="text-align: right; padding-right:25px;">VALOR LITRO LEITE MES</th><th class="table-th" >R$ {{number_format($valorLeiteMes,8, ',', '')}}</th>
                     </tr>
                     <tr>
-                        <th class="table-th" colspan="3">VALOR RECEBER</th><th class="table-th">R$  {{number_format($valorAReceber,2, ',', '.')}}</th>
+                        <th class="table-th" colspan="3" style="text-align: right; padding-right:25px;">VALOR RECEBER</th><th class="table-th">R$  {{number_format($valorAReceber,2, ',', '.')}}</th>
                     </tr>
                 </tfoot>
                 @endif
