@@ -130,7 +130,7 @@
 <body>
     <div class="container" >
 		<h2 style="text-align: center;"> APMPRBM </h2>
-        <h3 class="mb-5" style="text-align: center;">ASSOCIAÇÃO DE PEQUENOS E MÉDIOS PRODUTORES RURAIS DE BONVINOPOLIS DE MINAS</h3>
+        <h3 class="mb-5" style="text-align: center;">ASSOCIAÇÃO DE PEQUENOS E MÉDIOS PRODUTORES RURAIS DE BONFINOPOLIS DE MINAS</h3>
         <div class="hr padding-5"></div>
 
 		<div >
@@ -172,7 +172,7 @@
                         <tr>
                             <td  class="table-row">{{$rle->rlpt_id}}</td>
                             <td  class="table-row">{{\Carbon\Carbon::parse($rle->data_entrega)->format('d/m/Y')}}</td>
-                            <td  class="table-row">{{$rle->periodo_descricao}}</td>
+                            <td  class="table-row">{{$rle->periodo_valor}}</td>
                             <td  class="table-row">{{$rle->qntd_litros_entregue}}</td>
                         </tr>
                         @endforeach
