@@ -24,6 +24,10 @@ class Helpers
         return new DateTime( Date(Date('Y').'/'.$mes.'/'.Date("t", mktime(0,0,0,$mes,'01',Date('Y')))));
     }
 
+    public function ultimoDiaMes($mesAno){
+        return cal_days_in_month (CAL_GREGORIAN,  substr($mesAno,5,7), substr($mesAno,0,4));
+    }
+
 
     public function removerMapaCpf(String $cpf){
         $valor = trim($cpf);

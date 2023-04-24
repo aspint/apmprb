@@ -267,17 +267,17 @@
                             </a>
                             <ul aria-expanded="false" class="collapse first-level">
                                 <li class="sidebar-item">
-                                    <a href="{{route('RelatorioLeiteProdutorContent')}}" class="sidebar-link">
+                                    <a href="{{route('RelatorioLeiteProdutorDiario')}}" class="sidebar-link">
                                         <i class="mdi mdi-border-all"></i>
                                         <span class="hide-menu">Diario </span>
                                     </a>
                                 </li>
-                                {{-- <li class="sidebar-item">
-                                    <a href="table-basic.html" class="sidebar-link">
+                                <li class="sidebar-item">
+                                    <a href="{{route('RelatorioLeiteProdutorMensal')}}" class="sidebar-link">
                                         <i class="mdi mdi-border-all"></i>
                                         <span class="hide-menu">Mensal </span>
                                     </a>
-                                </li> --}}
+                                </li>
                             </ul>
                         </li>
                         @if ($permission->tipo_valor == 'ADM')
