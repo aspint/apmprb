@@ -122,6 +122,7 @@
                                                     <form action="{{ route('GerarPDFRelatorioLeiteProdutorMensalPesquisar') }}" method="POST" class="form-inline">
                                                         @csrf
                                                         <input type="text" name="id_recibo" id="id_recibo" value="{{$recibo->id}}" hidden/>
+                                                        <input type="text" name="data_ref_recibo" id="data_ref_recibo" value="{{$recibo->mes_referencia}}" hidden/>
                                                         <button type="submit"
                                                                 class="btn btn-info btn-circle ">
                                                                     <i class="far fa-file-pdf"></i>

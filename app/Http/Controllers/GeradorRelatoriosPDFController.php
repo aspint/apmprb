@@ -81,7 +81,7 @@ class GeradorRelatoriosPDFController extends Controller
 
 
             $data = $temp;
-            // dd($data);
+
             $pdf = Pdf::loadView('relatorios.relatorioLeiteDiarioPDF',$data);
             return $pdf->download('RelatorioPDFLeiteDiario.pdf');
         }else{
@@ -106,26 +106,18 @@ class GeradorRelatoriosPDFController extends Controller
             $temp['valorLeiteMes'] = 0.0;
             $temp['valorAReceber'] = 0.0;
 
-            $statusRecibo = StatusRecibo::where('valor',StatusReciboEnum::GERADO)
-                            ->first();
 
-            $temp['mesReferencia']  = Helpers::dataCorteInicioMesPersonalizado(date('m'));
+            $temp['mesReferencia']  = $request->input('data_ref_recibo');
 
             $reciboPagamento = ReciboPagamento::where('produtor_id', $produtor->id)
                             ->where('id', $request->input('id_recibo'))
+                            ->where('mes_referencia',$request->input('data_ref_recibo'))
                             ->first();
 
 
-            $temp['totalLitros'] =  $reciboPagamento!= null ? $reciboPagamento['total_litros_pago'] : 0;
+            $temp['totalLitros'] =  $reciboPagamento != null ? $reciboPagamento['total_litros_pago'] : 0;
 
-            $valorMensal = DB::table('valor_leite_mensal')
-                    ->where('valor_leite_mensal.tipo_produtor_id',$produtor->tipo_produtor_id)
-                    ->where('valor_leite_mensal.data_validade', ">=", date("Y-m-d"))
-                    ->select('valor_leite_mensal.valor_liquido as valor')
-                    ->first();
-
-
-            $temp['valorLeiteMes'] =    $valorMensal != null ? $valorMensal->valor : 0;
+            $temp['valorLeiteMes'] =   $reciboPagamento != null ? ($reciboPagamento['valor_pago']/$reciboPagamento['total_litros_pago'] ): 0;
 
             $temp['valorAReceber'] =  $reciboPagamento!= null ?  $reciboPagamento['valor_pago'] : 0;
 
@@ -134,19 +126,20 @@ class GeradorRelatoriosPDFController extends Controller
                     ->join('periodo','relacao_leite_produtor_tanque.periodo_id','periodo.id')
                     ->join('valor_leite_mensal','relacao_leite_produtor_tanque.valor_leite_mensal_id','valor_leite_mensal.id')
                     ->where('relacao_leite_produtor_tanque.produtor_id',$produtor->tipo_produtor_id )
+                    ->where('relacao_leite_produtor_tanque.recibo_pagamento_id',$request->input('id_recibo'))
                     ->whereBetween('relacao_leite_produtor_tanque.data_entrega',[ $reciboPagamento->periodo_inicio,$reciboPagamento->periodo_fim] )
                     ->select('relacao_leite_produtor_tanque.id as rlpt_id', 'relacao_leite_produtor_tanque.*', 'produtor.*','periodo.*','valor_leite_mensal.*')
                     ->orderBy('relacao_leite_produtor_tanque.data_entrega', 'DESC')
-                    ->paginate(20);
+                    ->get();
 
             $temp['relatoriEntregas'] = $entregas;
             $temp['produtor'] =  $produtor;
 
 
             $data = $temp;
-            // dd($data);
+
             $pdf = Pdf::loadView('relatorios.relatorioLeiteDiarioPDF',$data);
-            return $pdf->download('RelatorioPDFLeiteDiario.pdf');
+            return $pdf->download('RelatorioPDFLeiteMensal.pdf');
         }else{
             return null;
         }
