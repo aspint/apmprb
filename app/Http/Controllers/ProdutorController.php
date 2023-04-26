@@ -274,4 +274,120 @@ class ProdutorController extends Controller
    }
 
 
+   public function relatorioLeiteProdutorMensal(Request $request){
+    $page['info'] = 'RelatorioLeiteProdutorMensal';
+    $response = UserHelper::getDataUserLogged();
+    $permission = TipoUsuario::find($response['tipo_usuario_id']);
+    $DashboardRelatorioLeiteProdutor = null;
+    $RelatorioLeiteProdutor = null;
+    $valorMensal = null;
+
+    $produtor = DB::table('produtor')
+                        ->where('produtor.users_id', $response['id'])
+                        ->first();
+
+    if( $produtor != null ){
+
+        $temp['totalLitros'] = 0;
+        $temp['valorLeiteMes'] = 0.0;
+        $temp['valorAReceber'] = 0.0;
+
+        $statusRecibo = StatusRecibo::where('valor',StatusReciboEnum::GERADO)
+                        ->first();
+
+        $reciboPagamento = ReciboPagamento::where('produtor_id', $produtor->id)
+                        ->whereBetween('mes_referencia', [ Helpers::dataCorteInicioMesPersonalizado(date('m')), Helpers::dataCorteFimMesPersonalizado(date('m'))])
+                        ->where('status_recibo_id', $statusRecibo['id'])
+                        ->first();
+
+        $temp['totalLitros'] =  $reciboPagamento!= null ? $reciboPagamento['total_litros_pago'] : 0;
+
+        $valorMensal = DB::table('valor_leite_mensal')
+                ->where('valor_leite_mensal.tipo_produtor_id',$produtor->tipo_produtor_id)
+                ->where('valor_leite_mensal.data_validade', ">=", date("Y-m-d"))
+                // ->whereBetween('data_validade', [ Helpers::dataCorteInicioMes(), Helpers::dataCorteFimMes()])
+                ->select('valor_leite_mensal.valor_liquido as valor')
+                ->first();
+
+
+        $temp['valorLeiteMes'] =    $valorMensal != null ? $valorMensal->valor : 0;
+
+        $temp['valorAReceber'] =  $reciboPagamento!= null ?  $reciboPagamento['valor_pago'] : 0;
+
+        $entregas = DB::table('relacao_leite_produtor_tanque')
+                ->join('produtor','relacao_leite_produtor_tanque.produtor_id','produtor.id')
+                ->join('periodo','relacao_leite_produtor_tanque.periodo_id','periodo.id')
+                ->join('valor_leite_mensal','relacao_leite_produtor_tanque.valor_leite_mensal_id','valor_leite_mensal.id')
+                ->where('relacao_leite_produtor_tanque.produtor_id',$produtor->tipo_produtor_id )
+                ->whereBetween('relacao_leite_produtor_tanque.data_entrega',[ Helpers::dataCorteInicioMesPersonalizado(date('m')), Helpers::dataCorteFimMesPersonalizado(date('m'))] )
+                ->select('relacao_leite_produtor_tanque.id as rlpt_id', 'relacao_leite_produtor_tanque.*', 'produtor.*','periodo.*','valor_leite_mensal.*')
+                ->orderBy('relacao_leite_produtor_tanque.data_entrega', 'DESC')
+                ->paginate(20);
+
+
+        $DashboardRelatorioLeiteProdutor = $temp;
+        $RelatorioLeiteProdutor =  $entregas;
+    }
+
+
+
+    return view('view.RelatorioLeiteProdutorMensal',compact('response','page','permission','RelatorioLeiteProdutor','DashboardRelatorioLeiteProdutor'));
+}
+
+public function relatorioLeiteProdutorMensalPesquisar(Request $request){
+
+        if($request->input('mes_inicio') >= $request->input('mes_fim')){
+            return redirect('/produtor/relatorio/leitemensal')->with('message','Data de inicio deve ser maior que data de fim');
+        }
+
+        $page['info'] = 'RelatorioLeiteProdutorMensal';
+        $response = UserHelper::getDataUserLogged();
+        $permission = TipoUsuario::find($response['tipo_usuario_id']);
+        $reciboPagamento = null;
+
+        $produtor = DB::table('produtor')
+                            ->where('produtor.users_id', $response['id'])
+                            ->first();
+
+        if( $produtor != null ){
+
+            $reciboPagamento =
+                        ReciboPagamento::where('produtor_id', $produtor->id)
+                            ->join('status_recibo', 'status_recibo.id','recibo_pagamento.status_recibo_id')
+                            ->join('status_pagamento', 'status_pagamento.id','recibo_pagamento.status_pagamento_id')
+                            ->whereBetween('mes_referencia', [ $request->input('mes_inicio').'-01', $request->input('mes_fim').'-'.Helpers::ultimoDiaMes($request->input('mes_fim'))])
+                            ->select(
+                                'recibo_pagamento.id',
+                                'recibo_pagamento.valor_pago',
+                                'recibo_pagamento.total_litros_pago',
+                                'recibo_pagamento.periodo_inicio',
+                                'recibo_pagamento.periodo_fim',
+                                'recibo_pagamento.mes_referencia',
+                                'recibo_pagamento.produtor_id',
+                                'recibo_pagamento.status_pagamento_id',
+                                'status_pagamento.valor as status_pagamento_valor',
+                                'status_pagamento.descricao as status_pagamento_descricao',
+                                'recibo_pagamento.datahora_inclusao',
+                                'recibo_pagamento.datahora_atualizacao',
+                                'recibo_pagamento.status_recibo_id',
+                                'status_recibo.valor as status_recibo_valor',
+                                'status_recibo.descricao as  status_recibo_descricao',
+                                'recibo_pagamento.usuario')
+                            ->orderBy('recibo_pagamento.mes_referencia', 'DESC')
+                            ->paginate(20);
+
+        }
+
+        if( !isset($reciboPagamento) || $reciboPagamento == null){
+            return redirect('/produtor/relatorio/leitemensal')->with('message','Não foi encontrado recibos no intervalo de datas informadas');
+        }
+
+        // dd($reciboPagamento );
+        return view('view.RelatorioLeiteProdutorMensal',compact('response','page','permission','reciboPagamento'));
+    }
+
+
+    public function relatorioRecibosPagamento(Request $request){
+        return "OK";
+    }
 }

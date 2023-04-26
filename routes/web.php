@@ -50,7 +50,9 @@ Route::group(['middleware'=>['auth']], function(){
     Route::post('/produtor/formuario/criar',[ProdutorController::class, 'store'])->name('criarProdutor');
     Route::post('/produtor/formulario/alterar/{id}',[ProdutorController::class, 'alterar'])->name('alterarProdutor');
     Route::post('/produtor/formulario/atualizarprodutor',[ProdutorController::class, 'update'])->name('atualizarProdutor');
-    Route::get('/produtor/relatorio/leitediario',[ProdutorController::class, 'relatorioLeiteProdutorDiario'])->name('RelatorioLeiteProdutorContent');
+    Route::get('/produtor/relatorio/leitediario',[ProdutorController::class, 'relatorioLeiteProdutorDiario'])->name('RelatorioLeiteProdutorDiario');
+    Route::get('/produtor/relatorio/leitemensal',[ProdutorController::class, 'relatorioLeiteProdutorMensal'])->name('RelatorioLeiteProdutorMensal');
+    Route::post('/produtor/relatorio/leitemensal/pesquisar',[ProdutorController::class, 'relatorioLeiteProdutorMensalPesquisar'])->name('RelatorioLeiteProdutorMensalPesquisar');
     Route::get('/produtor/cadastro/leitediario',[AppController::class,'create'])->name('CadastroLeiteProdutor');
     Route::get('/produtor/back', function(){
         return redirect()->route('produtorFormulario');
@@ -68,9 +70,15 @@ Route::group(['middleware'=>['auth']], function(){
 
     //CLIENTE
     Route::get('/cliente/formulario',[ClienteEmpresaControler::class,'create'])->name('formularioCadastroCliente');
-
+    Route::post('/cliente/formulario/inserir-cliente',[ClienteEmpresaControler::class,'store'])->name('formularioCadastroClienteInserir');
+    Route::delete('/cliente/formulario/destroy/{id}',[ClienteEmpresaControler::class,'destroy'])->name('excluirCliente');
 
     //RELATORIO
     Route::get('/produtor/relatorio/leitediario/gerarPDF',[GeradorRelatoriosPDFController::class,'gerarRelatorioLeiteMensalPDF'])->name('produtorFormularioToPdf');
+    Route::post('/produtor/relatorio/leitemensal/pesquisar/gerarPDF',[GeradorRelatoriosPDFController::class, 'gerarRelatorioLeiteMensalPDFEspecifico'])->name('GerarPDFRelatorioLeiteProdutorMensalPesquisar');
+
+    //PAGAMENTO
+    Route::get('/produtor/relatorio/recibos-pagamento',[ProdutorController::class, 'relatorioRecibosPagamento'])->name('RelatorioRecibosPagamento');
+
 });
 

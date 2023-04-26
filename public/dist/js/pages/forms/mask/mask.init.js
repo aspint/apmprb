@@ -8,6 +8,7 @@ $(function (e) {
         $(".cc-inputmask").inputmask("9999 9999 9999 9999"),
         $(".ssn-inputmask").inputmask("999-99-9999"),
         $(".cpf").inputmask("999.999.999-99"),
+        $(".cnpj").inputmask("99.999.999/9999-99"),
         $(".isbn-inputmask").inputmask("999-99-999-9999-9"),
         $(".currency-inputmask").inputmask("$9999"),
         $(".percentage-inputmask").inputmask("99%"),

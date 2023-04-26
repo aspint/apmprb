@@ -17,25 +17,12 @@
             </div>
         </div>
     </div>
-    <!-- ============================================================== -->
-    <!-- End Bread crumb and right sidebar toggle -->
-    <!-- ============================================================== -->
-
-
-    <!-- ============================================================== -->
-    <!-- Container fluid  -->
-    <!-- ============================================================== -->
     @if (session('message'))
         <div class="alert alert-danger"> <i class="ti-user"></i> {{session('message')}}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
         </div>
     @endif
 
-
-
-    <div class="alert alert-danger"> <i class="ti-user"></i> FUNCIONALIDADE AINDA NÃO CONCLUIDA
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
-    </div>
     <div class="page-content container-fluid">
         <!-- Row -->
         <div class="row">
@@ -44,45 +31,54 @@
                     {{-- <div class="card-header bg-info">
                         <h4 class="mb-0 text-white">Formulario de Usuario</h4>
                     </div> --}}
-                    <form action="#">
+                    <form action="{{route('formularioCadastroClienteInserir')}}" method="post">
                         {{-- <div class="card-body">
                             <h4 class="card-title">Formulario de Criação de Usuarios do sistema</h4>
                         </div> --}}
                         {{-- <hr> --}}
+                        @csrf
                         <div class="form-body">
                             <div class="card-body">
                                 <div class="row pt-3">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label"> Nome / Razão Social</label>
-                                            <input type="text" id="firstName" class="form-control" placeholder="Ex.: Alvorada Leite LTDA ">
-                                            <small class="form-control-feedback"> Informe a razão social ou nome  </small> </div>
+                                            <input type="text" id="nome_razao_social" name='nome_razao_social' class="form-control" placeholder="Ex.: Alvorada Leite LTDA " required>
+                                            <small class="form-control-feedback"> Informe a razão social ou nome. </small> </div>
                                     </div>
                                     <!--/span-->
                                     <div class="col-md-6">
                                         <div class="form-group ">
                                             <label class="control-label">CPF / CNPJ</label>
-                                            <input type="text" id="lastName" class="form-control form-control-danger" placeholder="Ex.: 00.000.000/0001-00">
+                                            <input type="text" id="cpf_cnpj" name="cpf_cnpj" class="form-control form-control-danger" placeholder="Ex.: 00.000.000/0001-00" required>
                                             <small class="form-control-feedback"> Informar CPF ou CNPJ. </small> </div>
                                     </div>
                                     <!--/span-->
                                 </div>
                                 <!--/row-->
-                                <h4 class="card-title mt-5">Address</h4>
+                                <div class="row pt-3">
+                                    <div class="col-md-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="enderecoClienteCheck" name="enderecoClienteCheck"  onClick="mostrarOcultarCheckbox('enderecoClienteCheck','enderecoCliente')">
+                                        <label class="form-check-label" for="defaultCheck1">
+                                        Endereço
+                                        </label>
+                                    </div>
+                                </div>
+                                </div>
                             </div>
-                            <hr>
-                            <div class="card-body">
+                            <div class="card-body d-none" id="enderecoCliente">
                                 <div class="row">
                                     <div class="col-md-10 ">
                                         <div class="form-group">
                                             <label>Rua</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" id="rua" name="rua" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-2 ">
                                         <div class="form-group">
                                             <label>Numero</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" id="numero" name="numero" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -90,14 +86,14 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Bairro</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" id="bairro" name="bairro" class="form-control">
                                         </div>
                                     </div>
                                     <!--/span-->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Cidade</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" id="cidade" name="cidade" class="form-control">
                                         </div>
                                     </div>
                                     <!--/span-->
@@ -107,14 +103,14 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Estado</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" id="uf" name="uf" class="form-control">
                                         </div>
                                     </div>
                                     <!--/span-->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>CEP</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" id="cep" name="cep" class="form-control">
                                         </div>
                                     </div>
                                     <!--/span-->
@@ -122,7 +118,7 @@
                             </div>
                             <div class="form-actions">
                                 <div class="card-body">
-                                    <button type="submit" class="btn btn-success" disabled> <i class="fa fa-check"></i> Save</button>
+                                    <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
                                 </div>
                             </div>
                         </div>
@@ -148,12 +144,36 @@
                                             <th scope="col">#</th>
                                             <th scope="col">Razão Social</th>
                                             <th scope="col">CNPJ</th>
-                                            <th scope="col"> Data Inclusão</th>
+                                            <th scope="col">Data Inclusão</th>
                                             <th scope="col">Ação</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-
+                                        @if(isset($clientes))
+                                            @foreach ( $clientes as $cliente)
+                                                <tr>
+                                                    <th>{{$cliente->id}}</th>
+                                                    <td>{{$cliente->nome_razao_social}}</td>
+                                                    <td class="{{strlen($cliente->cpf_cnpj)>11?'cnpj':'cpf'}}">{{$cliente->cpf_cnpj}}</td>
+                                                    <td>{{\Carbon\Carbon::parse($cliente->datahora_inclusao)->format('d/m/Y')}}</td>
+                                                    <td>
+                                                        <form action="{{route('excluirCliente',$cliente->id)}}" method="POST">
+                                                            @method('DELETE')
+                                                            @csrf
+                                                            <input type="text" name="id_cliente" id="id_cliente" value="{{$cliente->id}}" hidden/>
+                                                            <button type="submit"
+                                                                    class="btn btn-warning btn-circle"
+                                                                    onclick="return confirm(`Deseja remover
+                                                                                            Cliente: {{$cliente->nome_razao_social}}?`)"
+                                                                    ><i class="fa fa-times"></i></button>
+                                                            {{-- <label class="control-label">Excluir </label> --}}
+                                                            <small class="form-control-feedback"><br> Excluir </small>
+                                                            {{-- <button type='submit'>Enviar</button> --}}
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                 </tbody>
                             </table>
                             {{-- {{$entregas->links()}} --}}

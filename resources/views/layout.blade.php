@@ -45,6 +45,8 @@
             @yield('cadastroTanqueLeite')
         @elseif($page['info'] == 'CadastroCliente')
             @yield('CadastroCliente')
+        @elseif($page['info'] == 'RelatorioLeiteProdutorMensal')
+            @yield('RelatorioLeiteProdutorMensal')
         @endif
 
 
@@ -86,5 +88,6 @@
     @endif
     <script src="{{asset('assets/libs/inputmask/dist/min/jquery.inputmask.bundle.min.js')}}"></script>
     <script src="{{asset('dist/js/pages/forms/mask/mask.init.js')}}"></script>
+    <script src="{{asset('dist/js/personal/functionsHelpers.js')}}"></script>
 </body>
 </html>

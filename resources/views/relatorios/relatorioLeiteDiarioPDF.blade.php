@@ -124,6 +124,15 @@
 		height: 25px;
 	}
 
+	.fixar-rodape{
+		border-top: 1px solid #333;
+		bottom: 0;
+		left: 0;
+		height: 40px;
+		position: fixed;
+		width: 100%;
+		}
+
 </style>
 
 </head>
@@ -178,7 +187,7 @@
                         @endforeach
                         <tr><td height="30px"></td></tr>
                 </tbody>
-                <tfoot>
+                <tfoot >
                     <tr>
                         <th class="table-th" colspan="3"  style="text-align: right; padding-right:25px;">TOTAL</th><th class="table-th">{{$totalLitros}}L</th>
                     </tr>
