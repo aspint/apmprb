@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helper\Helpers;
 use App\Helper\UserHelper;
 use App\Models\ClienteEmpresa;
+use App\Models\Endereco;
 use App\Models\TipoUsuario;
 use Exception;
 use Illuminate\Http\Request;
@@ -36,6 +37,34 @@ class ClienteEmpresaControler extends Controller
 
     // destroy – Remove o dado
     public function destroy(Request $request){
+        if(Auth::check()){
+            if(UserHelper::hasAdm() || UserHelper::hasFunc()){
+
+                $cliente = ClienteEmpresa::find($request->input('id_cliente'));
+
+                DB::beginTransaction();
+
+                try{
+                    $cliente->delete();
+
+                    if($cliente->endereco_id !=null){
+                        Endereco::destroy($cliente->endereco_id );
+                    }
+
+                DB::commit();
+
+                }catch(Exception $e){
+                    DB::rollBack();
+                    return redirect('/cliente/formulario')->with('message','Não foi possivel excluir os dados do cliente!');
+                }
+
+                return back();
+            }
+            return back();
+        }else{
+            return back();
+        }
+        return back();
 
     }
 

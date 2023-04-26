@@ -71,6 +71,7 @@ Route::group(['middleware'=>['auth']], function(){
     //CLIENTE
     Route::get('/cliente/formulario',[ClienteEmpresaControler::class,'create'])->name('formularioCadastroCliente');
     Route::post('/cliente/formulario/inserir-cliente',[ClienteEmpresaControler::class,'store'])->name('formularioCadastroClienteInserir');
+    Route::delete('/cliente/formulario/destroy/{id}',[ClienteEmpresaControler::class,'destroy'])->name('excluirCliente');
 
     //RELATORIO
     Route::get('/produtor/relatorio/leitediario/gerarPDF',[GeradorRelatoriosPDFController::class,'gerarRelatorioLeiteMensalPDF'])->name('produtorFormularioToPdf');

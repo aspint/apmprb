@@ -156,7 +156,21 @@
                                                     <td>{{$cliente->nome_razao_social}}</td>
                                                     <td class="{{strlen($cliente->cpf_cnpj)>11?'cnpj':'cpf'}}">{{$cliente->cpf_cnpj}}</td>
                                                     <td>{{\Carbon\Carbon::parse($cliente->datahora_inclusao)->format('d/m/Y')}}</td>
-                                                    <td></td>
+                                                    <td>
+                                                        <form action="{{route('excluirCliente',$cliente->id)}}" method="POST">
+                                                            @method('DELETE')
+                                                            @csrf
+                                                            <input type="text" name="id_cliente" id="id_cliente" value="{{$cliente->id}}" hidden/>
+                                                            <button type="submit"
+                                                                    class="btn btn-warning btn-circle"
+                                                                    onclick="return confirm(`Deseja remover
+                                                                                            Cliente: {{$cliente->nome_razao_social}}?`)"
+                                                                    ><i class="fa fa-times"></i></button>
+                                                            {{-- <label class="control-label">Excluir </label> --}}
+                                                            <small class="form-control-feedback"><br> Excluir </small>
+                                                            {{-- <button type='submit'>Enviar</button> --}}
+                                                        </form>
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         @endif
