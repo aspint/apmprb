@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\Helpers;
 use App\Helper\UserHelper;
 use App\Models\ClienteEmpresa;
 use App\Models\TipoUsuario;
@@ -57,7 +58,6 @@ class ClienteEmpresaControler extends Controller
                         'usuario' => UserHelper::getNameUserLogged(),
                     ]);
             }catch(Exception $e){
-                dd('erro');
                 return redirect('/cliente/formulario')->with('message','Não foi possivel atualizar os dados verifique novamente');
             }
         }
@@ -74,23 +74,25 @@ class ClienteEmpresaControler extends Controller
                 DB::beginTransaction();
 
                 try{
+                    $idEndereco = null;
+                    if($request->input('enderecoClienteCheck') == true){
+                        $idEndereco = DB::table('endereco')->insertGetId([
+                            'rua' =>  $request->input('rua') != null ? $request->input('rua'): null,
+                            'numero' => $request->input('numero') != null ? $request->input('numero') : null,
+                            'bairro' => $request->input('bairro')!= null  ? $request->input('bairro'): null,
+                            'cidade' =>  $request->input('cidade')!= null ? $request->input('cidade'): null,
+                            'estado' => $request->input('uf')!= null ? $request->input('uf')!= null: null,
+                            'cep' => $request->input('cep')!= null ? $request->input('cep'): null,
+                            'datahora_inclusao' => new \DateTime(),
+                            'datahora_atualizacao' => new \DateTime(),
+                            'usuario' => UserHelper::getNameUserLogged() != null ? UserHelper::getNameUserLogged() : null,
+                        ]);
+                    }
 
-                    $idEndereco = DB::table('endereco')->insertGetId([
-                        'rua' =>  $request->input('nome'),
-                        'numero' => $request->input('cpfcnpj'),
-                        'bairro' => $request->input('identificacao'),
-                        'cidade' =>  $request->input('telefone'),
-                        'estado' => $request->input('nascimento'),
-                        'cep' => (integer) $request->input('tipo_produtor'),
-                        'datahora_inclusao' => new \DateTime(),
-                        'datahora_atualizacao' => new \DateTime(),
-                        'usuario' => UserHelper::getNameUserLogged(),
-                    ]);
-
-                    $idCliente = DB::table('cliente')->insertGetId([
-                        'nome_razao_social' =>  $request->input('nome'),
-                        'cpf_cnpj' => $request->input('cpfcnpj'),
-                        'endereco_id' => $idEndereco != null ? $idEndereco : null,
+                    $idCliente = DB::table('cliente_empresa')->insertGetId([
+                        'nome_razao_social' =>  $request->input('nome_razao_social'),
+                        'cpf_cnpj' =>Helpers::removerMapaCpf( $request->input('cpf_cnpj')),
+                        'endereco_id' => $idEndereco,
                         'datahora_inclusao' => new \DateTime(),
                         'datahora_atualizacao' => new \DateTime(),
                         'usuario' => UserHelper::getNameUserLogged(),
@@ -100,7 +102,9 @@ class ClienteEmpresaControler extends Controller
                     DB::commit();
                 }catch(Exception $e){
                     DB::rollBack();
-                    echo "erro ao inserir na base informe ao desenvolvedor";
+                    dd($e);
+                    return redirect('/cliente/formulario')->with('message','erro ao inserir na base informe ao desenvolvedor');
+                    // echo "erro ao inserir na base informe ao desenvolvedor";
                 }
 
                 return back();

@@ -35,6 +35,9 @@ class Helpers
         $valor = str_replace(",", "", $valor);
         $valor = str_replace("-", "", $valor);
         $valor = str_replace("/", "", $valor);
+        if(strlen($valor)>14){
+            $valor = substr($valor,0,14);
+        }
         return $valor;
     }
 }

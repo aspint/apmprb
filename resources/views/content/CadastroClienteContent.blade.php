@@ -17,25 +17,12 @@
             </div>
         </div>
     </div>
-    <!-- ============================================================== -->
-    <!-- End Bread crumb and right sidebar toggle -->
-    <!-- ============================================================== -->
-
-
-    <!-- ============================================================== -->
-    <!-- Container fluid  -->
-    <!-- ============================================================== -->
     @if (session('message'))
         <div class="alert alert-danger"> <i class="ti-user"></i> {{session('message')}}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
         </div>
     @endif
 
-
-
-    <div class="alert alert-danger"> <i class="ti-user"></i> FUNCIONALIDADE AINDA NÃO CONCLUIDA
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
-    </div>
     <div class="page-content container-fluid">
         <!-- Row -->
         <div class="row">
@@ -57,7 +44,7 @@
                                         <div class="form-group">
                                             <label class="control-label"> Nome / Razão Social</label>
                                             <input type="text" id="nome_razao_social" name='nome_razao_social' class="form-control" placeholder="Ex.: Alvorada Leite LTDA " required>
-                                            <small class="form-control-feedback"> Informe a razão social ou nome  </small> </div>
+                                            <small class="form-control-feedback"> Informe a razão social ou nome. </small> </div>
                                     </div>
                                     <!--/span-->
                                     <div class="col-md-6">
@@ -69,10 +56,18 @@
                                     <!--/span-->
                                 </div>
                                 <!--/row-->
-                                <h4 class="card-title mt-5">Address</h4>
+                                <div class="row pt-3">
+                                    <div class="col-md-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="enderecoClienteCheck" name="enderecoClienteCheck"  onClick="mostrarOcultarCheckbox('enderecoClienteCheck','enderecoCliente')">
+                                        <label class="form-check-label" for="defaultCheck1">
+                                        Endereço
+                                        </label>
+                                    </div>
+                                </div>
+                                </div>
                             </div>
-                            <hr>
-                            <div class="card-body">
+                            <div class="card-body d-none" id="enderecoCliente">
                                 <div class="row">
                                     <div class="col-md-10 ">
                                         <div class="form-group">
@@ -149,12 +144,22 @@
                                             <th scope="col">#</th>
                                             <th scope="col">Razão Social</th>
                                             <th scope="col">CNPJ</th>
-                                            <th scope="col"> Data Inclusão</th>
+                                            <th scope="col">Data Inclusão</th>
                                             <th scope="col">Ação</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-
+                                        @if(isset($clientes))
+                                            @foreach ( $clientes as $cliente)
+                                                <tr>
+                                                    <th>{{$cliente->id}}</th>
+                                                    <td>{{$cliente->nome_razao_social}}</td>
+                                                    <td class="{{strlen($cliente->cpf_cnpj)>11?'cnpj':'cpf'}}">{{$cliente->cpf_cnpj}}</td>
+                                                    <td>{{\Carbon\Carbon::parse($cliente->datahora_inclusao)->format('d/m/Y')}}</td>
+                                                    <td></td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                 </tbody>
                             </table>
                             {{-- {{$entregas->links()}} --}}
