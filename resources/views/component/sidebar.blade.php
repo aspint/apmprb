@@ -280,6 +280,12 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="sidebar-item">
+                            <a href="{{route('RelatorioRecibosPagamento')}}" class="sidebar-link">
+                                <i class="mdi mdi-border-top"></i>
+                                <span class="hide-menu">Pagamentos</span>
+                            </a>
+                        </li>
                         @if ($permission->tipo_valor == 'ADM')
                             {{-- <li class="sidebar-item">
                                 <a href="table-jsgrid.html" class="sidebar-link">

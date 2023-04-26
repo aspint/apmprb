@@ -385,4 +385,9 @@ public function relatorioLeiteProdutorMensalPesquisar(Request $request){
         // dd($reciboPagamento );
         return view('view.RelatorioLeiteProdutorMensal',compact('response','page','permission','reciboPagamento'));
     }
+
+
+    public function relatorioRecibosPagamento(Request $request){
+        return "OK";
+    }
 }

@@ -44,25 +44,26 @@
                     {{-- <div class="card-header bg-info">
                         <h4 class="mb-0 text-white">Formulario de Usuario</h4>
                     </div> --}}
-                    <form action="#">
+                    <form action="{{route('formularioCadastroClienteInserir')}}" method="post">
                         {{-- <div class="card-body">
                             <h4 class="card-title">Formulario de Criação de Usuarios do sistema</h4>
                         </div> --}}
                         {{-- <hr> --}}
+                        @csrf
                         <div class="form-body">
                             <div class="card-body">
                                 <div class="row pt-3">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label"> Nome / Razão Social</label>
-                                            <input type="text" id="firstName" class="form-control" placeholder="Ex.: Alvorada Leite LTDA ">
+                                            <input type="text" id="nome_razao_social" name='nome_razao_social' class="form-control" placeholder="Ex.: Alvorada Leite LTDA " required>
                                             <small class="form-control-feedback"> Informe a razão social ou nome  </small> </div>
                                     </div>
                                     <!--/span-->
                                     <div class="col-md-6">
                                         <div class="form-group ">
                                             <label class="control-label">CPF / CNPJ</label>
-                                            <input type="text" id="lastName" class="form-control form-control-danger" placeholder="Ex.: 00.000.000/0001-00">
+                                            <input type="text" id="cpf_cnpj" name="cpf_cnpj" class="form-control form-control-danger" placeholder="Ex.: 00.000.000/0001-00" required>
                                             <small class="form-control-feedback"> Informar CPF ou CNPJ. </small> </div>
                                     </div>
                                     <!--/span-->
@@ -76,13 +77,13 @@
                                     <div class="col-md-10 ">
                                         <div class="form-group">
                                             <label>Rua</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" id="rua" name="rua" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-2 ">
                                         <div class="form-group">
                                             <label>Numero</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" id="numero" name="numero" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -90,14 +91,14 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Bairro</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" id="bairro" name="bairro" class="form-control">
                                         </div>
                                     </div>
                                     <!--/span-->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Cidade</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" id="cidade" name="cidade" class="form-control">
                                         </div>
                                     </div>
                                     <!--/span-->
@@ -107,14 +108,14 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Estado</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" id="uf" name="uf" class="form-control">
                                         </div>
                                     </div>
                                     <!--/span-->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>CEP</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" id="cep" name="cep" class="form-control">
                                         </div>
                                     </div>
                                     <!--/span-->
@@ -122,7 +123,7 @@
                             </div>
                             <div class="form-actions">
                                 <div class="card-body">
-                                    <button type="submit" class="btn btn-success" disabled> <i class="fa fa-check"></i> Save</button>
+                                    <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
                                 </div>
                             </div>
                         </div>

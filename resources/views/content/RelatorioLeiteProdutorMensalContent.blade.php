@@ -133,10 +133,12 @@
                                                     </form>
                                                 </td>
                                             </tr>
-                                            @endforeach
+                                             @endforeach
+                                             @endif
                                     </tbody>
                                 </table>
-                                {{$reciboPagamento->links()}}
+                                @if(isset($reciboPagamento))
+                                 {{$reciboPagamento->links()}}
                                 @endif
                             </div>
                         </div>

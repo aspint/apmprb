@@ -70,9 +70,14 @@ Route::group(['middleware'=>['auth']], function(){
 
     //CLIENTE
     Route::get('/cliente/formulario',[ClienteEmpresaControler::class,'create'])->name('formularioCadastroCliente');
+    Route::post('/cliente/formulario/inserir-cliente',[ClienteEmpresaControler::class,'store'])->name('formularioCadastroClienteInserir');
 
     //RELATORIO
     Route::get('/produtor/relatorio/leitediario/gerarPDF',[GeradorRelatoriosPDFController::class,'gerarRelatorioLeiteMensalPDF'])->name('produtorFormularioToPdf');
     Route::post('/produtor/relatorio/leitemensal/pesquisar/gerarPDF',[GeradorRelatoriosPDFController::class, 'gerarRelatorioLeiteMensalPDFEspecifico'])->name('GerarPDFRelatorioLeiteProdutorMensalPesquisar');
+
+    //PAGAMENTO
+    Route::get('/produtor/relatorio/recibos-pagamento',[ProdutorController::class, 'relatorioRecibosPagamento'])->name('RelatorioRecibosPagamento');
+
 });
 

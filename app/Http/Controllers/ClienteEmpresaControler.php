@@ -7,6 +7,7 @@ use App\Models\ClienteEmpresa;
 use App\Models\TipoUsuario;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ClienteEmpresaControler extends Controller
@@ -67,6 +68,53 @@ class ClienteEmpresaControler extends Controller
     // store – Salva o novo item na tabela
     public function store(Request $request){
 
+        if(Auth::check()){
+            if(UserHelper::hasAdm()){
+
+                DB::beginTransaction();
+
+                try{
+
+                    $idEndereco = DB::table('endereco')->insertGetId([
+                        'rua' =>  $request->input('nome'),
+                        'numero' => $request->input('cpfcnpj'),
+                        'bairro' => $request->input('identificacao'),
+                        'cidade' =>  $request->input('telefone'),
+                        'estado' => $request->input('nascimento'),
+                        'cep' => (integer) $request->input('tipo_produtor'),
+                        'datahora_inclusao' => new \DateTime(),
+                        'datahora_atualizacao' => new \DateTime(),
+                        'usuario' => UserHelper::getNameUserLogged(),
+                    ]);
+
+                    $idCliente = DB::table('cliente')->insertGetId([
+                        'nome_razao_social' =>  $request->input('nome'),
+                        'cpf_cnpj' => $request->input('cpfcnpj'),
+                        'endereco_id' => $idEndereco != null ? $idEndereco : null,
+                        'datahora_inclusao' => new \DateTime(),
+                        'datahora_atualizacao' => new \DateTime(),
+                        'usuario' => UserHelper::getNameUserLogged(),
+                    ]);
+
+
+                    DB::commit();
+                }catch(Exception $e){
+                    DB::rollBack();
+                    echo "erro ao inserir na base informe ao desenvolvedor";
+                }
+
+                return back();
+            }
+            return back();
+        }else{
+            return back();
+        }
+
+        // if(UserHelper::hasAdm()){
+
+        // }else{
+        //     return view('home');
+        // }
     }
 
     // create – Retorna a View para criar um item da tabela
@@ -77,8 +125,8 @@ class ClienteEmpresaControler extends Controller
             $response = UserHelper::getDataUserLogged();
             $permission = TipoUsuario::find($response['tipo_usuario_id']);
 
-
-            return view('view.CadastroClienteEmpresa', compact('page','response','permission'));
+            $clientes = ClienteEmpresa::all();
+            return view('view.CadastroClienteEmpresa', compact('page','response','permission','clientes'));
         }else{
             return view('home');
         }
