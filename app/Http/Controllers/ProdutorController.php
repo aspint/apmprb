@@ -387,7 +387,4 @@ public function relatorioLeiteProdutorMensalPesquisar(Request $request){
     }
 
 
-    public function relatorioRecibosPagamento(Request $request){
-        return "OK";
-    }
 }

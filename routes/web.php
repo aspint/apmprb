@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProdutorController;
+use App\Http\Controllers\ReciboPagamento;
 use App\Http\Controllers\RelacaoLeiteProtutorTanqueController;
 use App\Http\Controllers\TanqueLeiteAssociacaoController;
 use App\Http\Controllers\ValorLeiteMensalController;
@@ -80,7 +81,7 @@ Route::group(['middleware'=>['auth']], function(){
     Route::post('/produtor/relatorio/leitemensal/pesquisar/gerarPDF',[GeradorRelatoriosPDFController::class, 'gerarRelatorioLeiteMensalPDFEspecifico'])->name('GerarPDFRelatorioLeiteProdutorMensalPesquisar');
 
     //PAGAMENTO
-    Route::get('/produtor/relatorio/recibos-pagamento',[ProdutorController::class, 'relatorioRecibosPagamento'])->name('RelatorioRecibosPagamento');
+    Route::get('/produtor/relatorio/recibos-pagamento',[ReciboPagamento::class, 'relatorioRecibosPagamento'])->name('RelatorioRecibosPagamento');
 
 
 });

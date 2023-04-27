@@ -89,15 +89,15 @@ class AppController extends Controller
 
 
         $tipoProdutores = TipoProdutor::all();
+        $page['formulario'] = false;
+        // if(sizeof($valorLeiteMensal) >= 1){
+        //     $page['formulario'] = false;
+        //     $page['message'] = '';
 
-        if(sizeof($valorLeiteMensal) >= 1){
-            $page['formulario'] = false;
-            $page['message'] = '';
-
-        }else{
-            $page['formulario'] = true;
-            $page['message'] = 'Não possui valor do leite mensal cadastrado, peça ao administrador que cadadstre para preencher a data de entrega';
-        }
+        // }else{
+        //     $page['formulario'] = true;
+        //     $page['message'] = 'Não possui valor do leite mensal cadastrado, peça ao administrador que cadadstre para preencher a data de entrega';
+        // }
 
         $indices = [];
 
