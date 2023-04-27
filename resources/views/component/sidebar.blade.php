@@ -59,7 +59,13 @@
                                     <li class="sidebar-item">
                                         <a href="{{route('CadastroLeiteProdutor')}}" class="sidebar-link">
                                             <i class="mdi mdi-email"></i>
-                                            <span class="hide-menu"> Informar Recebimento </span>
+                                            <span class="hide-menu"> Recebimento </span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a href="{{route('CadastroLeiteSaida')}}" class="sidebar-link">
+                                            <i class="mdi mdi-email"></i>
+                                            <span class="hide-menu"> Saida </span>
                                         </a>
                                     </li>
                                 </ul>

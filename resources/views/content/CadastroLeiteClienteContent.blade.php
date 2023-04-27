@@ -5,14 +5,14 @@
     <div class="page-breadcrumb bg-white">
         <div class="row">
             <div class="col-lg-3 col-md-4 col-xs-12 align-self-center">
-                <h5 class="font-medium text-uppercase mb-0">Inserir Recebimento de Leite</h5>
+                <h5 class="font-medium text-uppercase mb-0">Inserir Saida de Leite para Cliente</h5>
             </div>
             <div class="col-lg-9 col-md-8 col-xs-12 align-self-center">
                 <nav aria-label="breadcrumb" class="mt-2 float-md-right float-left">
                     <ol class="breadcrumb mb-0 justify-content-end p-0 bg-white">
                         <li class="breadcrumb-item"><a href="index.html">Apps</a></li>
                         <li class="breadcrumb-item" aria-current="page">Leite</li>
-                        <li class="breadcrumb-item active" aria-current="page">Informar Recebimento</li>
+                        <li class="breadcrumb-item active" aria-current="page">Informar Saida</li>
                     </ol>
                 </nav>
             </div>
@@ -27,6 +27,10 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
         </div>
     @endif
+    <div class="alert alert-danger"> <i class="ti-user"></i> {{$page['message']}}
+        Funcionalidade ainda não concluida
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+    </div>
     <!-- ============================================================== -->
     <!-- Container fluid  -->
     <!-- ============================================================== -->
@@ -40,7 +44,7 @@
                     </div> --}}
 
                     {{-- <form action="{{route('inserirUsuario')}}"  method="POST"> --}}
-                    <form action="{{route('inserirLeiteProdutor')}}"  method="POST">
+                    <form action="{{route('inserirLeiteCliente')}}"  method="POST">
                         @csrf
                         {{-- <div class="card-body">
                             <h4 class="card-title">Formulario de Criação de Produtor</h4>
@@ -51,24 +55,24 @@
                                 <div class="row pt-3">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label">Data Recebimento:</label>
+                                            <label class="control-label">Data da Entrega:</label>
                                             <input type="date" id="dataEntrega" name="dataEntrega"class="form-control" required  {{$page['formulario']?'disabled':''}}>
-                                            <small class="form-control-feedback"> Informe a data de recebimento do leite(esse campo não pode ser vazio) </small>
+                                            <small class="form-control-feedback"> Informe a data da entrega(esse campo não pode ser vazio) </small>
                                         </div>
                                     </div>
                                     <!--/span-->
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label">Informar Produtor:</label>
+                                            <label class="control-label">Informar Cliente:</label>
                                             <select class="form-control custom-select" id="produtor" name="produtor" required {{$page['formulario']?'disabled':''}}>
                                                 <option value=""></option>
-                                                @if(isset($produtores))
-                                                    @foreach ($produtores as $produtor)
-                                                        <option value="{{$produtor->id}}"> {{$produtor->inscricao}} - {{$produtor->nome}}</option>
+                                                @if(isset($empresas))
+                                                    @foreach ($empresas as $empresa)
+                                                        <option value="{{$empresa->id}}"> {{$empresa->nome_razao_social}}</option>
                                                     @endforeach
                                                 @endif
                                             </select>
-                                            <small class="form-control-feedback"> Informe o produtor que fez a entrega(este campo não pode ser nulo). </small>
+                                            <small class="form-control-feedback"> Informe o cliente que recebe a remessa do leite(este campo não pode ser nulo). </small>
                                         </div>
                                     </div>
                                     <!--/span-->
@@ -128,7 +132,7 @@
 
                             <div class="form-actions">
                                 <div class="card-body">
-                                    <button type="submit" class="btn btn-success" {{$page['formulario']?'disabled':''}}> <i class="fa fa-check"></i>Salvar</button>
+                                    <button type="submit" class="btn btn-success" {{$page['formulario']?'disabled':''}} disabled> <i class="fa fa-check"></i>Salvar</button>
                                 </div>
                             </div>
                         </div>
@@ -144,7 +148,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Ultimos Recebimentos</h4>
+                                <h4 class="card-title">Ultimas Entregas</h4>
                                 {{-- <h6 class="card-subtitle">Similar to tables, use the modifier classes .thead-light to make <code>&lt;thead&gt;</code>s appear light.</h6> --}}
                             </div>
                             <div class="table-responsive">
