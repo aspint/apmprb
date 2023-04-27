@@ -49,6 +49,8 @@
             @yield('RelatorioLeiteProdutorMensal')
         @elseif($page['info'] == 'CadastroLeiteCliente')
             @yield('CadastroLeiteCliente')
+        @elseif($page['info'] == 'RelatorioReciboPagamento')
+            @yield('RelatorioReciboPagamento')
         @endif
 
 

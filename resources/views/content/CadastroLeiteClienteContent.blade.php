@@ -27,7 +27,7 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
         </div>
     @endif
-    <div class="alert alert-danger"> <i class="ti-user"></i> {{$page['message']}}
+    <div class="alert alert-danger"> <i class="ti-user"></i>
         Funcionalidade ainda não concluida
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
     </div>
