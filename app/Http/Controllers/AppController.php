@@ -27,7 +27,7 @@ class AppController extends Controller
     public function create(){
         $response = UserHelper::getDataUserLogged();
         $permission = TipoUsuario::find($response['tipo_usuario_id']);
-        $page['info'] = 'app';
+        $page['info'] = 'CadastroLeiteProdutor';
 
         $periodos = Periodo::all();
         $fonteTanques = FonteTanque::all();
@@ -69,6 +69,55 @@ class AppController extends Controller
                        ->paginate(10);
 
         return view('view.CadastroLeiteProdutor', compact('response','permission','page','periodos','produtores','fonteTanques','entregas'));
+    }
+
+
+
+    public function saidaLeite(){
+        $response = UserHelper::getDataUserLogged();
+        $permission = TipoUsuario::find($response['tipo_usuario_id']);
+        $page['info'] = 'CadastroLeiteCliente';
+
+        $periodos = Periodo::all();
+        $fonteTanques = FonteTanque::all();
+
+        $valorLeiteMensal = DB::table('valor_leite_mensal')
+                        ->join('tipo_produtor','valor_leite_mensal.tipo_produtor_id','tipo_produtor.id')
+                        ->where('valor_leite_mensal.data_validade', ">=", date("Y-m-d"))
+                        // ->whereBetween('data_referencia', [ Helpers::dataCorteInicioMes(), Helpers::dataCorteFimMes()])
+                        ->get();
+
+
+        $tipoProdutores = TipoProdutor::all();
+
+        if(sizeof($valorLeiteMensal) >= 1){
+            $page['formulario'] = false;
+            $page['message'] = '';
+
+        }else{
+            $page['formulario'] = true;
+            $page['message'] = 'Não possui valor do leite mensal cadastrado, peça ao administrador que cadadstre para preencher a data de entrega';
+        }
+
+        $indices = [];
+
+        foreach($valorLeiteMensal as $valorLeite){
+            if(!in_array($valorLeite->tipo_produtor_id, $indices )){
+                array_push($indices, $valorLeite->tipo_produtor_id);
+            }
+        }
+
+        $empresas = DB::table('cliente_empresa')->get();
+
+        $entregas = DB::table('relacao_leite_cliente_empresa')
+                       ->join('cliente_empresa','relacao_leite_cliente_empresa.cliente_empresa_id','cliente_empresa.id')
+                       ->join('periodo','relacao_leite_cliente_empresa.periodo_id','periodo.id')
+                       ->join('valor_leite_mensal','relacao_leite_cliente_empresa.valor_leite_mensal_id','valor_leite_mensal.id')
+                       ->select('relacao_leite_cliente_empresa.id as rlpt_id', 'relacao_leite_cliente_empresa.*', 'cliente_empresa.*','periodo.*','valor_leite_mensal.*')
+                       ->orderBy('relacao_leite_cliente_empresa.data_entrega', 'DESC')
+                       ->paginate(10);
+
+        return view('view.CadastroLeiteCliente', compact('response','permission','page','periodos','empresas','fonteTanques','entregas'));
     }
 
 }

@@ -37,7 +37,7 @@
             @yield('CadastroCliente')
         @elseif($page['info'] == 'relatorioLeiteProdutor')
             @yield('RelatorioLeiteProdutor')
-        @elseif($page['info'] == 'app')
+        @elseif($page['info'] == 'CadastroLeiteProdutor')
             @yield('CadastroLeiteProdutor')
         @elseif($page['info'] == 'CadastroValorLeiteMensal')
             @yield('CadastroValorLeiteMensal')
@@ -47,6 +47,8 @@
             @yield('CadastroCliente')
         @elseif($page['info'] == 'RelatorioLeiteProdutorMensal')
             @yield('RelatorioLeiteProdutorMensal')
+        @elseif($page['info'] == 'CadastroLeiteCliente')
+            @yield('CadastroLeiteCliente')
         @endif
 
 
