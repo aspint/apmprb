@@ -69,7 +69,7 @@ Route::group(['middleware'=>['auth']], function(){
     Route::post('/fonte/formulario/inserir',[TanqueLeiteAssociacaoController::class,'create'])->name('criarTanqueFonte');
     Route::delete('/fonte/formulario/excluir/{id}',[TanqueLeiteAssociacaoController::class,'destroy'])->name('excluirFonte');
     Route::get('/cliente/cadastro/leite-saida',[AppController::class,'saidaLeite'])->name('CadastroLeiteSaida');
-    Route::post('/cliente/cadastro/leite-saida/inserir',[RelacaoLeiteProtutorTanqueController::class,'store'])->name('inserirLeiteCliente');
+    Route::post('/cliente/cadastro/leite-saida/inserir',[AppController::class,'inserirSaidaLeiteCliente'])->name('inserirLeiteCliente');
 
     //CLIENTE
     Route::get('/cliente/formulario',[ClienteEmpresaControler::class,'create'])->name('formularioCadastroCliente');

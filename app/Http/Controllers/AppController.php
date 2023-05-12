@@ -2,15 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\StatusPagamentoEnum;
+use App\Enums\StatusReciboEnum;
 use App\Helper\Helpers;
 use App\Helper\UserHelper;
 use App\Models\FonteTanque;
 use App\Models\Periodo;
 use App\Models\Produtor;
+use App\Models\SaldoProdutor;
+use App\Models\StatusPagamento;
+use App\Models\StatusRecibo;
+use App\Models\TipoAcaoLeite;
 use App\Models\TipoProdutor;
 use App\Models\TipoUsuario;
+use App\Models\ValorLeiteMensal;
 use DateTime;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AppController extends Controller
@@ -84,6 +93,20 @@ class AppController extends Controller
         $valorLeiteMensal = DB::table('valor_leite_mensal')
                         ->join('tipo_produtor','valor_leite_mensal.tipo_produtor_id','tipo_produtor.id')
                         ->where('valor_leite_mensal.data_validade', ">=", date("Y-m-d"))
+                        ->select('valor_leite_mensal.id as idValor',
+                                 'valor_leite_mensal.data_inclusao',
+                                 'valor_leite_mensal.data_validade',
+                                 'valor_leite_mensal.valor_bruto',
+                                 'valor_leite_mensal.valor_liquido',
+                                 'valor_leite_mensal.tipo_produtor_id',
+                                 'valor_leite_mensal.usuario',
+                                 'tipo_produtor.id',
+                                 'tipo_produtor.tipo_valor',
+                                 'tipo_produtor.desc_valor',
+                                 'tipo_produtor.datahora_inclusao',
+                                 'tipo_produtor.datahora_atualizacao',
+                                 'tipo_produtor.usuario'
+                                 )
                         // ->whereBetween('data_referencia', [ Helpers::dataCorteInicioMes(), Helpers::dataCorteFimMes()])
                         ->get();
 
@@ -117,7 +140,70 @@ class AppController extends Controller
                        ->orderBy('relacao_leite_cliente_empresa.data_entrega', 'DESC')
                        ->paginate(10);
 
-        return view('view.CadastroLeiteCliente', compact('response','permission','page','periodos','empresas','fonteTanques','entregas'));
+        return view('view.CadastroLeiteCliente', compact('response','permission','page','periodos','empresas','fonteTanques','entregas','valorLeiteMensal'));
+    }
+
+
+    public function inserirSaidaLeiteCliente (Request $request){
+        if(Auth::check()){
+            if(UserHelper::hasAdm() || UserHelper::hasFunc()){
+              
+                $userLogado = UserHelper::getDataUserLogged()['name'];
+
+                $ValorLeite = ValorLeiteMensal::where('data_validade', ">=", date("Y-m-d"))
+                                ->where('id',$request->input('valor-leite-mensal-id'))
+                                ->first();
+
+                $acaoLeite = TipoAcaoLeite::where('tipo_acao_valor','SAIDA')->first();
+                $FonteTanque = FonteTanque::find( $request->input('fonte-tanque'));
+                
+                DB::beginTransaction();
+
+                try{
+
+                    
+                    $leiteProdutorTanque =  DB::table('relacao_leite_cliente_empresa')->insertGetId([
+                        'data_entrega' =>  $request->input('data-entrega'),
+                        'qntd_litros_entregue' =>$request->input('quantidade-litros-leite') ,
+                        'periodo_id' =>$request->input('periodo-id'),
+                        'cliente_empresa_id' => $request->input('cliente-id'),
+                        'datahora_inclusao' => new \DateTime(),
+                        'datahora_atualizacao' =>new \DateTime(),
+                        'valor_leite_mensal_id' => $ValorLeite['id'] ,
+                        'usuario' =>  $userLogado,
+                ]);
+
+                    DB::table('tanque_leite_associacao')->insert([
+                        'fonte_id' =>  $request->input('fonte-tanque'),
+                        'tipo_acao_leite_id' => $acaoLeite->id,
+                        'total_leite_acao' => $request->input('quantidade-litros-leite'),
+                        'relacao_leite_cliente_empresa_id' =>  $leiteProdutorTanque,
+                        'usuario' => $userLogado,
+                        'datahora_inclusao' => new \DateTime() ,
+                        'datahora_atualizacao' =>  new \DateTime(),
+                    ]);
+                   
+                    DB::table('fonte_tanque')
+                    ->where('id',$FonteTanque->id)
+                    ->update(['total_leite'=>$FonteTanque->total_leite-$request->input('quantidade-litros-leite'),
+                            'datahora_atualizacao'=> new \DateTime(),
+                            'usuario' => $userLogado ]);
+
+                DB::commit();
+
+                }catch(Exception $e){
+                    DB::rollBack();
+
+                    dd($e);
+                    echo 'Erro ao inserir leite diario na base comunique ao administrador';
+                }
+
+                return back();
+            }
+            return back();
+        }else{
+            return back();
+        }
     }
 
 }
