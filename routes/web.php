@@ -69,19 +69,22 @@ Route::group(['middleware'=>['auth']], function(){
     Route::post('/fonte/formulario/inserir',[TanqueLeiteAssociacaoController::class,'create'])->name('criarTanqueFonte');
     Route::delete('/fonte/formulario/excluir/{id}',[TanqueLeiteAssociacaoController::class,'destroy'])->name('excluirFonte');
     Route::get('/cliente/cadastro/leite-saida',[AppController::class,'saidaLeite'])->name('CadastroLeiteSaida');
-    Route::post('/cliente/cadastro/leite-saida/inserir',[AppController::class,'inserirSaidaLeiteCliente'])->name('inserirLeiteCliente');
+    Route::post('/cliente/cadastro/leite-saida/inserir',[AppController::class,'inserirLeiteCliente'])->name('inserirLeiteCliente');
 
     //CLIENTE
     Route::get('/cliente/formulario',[ClienteEmpresaControler::class,'create'])->name('formularioCadastroCliente');
     Route::post('/cliente/formulario/inserir-cliente',[ClienteEmpresaControler::class,'store'])->name('formularioCadastroClienteInserir');
     Route::delete('/cliente/formulario/destroy/{id}',[ClienteEmpresaControler::class,'destroy'])->name('excluirCliente');
 
-    //RELATORIO
+    //RELATORIO PDFs
     Route::get('/produtor/relatorio/leitediario/gerarPDF',[GeradorRelatoriosPDFController::class,'gerarRelatorioLeiteMensalPDF'])->name('produtorFormularioToPdf');
     Route::post('/produtor/relatorio/leitemensal/pesquisar/gerarPDF',[GeradorRelatoriosPDFController::class, 'gerarRelatorioLeiteMensalPDFEspecifico'])->name('GerarPDFRelatorioLeiteProdutorMensalPesquisar');
+    Route::post('/produtor/relatorio/recibo/gerarPDF',[GeradorRelatoriosPDFController::class, 'gerarReciboPagamentoPDF'])->name('GerarReciboPagamentoPDF');
 
     //PAGAMENTO
     Route::get('/produtor/relatorio/recibos-pagamento',[ReciboPagamento::class, 'relatorioRecibosPagamento'])->name('RelatorioRecibosPagamento');
+    Route::post('/produtor/relatorio/recibos-pagamento/pesquisar',[ReciboPagamento::class, 'relatorioReciboProdutorPesquisar'])->name('RelatorioReciboProdutorPesquisar');
+    Route::get('/app/recibos-pagamento',[ReciboPagamento::class, 'appRecibosPagamento'])->name('AppRecibosPagamento');
 
 
 });
