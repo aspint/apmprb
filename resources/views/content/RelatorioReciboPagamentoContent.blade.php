@@ -5,7 +5,7 @@
     <div class="page-breadcrumb bg-white">
         <div class="row">
             <div class="col-lg-3 col-md-4 col-xs-12 align-self-center">
-                <h5 class="font-medium text-uppercase mb-0">Relatorio de Recibos Pagamento</h5>
+                <h5 class="font-medium text-uppercase mb-0">Relatorio Recibos Pagamento</h5>
             </div>
             <div class="col-lg-9 col-md-8 col-xs-12 align-self-center">
                 <nav aria-label="breadcrumb" class="mt-2 float-md-right float-left">
@@ -26,10 +26,7 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
         </div>
     @endif
-    <div class="alert alert-danger"> <i class="ti-user"></i>
-        Funcionalidade ainda não concluida
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
-    </div>
+
     <!-- ============================================================== -->
     <!-- Container fluid  -->
     <!-- ============================================================== -->
@@ -42,7 +39,7 @@
                         <h4 class="mb-0 text-white">Formulario de Usuario</h4>
                     </div> --}}
 
-                    <form action="{{route('RelatorioLeiteProdutorMensalPesquisar')}}"  method="POST">
+                    <form action="{{route('RelatorioReciboProdutorPesquisar')}}"  method="POST">
                         @csrf
                         <div class="card-body">
                             <h4 class="card-title">Pesquisar relatorio de datas especificas</h4>
@@ -76,7 +73,7 @@
                             <div class="form-actions">
                                 <div class="card-body">
                                     <button type="submit"
-                                            class="btn btn-success" disabled>
+                                            class="btn btn-success">
                                                 <i class="fa fa-check"></i>
                                                 Pesquisar
                                     </button>
@@ -115,14 +112,34 @@
                                             @foreach ( $reciboPagamento as $recibo)
                                             <tr>
                                                 <th  class="align-middle text-center" scope="row">{{$recibo->id}}</th>
-                                                <td  class="align-middle text-center" >{{\Carbon\Carbon::parse($recibo->mes_referencia)->format('d/m/Y')}}</td>
+                                                <td  class="align-middle text-center" >{{\Carbon\Carbon::parse($recibo->mes_referencia)->translatedFormat('F/Y')}}</td>
                                                 <td  class="align-middle text-center">{{\Carbon\Carbon::parse($recibo->periodo_inicio)->format('d/m/Y')}}</td>
                                                 <td  class="align-middle text-center">{{\Carbon\Carbon::parse($recibo->periodo_fim)->format('d/m/Y')}}</td>
-                                                <td  class="align-middle text-center">{{$recibo->status_recibo_valor}}</td>
-                                                <td  class="align-middle text-center">{{$recibo->status_pagamento_valor}}</td>
+                                                <td  class="align-middle text-center">
+                                                    @if ($recibo->status_recibo_valor == 'GERADO')
+                                                        <h4><span class="badge badge-pill badge-primary">
+                                                            {{$recibo->status_recibo_valor}}
+                                                        </span></h4>
+                                                    @elseif ($recibo->status_recibo_valor == 'FECHADO')
+                                                        <h4><span class="badge badge-pill badge-success">
+                                                            {{$recibo->status_recibo_valor}}
+                                                        </span></h4>
+                                                    @endif</td>
+                                                <td  class="align-middle text-center">
+                                                    @if ($recibo->status_pagamento_valor == 'PENDENTE')
+                                                        <h4><span class="badge badge-pill badge-warning">
+                                                            {{$recibo->status_pagamento_valor}}
+                                                        </span></h4>
+                                                    @elseif ($recibo->status_pagamento_valor == 'PAGO')
+                                                        <h4><span class="badge badge-pill badge-success">
+                                                            {{$recibo->status_pagamento_valor}}
+                                                        </span></h4>
+                                                    @endif</td>
+
+                                                </td>
                                                 {{-- <td>{{$user->perfil}}</td> --}}
                                                 <td class="text-center">
-                                                    <form action="{{ route('GerarPDFRelatorioLeiteProdutorMensalPesquisar') }}" method="POST" class="form-inline">
+                                                    <form action="{{route('GerarReciboPagamentoPDF')}}" method="POST" class="form-inline">
                                                         @csrf
                                                         <input type="text" name="id_recibo" id="id_recibo" value="{{$recibo->id}}" hidden/>
                                                         <input type="text" name="data_ref_recibo" id="data_ref_recibo" value="{{$recibo->mes_referencia}}" hidden/>

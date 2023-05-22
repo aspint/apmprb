@@ -70,12 +70,12 @@
                                     </li>
                                 </ul>
                             </li>
-                            {{-- <li class="sidebar-item">
-                                <a href="app-chats.html" class="sidebar-link">
+                             <li class="sidebar-item">
+                                <a href="{{route('AppRecibosPagamento')}}" class="sidebar-link">
                                     <i class="mdi mdi-comment-processing-outline"></i>
-                                    <span class="hide-menu">Chat Message</span>
+                                    <span class="hide-menu">Pagamentos</span>
                                 </a>
-                            </li>
+                            </li>{{--
                             <li class="sidebar-item">
                                 <a class="has-arrow sidebar-link" href="javascript:void(0)" aria-expanded="false">
                                     <i class="mdi mdi-inbox-arrow-down"></i>

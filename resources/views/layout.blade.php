@@ -51,6 +51,8 @@
             @yield('CadastroLeiteCliente')
         @elseif($page['info'] == 'RelatorioReciboPagamento')
             @yield('RelatorioReciboPagamento')
+        @elseif($page['info'] == 'AppReciboPagamento')
+            @yield('AppReciboPagamento')
         @endif
 
 
