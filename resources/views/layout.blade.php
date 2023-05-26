@@ -53,6 +53,8 @@
             @yield('RelatorioReciboPagamento')
         @elseif($page['info'] == 'AppReciboPagamento')
             @yield('AppReciboPagamento')
+        @elseif($page['info'] == 'WikiVideo')
+            @yield('WikiVideo')
         @endif
 
 

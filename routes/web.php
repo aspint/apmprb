@@ -11,6 +11,7 @@ use App\Http\Controllers\ReciboPagamento;
 use App\Http\Controllers\RelacaoLeiteProtutorTanqueController;
 use App\Http\Controllers\TanqueLeiteAssociacaoController;
 use App\Http\Controllers\ValorLeiteMensalController;
+use App\Http\Controllers\WikiVideoController;
 
 //Rota para site
 Route::get('/', function () {
@@ -85,6 +86,11 @@ Route::group(['middleware'=>['auth']], function(){
     Route::get('/produtor/relatorio/recibos-pagamento',[ReciboPagamento::class, 'relatorioRecibosPagamento'])->name('RelatorioRecibosPagamento');
     Route::post('/produtor/relatorio/recibos-pagamento/pesquisar',[ReciboPagamento::class, 'relatorioReciboProdutorPesquisar'])->name('RelatorioReciboProdutorPesquisar');
     Route::get('/app/recibos-pagamento',[ReciboPagamento::class, 'appRecibosPagamento'])->name('AppRecibosPagamento');
+    Route::post('/app/recibos-pagamento/baixa',[ReciboPagamento::class, 'baixarPagamento'])->name('BaixarPagamento');
+
+
+    //WIKI
+    Route::get('/wiki/video/{id}',[WikiVideoController::class, 'videoPlay'])->name('VideoPlay');
 
 
 });
