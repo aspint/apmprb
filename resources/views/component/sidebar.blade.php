@@ -141,66 +141,6 @@
                 @endif
                 <div class="devider"></div>
 
-                {{-- <li class="sidebar-item">
-                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                        <i class="mdi mdi-notification-clear-all"></i>
-                        <span class="hide-menu">Memorandos</span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse first-level">
-                        <li class="sidebar-item">
-                            <a href="javascript:void(0)" class="sidebar-link">
-                                <i class="mdi mdi-octagram"></i>
-                                <span class="hide-menu"> item 1.1</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="javascript:void(0)" class="sidebar-link">
-                                <i class="mdi mdi-octagram"></i>
-                                <span class="hide-menu"> item 1.2</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="has-arrow sidebar-link" href="javascript:void(0)" aria-expanded="false">
-                                <i class="mdi mdi-playlist-plus"></i>
-                                <span class="hide-menu">Menu 1.3</span>
-                            </a>
-                            <ul aria-expanded="false" class="collapse second-level">
-                                <li class="sidebar-item">
-                                    <a href="javascript:void(0)" class="sidebar-link">
-                                        <i class="mdi mdi-octagram"></i>
-                                        <span class="hide-menu"> item 1.3.1</span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a href="javascript:void(0)" class="sidebar-link">
-                                        <i class="mdi mdi-octagram"></i>
-                                        <span class="hide-menu"> item 1.3.2</span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a href="javascript:void(0)" class="sidebar-link">
-                                        <i class="mdi mdi-octagram"></i>
-                                        <span class="hide-menu"> item 1.3.3</span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a href="javascript:void(0)" class="sidebar-link">
-                                        <i class="mdi mdi-octagram"></i>
-                                        <span class="hide-menu"> item 1.3.4</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="javascript:void(0)" class="sidebar-link">
-                                <i class="mdi mdi-playlist-check"></i>
-                                <span class="hide-menu"> item 1.4</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <div class="devider"></div> --}}
 
                 @if ($permission->tipo_valor == 'ADM')
                     <li class="sidebar-item" >
@@ -316,6 +256,93 @@
                 </li>
 
                 <div class="devider"></div>
+                @if ($permission->tipo_valor == 'ADM' || $permission->tipo_valor == 'FUNC')
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                        <i class="mdi mdi-notification-clear-all"></i>
+                        <span class="hide-menu">Wiki</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        {{-- <li class="sidebar-item">
+                            <a href="javascript:void(0)" class="sidebar-link">
+                                <i class="mdi mdi-octagram"></i>
+                                <span class="hide-menu"> item 1.1</span>
+                            </a>
+                        </li> --}}
+                        <li class="sidebar-item">
+                            <a class="has-arrow sidebar-link" href="javascript:void(0)" aria-expanded="false">
+                                <i class="mdi mdi-playlist-plus"></i>
+                                <span class="hide-menu">Fluxo</span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse second-level">
+                                <li class="sidebar-item">
+                                    <a href="{{route('VideoPlay',['01_ApresentacaoSistema'])}}" class="sidebar-link">
+                                        <i class="mdi mdi-octagram"></i>
+                                        <span class="hide-menu">Apresentação Plataforma</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="{{route('VideoPlay',['02_FluxoPrincipalRecebimento'])}}" class="sidebar-link">
+                                        <i class="mdi mdi-octagram"></i>
+                                        <span class="hide-menu">Fluxo Principal Compra</span>
+                                    </a>
+                                </li>
+                                {{-- <li class="sidebar-item">
+                                    <a href="javascript:void(0)" class="sidebar-link">
+                                        <i class="mdi mdi-octagram"></i>
+                                        <span class="hide-menu"> item 1.3.3</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="javascript:void(0)" class="sidebar-link">
+                                        <i class="mdi mdi-octagram"></i>
+                                        <span class="hide-menu"> item 1.3.4</span>
+                                    </a>
+                                </li> --}}
+                            </ul>
+                        </li>
+                      {{--   <li class="sidebar-item">
+                            <a class="has-arrow sidebar-link" href="javascript:void(0)" aria-expanded="false">
+                                <i class="mdi mdi-playlist-plus"></i>
+                                <span class="hide-menu">Criar Usuario</span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse second-level">
+                                <li class="sidebar-item">
+                                    <a href="javascript:void(0)" class="sidebar-link">
+                                        <i class="mdi mdi-octagram"></i>
+                                        <span class="hide-menu"> item 1.3.1</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="javascript:void(0)" class="sidebar-link">
+                                        <i class="mdi mdi-octagram"></i>
+                                        <span class="hide-menu"> item 1.3.2</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="javascript:void(0)" class="sidebar-link">
+                                        <i class="mdi mdi-octagram"></i>
+                                        <span class="hide-menu"> item 1.3.3</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="javascript:void(0)" class="sidebar-link">
+                                        <i class="mdi mdi-octagram"></i>
+                                        <span class="hide-menu"> item 1.3.4</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="javascript:void(0)" class="sidebar-link">
+                                <i class="mdi mdi-playlist-check"></i>
+                                <span class="hide-menu"> item 1.4</span>
+                            </a>
+                        </li> --}}
+                    </ul>
+                </li>
+                <div class="devider"></div>
+                @endif
 
                 <li class="sidebar-item">
                     <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">

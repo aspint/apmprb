@@ -144,7 +144,7 @@
                                                 </td>
                                                 {{-- <td>{{$user->perfil}}</td> --}}
                                                 <td class="text-center">
-                                                    <form action="{{route('GerarReciboPagamentoPDF')}}" method="POST" class="form-inline">
+                                                    <form action="{{route('BaixarPagamento')}}" method="POST" class="form-inline">
                                                         @csrf
                                                         <input type="text" name="id_recibo" id="id_recibo" value="{{$recibo->id}}" hidden/>
                                                         <input type="text" name="data_ref_recibo" id="data_ref_recibo" value="{{$recibo->mes_referencia}}" hidden/>
